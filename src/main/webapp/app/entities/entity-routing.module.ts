@@ -186,6 +186,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./evento/endereco-evento/endereco-evento.module').then(m => m.EnderecoEventoModule),
       },
       {
+        path: 'fluxo-caixa-report',
+        data: { pageTitle: 'hunterappApp.fluxoCaixa.home.title' },
+        loadChildren: () => import('./controle/report/fluxo-caixa/fluxo-caixa.module').then(m => m.FluxoCaixaModule),
+      },
+      {
         path: 'pagar',
         data: { pageTitle: 'hunterappApp.controlePagar.home.title' },
         loadChildren: () => import('./controle/pagar/pagar.module').then(m => m.PagarModule),

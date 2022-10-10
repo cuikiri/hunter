@@ -1,6 +1,11 @@
 {
   "hunterappApp": {
     "controleEstoque": {
+      "report": {
+        "title": "Fluxo de caixa",
+        "dataInicio": "Data Início",
+        "dataFim": "Data Fim"
+      },
       "home": {
         "title": "Estoques",
         "refreshListLabel": "Refresh list",

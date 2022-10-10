@@ -5,7 +5,6 @@ import br.com.jhisolution.user.hunters.repository.ReceberRepository;
 import br.com.jhisolution.user.hunters.service.ReceberService;
 import br.com.jhisolution.user.hunters.web.rest.dto.FiltroReceberDTO;
 import br.com.jhisolution.user.hunters.web.rest.dto.ReceberDTO;
-import br.com.jhisolution.user.hunters.web.rest.dto.RelatorioReceberDTO;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import io.jsonwebtoken.io.IOException;
 import java.net.URI;

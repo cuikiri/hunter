@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="print()" [formGroup]="editForm">
+      <h2 id="jhi-fluxo-caixa-heading" data-cy="FluxoCaixaHeading" jhiTranslate="hunterappApp.controleFluxoCaixa.report.title">
+        Fluxo de caixa
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.controleFluxoCaixa.report.dataInicio" for="field_data_inicio"
+            >Data Inicio</label
+          >
+          <div class="input-group">
+            <input
+              id="field_data_inicio"
+              data-cy="dataInicio"
+              type="text"
+              class="form-control"
+              name="dataInicio"
+              ngbDatepicker
+              #dataDpInicio="ngbDatepicker"
+              formControlName="dataInicio"
+              placeholder="dd/mm/yyyy"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataDpInicio.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('dataInicio')!.invalid && (editForm.get('dataInicio')!.dirty || editForm.get('dataInicio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dataInicio')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.controleFluxoCaixa.report.dataFim" for="field_data_fim">Data Fim</label>
+          <div class="input-group">
+            <input
+              id="field_data_fim"
+              data-cy="dataFim"
+              type="text"
+              class="form-control"
+              name="dataFim"
+              ngbDatepicker
+              #dataDpFim="ngbDatepicker"
+              formControlName="dataFim"
+              placeholder="dd/mm/yyyy"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataDpFim.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('dataFim')!.invalid && (editForm.get('dataFim')!.dirty || editForm.get('dataFim')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dataFim')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityFluxoCaixaCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" id="save-entity" data-cy="entityFluxoCaixaSaveButton" [disabled]="isPrinting" class="btn btn-primary">
+          <fa-icon icon="newspaper"></fa-icon>&nbsp;<span jhiTranslate="hunterappApp.controleFluxoCaixa.report.emitir">Emitir</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

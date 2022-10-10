@@ -1,0 +1,12 @@
+{
+  "hunterappApp": {
+    "controleFluxoCaixa": {
+      "report": {
+        "title": "Fluxo de caixa",
+        "dataInicio": "Data Início",
+        "dataFim": "Data Fim",
+        "emitir": "Emitir"
+      }
+    }
+  }
+}
