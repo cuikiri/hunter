@@ -8,8 +8,10 @@ import { ReceberReportComponent } from './report/receber-report.component';
 import { ReceberRoutingModule } from './route/receber-routing.module';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
 @NgModule({
-  imports: [SharedModule, ReceberRoutingModule, CurrencyMaskModule],
+  imports: [SharedModule, ReceberRoutingModule, CurrencyMaskModule, AutocompleteLibModule],
   declarations: [ReceberComponent, ReceberDetailComponent, ReceberUpdateComponent, ReceberDeleteDialogComponent, ReceberReportComponent],
   entryComponents: [ReceberDeleteDialogComponent],
 })

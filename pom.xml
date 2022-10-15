@@ -7,7 +7,7 @@
 
     <groupId>br.com.jhisolution.user.hunters</groupId>
     <artifactId>hunterapp</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Hunterapp</name>
     <description>Description for hunterapp</description>

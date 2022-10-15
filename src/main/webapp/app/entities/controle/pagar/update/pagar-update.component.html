@@ -37,7 +37,15 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="hunterappApp.controlePagar.valor" for="field_valor">Valor</label>
-          <input type="number" class="form-control" name="valor" id="field_valor" data-cy="valor" formControlName="valor" />
+          <input
+            currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+            class="form-control"
+            name="valor"
+            id="field_valor"
+            data-cy="valor"
+            formControlName="valor"
+          />
           <div *ngIf="editForm.get('valor')!.invalid && (editForm.get('valor')!.dirty || editForm.get('valor')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('valor')?.errors?.required" jhiTranslate="entity.validation.required">
               This field is required.

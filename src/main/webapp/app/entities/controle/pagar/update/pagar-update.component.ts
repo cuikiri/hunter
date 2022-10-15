@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
+import { ASC } from 'app/config/pagination.constants';
+
 import { IPagar, Pagar } from '../pagar.model';
 import { PagarService } from '../service/pagar.service';
 import { ITipoPagar } from 'app/entities/controle/tipo-pagar/tipo-pagar.model';
@@ -136,7 +138,11 @@ export class PagarUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.tipoPagarService
-      .query({ filter: 'pagar-is-null' })
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<ITipoPagar[]>) => res.body ?? []))
       .pipe(
         map((tipoPagars: ITipoPagar[]) =>
@@ -146,7 +152,11 @@ export class PagarUpdateComponent implements OnInit {
       .subscribe((tipoPagars: ITipoPagar[]) => (this.tipoPagarsCollection = tipoPagars));
 
     this.pagarParaService
-      .query({ filter: 'pagar-is-null' })
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<IPagarPara[]>) => res.body ?? []))
       .pipe(
         map((pagarParas: IPagarPara[]) =>
@@ -156,7 +166,11 @@ export class PagarUpdateComponent implements OnInit {
       .subscribe((pagarParas: IPagarPara[]) => (this.pagarParasCollection = pagarParas));
 
     this.tipoTransacaoService
-      .query({ filter: 'pagar-is-null' })
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<ITipoTransacao[]>) => res.body ?? []))
       .pipe(
         map((tipoTransacaos: ITipoTransacao[]) =>
@@ -166,7 +180,11 @@ export class PagarUpdateComponent implements OnInit {
       .subscribe((tipoTransacaos: ITipoTransacao[]) => (this.tipoTransacaosCollection = tipoTransacaos));
 
     this.dadosPessoaisService
-      .query()
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<IDadosPessoais[]>) => res.body ?? []))
       .pipe(
         map((dadosPessoais: IDadosPessoais[]) =>

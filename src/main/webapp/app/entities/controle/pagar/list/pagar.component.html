@@ -59,7 +59,7 @@
             <a [routerLink]="['/pagar', pagar.id, 'view']">{{ pagar.id }}</a>
           </td>
           <td>{{ pagar.data | formatMediumDate }}</td>
-          <td>{{ pagar.valor }}</td>
+          <td>{{ pagar.valor | currency: 'BRL' }}</td>
           <td jhiTranslate="{{ 'hunterappApp.StatusContaPagar.' + pagar.status }}">{{ pagar.status }}</td>
           <td>
             <div *ngIf="pagar.tipoPagar">{{ pagar.tipoPagar?.nome }}</div>

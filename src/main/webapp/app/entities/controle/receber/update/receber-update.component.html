@@ -57,37 +57,11 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.controleReceber.receberDe" for="field_receberDe">Receber De</label>
-          <select class="form-control" id="field_receberDe" data-cy="receberDe" name="receberDe" formControlName="receberDe">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="receberDeOption.id === editForm.get('receberDe')!.value?.id ? editForm.get('receberDe')!.value : receberDeOption"
-              *ngFor="let receberDeOption of receberDesCollection; trackBy: trackReceberDeById"
-            >
-              {{ receberDeOption.nome }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.controleReceber.pessoa" for="field_dadosPessoais">Pessoa</label>
-          <select
-            class="form-control"
-            id="field_dadosPessoais"
-            data-cy="dadosPessoais"
-            name="dadosPessoais"
-            formControlName="dadosPessoais"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                dadosPessoaisOption.id === editForm.get('dadosPessoais')!.value?.id
-                  ? editForm.get('dadosPessoais')!.value
-                  : dadosPessoaisOption
-              "
-              *ngFor="let dadosPessoaisOption of dadosPessoaisSharedCollection; trackBy: trackDadosPessoaisById"
-            >
-              {{ dadosPessoaisOption.nome }}
+          <label class="form-label" jhiTranslate="hunterappApp.controleReceber.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'hunterappApp.StatusContaReceber.null' | translate }}</option>
+            <option *ngFor="let statusContaReceber of statusContaReceberValues" [value]="statusContaReceber">
+              {{ 'hunterappApp.StatusContaReceber.' + statusContaReceber | translate }}
             </option>
           </select>
         </div>
@@ -133,11 +107,59 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.controleReceber.status" for="field_status">Status</label>
-          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
-            <option [ngValue]="null">{{ 'hunterappApp.StatusContaReceber.null' | translate }}</option>
-            <option *ngFor="let statusContaReceber of statusContaReceberValues" [value]="statusContaReceber">
-              {{ 'hunterappApp.StatusContaReceber.' + statusContaReceber | translate }}
+          <label class="form-label" jhiTranslate="hunterappApp.controleReceber.receberDe" for="field_receberDe">Receber De</label>
+          <select class="form-control" id="field_receberDe" data-cy="receberDe" name="receberDe" formControlName="receberDe">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="receberDeOption.id === editForm.get('receberDe')!.value?.id ? editForm.get('receberDe')!.value : receberDeOption"
+              *ngFor="let receberDeOption of receberDesCollection; trackBy: trackReceberDeById"
+            >
+              {{ receberDeOption.nome }}
+            </option>
+          </select>
+          <!--
+          <div class="ng-autocomplete">
+            <ng-autocomplete 
+              [data]="receberDesCollection"
+              [searchKeyword]="keyword"
+              placeholder="Select country"
+              (selected)='selectEvent($event)'
+              (inputChanged)='onChangeSearch($event)'
+              (inputFocused)='onFocused($event)'
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate">                                 
+            </ng-autocomplete>
+            
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.nome"></a>
+            </ng-template>
+            
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+          -->
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.controleReceber.pessoa" for="field_dadosPessoais">Pessoa</label>
+          <select
+            class="form-control"
+            id="field_dadosPessoais"
+            data-cy="dadosPessoais"
+            name="dadosPessoais"
+            formControlName="dadosPessoais"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                dadosPessoaisOption.id === editForm.get('dadosPessoais')!.value?.id
+                  ? editForm.get('dadosPessoais')!.value
+                  : dadosPessoaisOption
+              "
+              *ngFor="let dadosPessoaisOption of dadosPessoaisSharedCollection; trackBy: trackDadosPessoaisById"
+            >
+              {{ dadosPessoaisOption.nome }}
             </option>
           </select>
         </div>

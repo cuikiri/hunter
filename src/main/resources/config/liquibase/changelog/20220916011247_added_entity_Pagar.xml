@@ -27,13 +27,13 @@
                 <constraints nullable="true" />
             </column>
             <column name="tipo_pagar_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pagar__tipo_pagar_id" />
+                <constraints nullable="true" />
             </column>
             <column name="pagar_para_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pagar__pagar_para_id" />
+                <constraints nullable="true" />
             </column>
             <column name="tipo_transacao_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_pagar__tipo_transacao_id" />
+                <constraints nullable="true" />
             </column>
             <column name="dados_pessoais_id" type="bigint">
                 <constraints nullable="true" />

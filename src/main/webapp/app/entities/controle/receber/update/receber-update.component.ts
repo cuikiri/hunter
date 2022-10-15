@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+
+import { ASC } from 'app/config/pagination.constants';
 
 import { IReceber, Receber } from '../receber.model';
 import { ReceberService } from '../service/receber.service';
@@ -24,6 +26,8 @@ import { StatusContaReceber } from 'app/entities/enumerations/status-conta-receb
 export class ReceberUpdateComponent implements OnInit {
   isSaving = false;
   statusContaReceberValues = Object.keys(StatusContaReceber);
+
+  keyword = 'nome';
 
   tipoRecebersCollection: ITipoReceber[] = [];
   receberDesCollection: IReceberDe[] = [];
@@ -90,6 +94,38 @@ export class ReceberUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  selectEvent(item: any): any {
+    this.editForm.get(['receberDe'])?.setValue(item);
+  }
+
+  onChangeSearch(val: string): any {
+    this.receberDeService
+      .query({ 'name.contains': val, sort: ['nome', ASC] })
+      .pipe(map((res: HttpResponse<IReceberDe[]>) => res.body ?? []))
+      .pipe(
+        map((receberDes: IReceberDe[]) =>
+          this.receberDeService.addReceberDeToCollectionIfMissing(receberDes, this.editForm.get('receberDe')!.value)
+        )
+      )
+      .subscribe((receberDes: IReceberDe[]) => (this.receberDesCollection = receberDes));
+  }
+
+  onFocused(e: any): any {
+    this.receberDeService
+      .query({
+        page: 0,
+        size: 10,
+        sort: ['nome', ASC],
+      })
+      .pipe(map((res: HttpResponse<IReceberDe[]>) => res.body ?? []))
+      .pipe(
+        map((receberDes: IReceberDe[]) =>
+          this.receberDeService.addReceberDeToCollectionIfMissing(receberDes, this.editForm.get('receberDe')!.value)
+        )
+      )
+      .subscribe((receberDes: IReceberDe[]) => (this.receberDesCollection = receberDes));
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IReceber>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -139,7 +175,11 @@ export class ReceberUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.tipoReceberService
-      .query({ filter: 'receber-is-null' })
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<ITipoReceber[]>) => res.body ?? []))
       .pipe(
         map((tipoRecebers: ITipoReceber[]) =>
@@ -149,7 +189,11 @@ export class ReceberUpdateComponent implements OnInit {
       .subscribe((tipoRecebers: ITipoReceber[]) => (this.tipoRecebersCollection = tipoRecebers));
 
     this.receberDeService
-      .query({ filter: 'receber-is-null' })
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<IReceberDe[]>) => res.body ?? []))
       .pipe(
         map((receberDes: IReceberDe[]) =>
@@ -159,7 +203,11 @@ export class ReceberUpdateComponent implements OnInit {
       .subscribe((receberDes: IReceberDe[]) => (this.receberDesCollection = receberDes));
 
     this.tipoTransacaoService
-      .query({ filter: 'receber-is-null' })
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<ITipoTransacao[]>) => res.body ?? []))
       .pipe(
         map((tipoTransacaos: ITipoTransacao[]) =>
@@ -169,7 +217,11 @@ export class ReceberUpdateComponent implements OnInit {
       .subscribe((tipoTransacaos: ITipoTransacao[]) => (this.tipoTransacaosCollection = tipoTransacaos));
 
     this.dadosPessoaisService
-      .query()
+      .query({
+        page: 0,
+        size: 1000000,
+        sort: ['nome', ASC],
+      })
       .pipe(map((res: HttpResponse<IDadosPessoais[]>) => res.body ?? []))
       .pipe(
         map((dadosPessoais: IDadosPessoais[]) =>

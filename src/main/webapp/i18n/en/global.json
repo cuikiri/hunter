@@ -63,8 +63,8 @@
         "fotoFotoSaidaEstoque": "Foto Saida Estoque",
         "controleGrupoProduto": "Grupo Produto",
         "controleSubGrupoProduto": "Sub Grupo Produto",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "controleReportFluxoCaixa": "Fluxo de caixa"
+        "controleReportFluxoCaixa": "Fluxo de caixa",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
         "main": "Account",
