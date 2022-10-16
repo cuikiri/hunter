@@ -1,16 +1,25 @@
 #!/usr/bin/env groovy
 
-node {
-   stage 'test'
-   def whatThe = someFunc('textToFunc')
-   def whatThe2 = someFunc2('textToFunc2')
-}
+pipeline {
+    agent any
+    tools { 
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8' 
+    }
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                ''' 
+            }
+        }
 
-def someFunc(String text){
-    echo text
-    text
-}
-def someFunc2(String text2){
-    echo text2
-    text2
+        stage ('Build') {
+            steps {
+                echo 'This is a minimal pipeline.'
+            }
+        }
+    }
 }
