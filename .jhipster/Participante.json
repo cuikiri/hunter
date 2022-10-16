@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015032245",
+  "clientRootFolder": "reuniao",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "participante",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "obs",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Participante",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "reuniao",
+      "otherEntityRelationshipName": "participantes",
+      "relationshipName": "reuniao",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

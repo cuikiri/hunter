@@ -1,0 +1,26 @@
+{
+  "hunterappApp": {
+    "reuniaoAcao": {
+      "home": {
+        "title": "Acaos",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Acao",
+        "createOrEditLabel": "Criar ou editar Acao",
+        "notFound": "Nenhum Acao encontrado"
+      },
+      "created": "Um novo Acao foi criado com o identificador {{ param }}",
+      "updated": "Um Acao foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Acao foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Acao {{ id }}?"
+      },
+      "detail": {
+        "title": "Acao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "reuniao": "Reuniao"
+    }
+  }
+}

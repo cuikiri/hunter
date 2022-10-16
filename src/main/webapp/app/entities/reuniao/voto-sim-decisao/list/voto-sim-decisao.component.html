@@ -1,0 +1,106 @@
+<div>
+  <h2 id="page-heading" data-cy="VotoSimDecisaoHeading">
+    <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.home.title">Voto Sim Decisaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-voto-sim-decisao"
+        [routerLink]="['/voto-sim-decisao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.home.createLabel"> Criar novo Voto Sim Decisao </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="votoSimDecisaos?.length === 0">
+    <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.home.notFound">Nenhum Voto Sim Decisao encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="votoSimDecisaos && votoSimDecisaos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nome">
+            <div class="d-flex">
+              <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="obs">
+            <div class="d-flex">
+              <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.obs">Obs</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="decisao.id">
+            <div class="d-flex">
+              <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.decisao">Decisao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let votoSimDecisao of votoSimDecisaos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/voto-sim-decisao', votoSimDecisao.id, 'view']">{{ votoSimDecisao.id }}</a>
+          </td>
+          <td>{{ votoSimDecisao.nome }}</td>
+          <td>{{ votoSimDecisao.obs }}</td>
+          <td>
+            <div *ngIf="votoSimDecisao.decisao">
+              <a [routerLink]="['/decisao', votoSimDecisao.decisao.id, 'view']">{{ votoSimDecisao.decisao.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/voto-sim-decisao', votoSimDecisao.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/voto-sim-decisao', votoSimDecisao.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(votoSimDecisao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

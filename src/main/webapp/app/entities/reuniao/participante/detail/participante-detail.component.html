@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="participante">
+      <h2 data-cy="participanteDetailsHeading"><span jhiTranslate="hunterappApp.reuniaoParticipante.detail.title">Participante</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ participante.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoParticipante.nome">Nome</span></dt>
+        <dd>
+          <span>{{ participante.nome }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoParticipante.obs">Obs</span></dt>
+        <dd>
+          <span>{{ participante.obs }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoParticipante.reuniao">Reuniao</span></dt>
+        <dd>
+          <div *ngIf="participante.reuniao">
+            <a [routerLink]="['/reuniao', participante.reuniao.id, 'view']">{{ participante.reuniao.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/participante', participante.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

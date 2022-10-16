@@ -20,9 +20,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "dadosPessoais1",
+      "otherEntityName": "dadosPessoais",
       "otherEntityRelationshipName": "caracteristicasPsiquicas",
-      "relationshipName": "dadosPessoais1",
+      "relationshipName": "dadosPessoais",
       "relationshipType": "many-to-one"
     }
   ],

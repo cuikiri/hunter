@@ -1,0 +1,26 @@
+{
+  "hunterappApp": {
+    "reuniaoVotoNaoDecisao": {
+      "home": {
+        "title": "Voto Nao Decisaos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Voto Nao Decisao",
+        "createOrEditLabel": "Crear o editar Voto Nao Decisao",
+        "notFound": "Ningún Voto Nao Decisaos encontrado"
+      },
+      "created": "Un nuevo Voto Nao Decisao ha sido creado con el identificador {{ param }}",
+      "updated": "Un Voto Nao Decisao ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Voto Nao Decisao ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Voto Nao Decisao {{ id }}?"
+      },
+      "detail": {
+        "title": "Voto Nao Decisao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "decisao": "Decisao"
+    }
+  }
+}

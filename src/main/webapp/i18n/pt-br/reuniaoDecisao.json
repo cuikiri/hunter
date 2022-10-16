@@ -1,0 +1,28 @@
+{
+  "hunterappApp": {
+    "reuniaoDecisao": {
+      "home": {
+        "title": "Decisaos",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Decisao",
+        "createOrEditLabel": "Criar ou editar Decisao",
+        "notFound": "Nenhum Decisao encontrado"
+      },
+      "created": "Um novo Decisao foi criado com o identificador {{ param }}",
+      "updated": "Um Decisao foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Decisao foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Decisao {{ id }}?"
+      },
+      "detail": {
+        "title": "Decisao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "votoSim": "Voto Sim",
+      "votoNao": "Voto Nao",
+      "reuniao": "Reuniao"
+    }
+  }
+}

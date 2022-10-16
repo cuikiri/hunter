@@ -40,7 +40,7 @@ public class FotoExameMedico implements Serializable {
     private String fotoContentType;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "fotoExameMedicos", "dadosPessoais1" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "fotoExameMedicos", "dadosPessoais" }, allowSetters = true)
     private ExameMedico exameMedico;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

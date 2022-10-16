@@ -1,0 +1,26 @@
+{
+  "hunterappApp": {
+    "reuniaoVotoSimDecisao": {
+      "home": {
+        "title": "Voto Sim Decisaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Voto Sim Decisao",
+        "createOrEditLabel": "Create or edit a Voto Sim Decisao",
+        "notFound": "No Voto Sim Decisaos found"
+      },
+      "created": "A new Voto Sim Decisao is created with identifier {{ param }}",
+      "updated": "A Voto Sim Decisao is updated with identifier {{ param }}",
+      "deleted": "A Voto Sim Decisao is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Voto Sim Decisao {{ id }}?"
+      },
+      "detail": {
+        "title": "Voto Sim Decisao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "decisao": "Decisao"
+    }
+  }
+}

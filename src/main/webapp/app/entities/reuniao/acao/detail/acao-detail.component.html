@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="acao">
+      <h2 data-cy="acaoDetailsHeading"><span jhiTranslate="hunterappApp.reuniaoAcao.detail.title">Acao</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ acao.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoAcao.nome">Nome</span></dt>
+        <dd>
+          <span>{{ acao.nome }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoAcao.obs">Obs</span></dt>
+        <dd>
+          <span>{{ acao.obs }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoAcao.reuniao">Reuniao</span></dt>
+        <dd>
+          <div *ngIf="acao.reuniao">
+            <a [routerLink]="['/reuniao', acao.reuniao.id, 'view']">{{ acao.reuniao.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/acao', acao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

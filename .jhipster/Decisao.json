@@ -1,0 +1,48 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015032241",
+  "clientRootFolder": "reuniao",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "decisao",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "obs",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Decisao",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "votoSimDecisao",
+      "otherEntityRelationshipName": "decisao",
+      "relationshipName": "votoSim",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "votoNaoDecisao",
+      "otherEntityRelationshipName": "decisao",
+      "relationshipName": "votoNao",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "reuniao",
+      "otherEntityRelationshipName": "decisoes",
+      "relationshipName": "reuniao",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

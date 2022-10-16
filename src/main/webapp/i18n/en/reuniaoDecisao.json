@@ -1,0 +1,28 @@
+{
+  "hunterappApp": {
+    "reuniaoDecisao": {
+      "home": {
+        "title": "Decisaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Decisao",
+        "createOrEditLabel": "Create or edit a Decisao",
+        "notFound": "No Decisaos found"
+      },
+      "created": "A new Decisao is created with identifier {{ param }}",
+      "updated": "A Decisao is updated with identifier {{ param }}",
+      "deleted": "A Decisao is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Decisao {{ id }}?"
+      },
+      "detail": {
+        "title": "Decisao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "votoSim": "Voto Sim",
+      "votoNao": "Voto Nao",
+      "reuniao": "Reuniao"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015032239",
+  "clientRootFolder": "reuniao",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "reuniao",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dataInicio",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dataFim",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "horaInicio",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "5"
+    },
+    {
+      "fieldName": "horaFim",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "5"
+    },
+    {
+      "fieldName": "tipoReuniao",
+      "fieldType": "TipoReuniao",
+      "fieldValues": "DELIBERATIVA,INFORMATIVA,AVALIATIVA,CRIATIVA,FEEDBACK,RESULTADOS"
+    },
+    {
+      "fieldName": "obs",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Reuniao",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "pauta",
+      "otherEntityRelationshipName": "reuniao",
+      "relationshipName": "pautas",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "decisao",
+      "otherEntityRelationshipName": "reuniao",
+      "relationshipName": "decisoes",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "acao",
+      "otherEntityRelationshipName": "reuniao",
+      "relationshipName": "acoes",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "participante",
+      "otherEntityRelationshipName": "reuniao",
+      "relationshipName": "participantes",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

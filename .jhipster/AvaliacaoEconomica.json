@@ -177,9 +177,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "dadosPessoais1",
+      "otherEntityName": "dadosPessoais",
       "otherEntityRelationshipName": "avaliacaoEconomica",
-      "relationshipName": "dadosPessoais1",
+      "relationshipName": "dadosPessoais",
       "relationshipType": "many-to-one"
     }
   ],

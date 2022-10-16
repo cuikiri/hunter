@@ -37,7 +37,7 @@ public class TipoContratacao implements Serializable {
     private String nome;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "agendaColaboradors", "tipoContratacaos", "dadosPessoais1" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "agendaColaboradors", "tipoContratacaos", "dadosPessoais" }, allowSetters = true)
     private Colaborador colaborador;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

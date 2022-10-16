@@ -1,0 +1,26 @@
+{
+  "hunterappApp": {
+    "reuniaoAcao": {
+      "home": {
+        "title": "Acaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Acao",
+        "createOrEditLabel": "Create or edit a Acao",
+        "notFound": "No Acaos found"
+      },
+      "created": "A new Acao is created with identifier {{ param }}",
+      "updated": "A Acao is updated with identifier {{ param }}",
+      "deleted": "A Acao is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Acao {{ id }}?"
+      },
+      "detail": {
+        "title": "Acao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "reuniao": "Reuniao"
+    }
+  }
+}

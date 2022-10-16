@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="votoSimDecisao">
+      <h2 data-cy="votoSimDecisaoDetailsHeading">
+        <span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.detail.title">Voto Sim Decisao</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ votoSimDecisao.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.nome">Nome</span></dt>
+        <dd>
+          <span>{{ votoSimDecisao.nome }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.obs">Obs</span></dt>
+        <dd>
+          <span>{{ votoSimDecisao.obs }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoVotoSimDecisao.decisao">Decisao</span></dt>
+        <dd>
+          <div *ngIf="votoSimDecisao.decisao">
+            <a [routerLink]="['/decisao', votoSimDecisao.decisao.id, 'view']">{{ votoSimDecisao.decisao.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/voto-sim-decisao', votoSimDecisao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

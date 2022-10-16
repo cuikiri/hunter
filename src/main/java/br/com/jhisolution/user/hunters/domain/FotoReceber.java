@@ -40,7 +40,7 @@ public class FotoReceber implements Serializable {
     private String conteudoContentType;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "tipoReceber", "receberDe", "tipoTransacao", "fotoRecebers", "dadosPessoais1" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tipoReceber", "receberDe", "tipoTransacao", "fotoRecebers", "dadosPessoais" }, allowSetters = true)
     private Receber receber;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -47,7 +47,7 @@ public class ItemMateria implements Serializable {
     private Materia materia;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "itemMaterias", "dadosPessoais1" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "itemMaterias", "dadosPessoais" }, allowSetters = true)
     private AcompanhamentoAluno acompanhamentoAluno;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

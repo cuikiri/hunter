@@ -66,7 +66,7 @@ public class EnderecoEvento implements Serializable {
     private String uf;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "periodoDuracao", "enderecos", "dadosPessoais1" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "periodoDuracao", "enderecos", "dadosPessoais" }, allowSetters = true)
     private Evento evento;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

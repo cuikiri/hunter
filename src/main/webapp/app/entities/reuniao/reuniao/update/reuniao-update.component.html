@@ -1,0 +1,192 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-reuniao-heading" data-cy="ReuniaoCreateUpdateHeading" jhiTranslate="hunterappApp.reuniaoReuniao.home.createOrEditLabel">
+        Criar ou editar Reuniao
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" jhiTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nome')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              Este campo não pode ter mais de 50 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              Este campo não pode ter mais de 1000 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.data" for="field_data">Data</label>
+          <div class="input-group">
+            <input
+              id="field_data"
+              data-cy="data"
+              type="text"
+              class="form-control"
+              name="data"
+              ngbDatepicker
+              #dataDp="ngbDatepicker"
+              formControlName="data"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('data')!.invalid && (editForm.get('data')!.dirty || editForm.get('data')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('data')?.errors?.required" jhiTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.dataInicio" for="field_dataInicio">Data Inicio</label>
+          <div class="input-group">
+            <input
+              id="field_dataInicio"
+              data-cy="dataInicio"
+              type="text"
+              class="form-control"
+              name="dataInicio"
+              ngbDatepicker
+              #dataInicioDp="ngbDatepicker"
+              formControlName="dataInicio"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataInicioDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.dataFim" for="field_dataFim">Data Fim</label>
+          <div class="input-group">
+            <input
+              id="field_dataFim"
+              data-cy="dataFim"
+              type="text"
+              class="form-control"
+              name="dataFim"
+              ngbDatepicker
+              #dataFimDp="ngbDatepicker"
+              formControlName="dataFim"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataFimDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.horaInicio" for="field_horaInicio">Hora Inicio</label>
+          <input
+            type="text"
+            class="form-control"
+            name="horaInicio"
+            id="field_horaInicio"
+            data-cy="horaInicio"
+            formControlName="horaInicio"
+          />
+          <div *ngIf="editForm.get('horaInicio')!.invalid && (editForm.get('horaInicio')!.dirty || editForm.get('horaInicio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('horaInicio')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 5 }"
+            >
+              Este campo não pode ter mais de 5 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.horaFim" for="field_horaFim">Hora Fim</label>
+          <input type="text" class="form-control" name="horaFim" id="field_horaFim" data-cy="horaFim" formControlName="horaFim" />
+          <div *ngIf="editForm.get('horaFim')!.invalid && (editForm.get('horaFim')!.dirty || editForm.get('horaFim')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('horaFim')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 5 }"
+            >
+              Este campo não pode ter mais de 5 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.tipoReuniao" for="field_tipoReuniao">Tipo Reuniao</label>
+          <select class="form-control" name="tipoReuniao" formControlName="tipoReuniao" id="field_tipoReuniao" data-cy="tipoReuniao">
+            <option [ngValue]="null">{{ 'hunterappApp.TipoReuniao.null' | translate }}</option>
+            <option *ngFor="let tipoReuniao of tipoReuniaoValues" [value]="tipoReuniao">
+              {{ 'hunterappApp.TipoReuniao.' + tipoReuniao | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.obs" for="field_obs">Obs</label>
+          <input type="text" class="form-control" name="obs" id="field_obs" data-cy="obs" formControlName="obs" />
+          <div *ngIf="editForm.get('obs')!.invalid && (editForm.get('obs')!.dirty || editForm.get('obs')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('obs')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              Este campo não pode ter mais de 100 caracteres.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

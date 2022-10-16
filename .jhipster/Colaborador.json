@@ -55,9 +55,9 @@
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "dadosPessoais1",
+      "otherEntityName": "dadosPessoais",
       "otherEntityRelationshipName": "colaborador",
-      "relationshipName": "dadosPessoais1",
+      "relationshipName": "dadosPessoais",
       "relationshipType": "many-to-one"
     }
   ],

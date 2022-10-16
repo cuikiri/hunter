@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="reuniao">
+      <h2 data-cy="reuniaoDetailsHeading"><span jhiTranslate="hunterappApp.reuniaoReuniao.detail.title">Reuniao</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ reuniao.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.nome">Nome</span></dt>
+        <dd>
+          <span>{{ reuniao.nome }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ reuniao.descricao }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.data">Data</span></dt>
+        <dd>
+          <span>{{ reuniao.data | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.dataInicio">Data Inicio</span></dt>
+        <dd>
+          <span>{{ reuniao.dataInicio | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.dataFim">Data Fim</span></dt>
+        <dd>
+          <span>{{ reuniao.dataFim | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.horaInicio">Hora Inicio</span></dt>
+        <dd>
+          <span>{{ reuniao.horaInicio }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.horaFim">Hora Fim</span></dt>
+        <dd>
+          <span>{{ reuniao.horaFim }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.tipoReuniao">Tipo Reuniao</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'hunterappApp.TipoReuniao.' + reuniao.tipoReuniao }}">{{ reuniao.tipoReuniao }}</span>
+        </dd>
+        <dt><span jhiTranslate="hunterappApp.reuniaoReuniao.obs">Obs</span></dt>
+        <dd>
+          <span>{{ reuniao.obs }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/reuniao', reuniao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

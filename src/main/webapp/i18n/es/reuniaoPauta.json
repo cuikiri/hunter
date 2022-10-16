@@ -1,0 +1,26 @@
+{
+  "hunterappApp": {
+    "reuniaoPauta": {
+      "home": {
+        "title": "Pautas",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Pauta",
+        "createOrEditLabel": "Crear o editar Pauta",
+        "notFound": "Ningún Pautas encontrado"
+      },
+      "created": "Un nuevo Pauta ha sido creado con el identificador {{ param }}",
+      "updated": "Un Pauta ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Pauta ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Pauta {{ id }}?"
+      },
+      "detail": {
+        "title": "Pauta"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "reuniao": "Reuniao"
+    }
+  }
+}

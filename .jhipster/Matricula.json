@@ -33,9 +33,9 @@
       "relationshipType": "one-to-one"
     },
     {
-      "otherEntityName": "dadosPessoais1",
+      "otherEntityName": "dadosPessoais",
       "otherEntityRelationshipName": "matricula",
-      "relationshipName": "dadosPessoais1",
+      "relationshipName": "dadosPessoais",
       "relationshipType": "many-to-one"
     }
   ],

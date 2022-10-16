@@ -1,0 +1,13 @@
+{
+  "hunterappApp": {
+    "TipoReuniao": {
+      "null": "",
+      "DELIBERATIVA": "DELIBERATIVA",
+      "INFORMATIVA": "INFORMATIVA",
+      "AVALIATIVA": "AVALIATIVA",
+      "CRIATIVA": "CRIATIVA",
+      "FEEDBACK": "FEEDBACK",
+      "RESULTADOS": "RESULTADOS"
+    }
+  }
+}

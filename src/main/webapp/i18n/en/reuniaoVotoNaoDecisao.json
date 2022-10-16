@@ -1,0 +1,26 @@
+{
+  "hunterappApp": {
+    "reuniaoVotoNaoDecisao": {
+      "home": {
+        "title": "Voto Nao Decisaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Voto Nao Decisao",
+        "createOrEditLabel": "Create or edit a Voto Nao Decisao",
+        "notFound": "No Voto Nao Decisaos found"
+      },
+      "created": "A new Voto Nao Decisao is created with identifier {{ param }}",
+      "updated": "A Voto Nao Decisao is updated with identifier {{ param }}",
+      "deleted": "A Voto Nao Decisao is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Voto Nao Decisao {{ id }}?"
+      },
+      "detail": {
+        "title": "Voto Nao Decisao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "obs": "Obs",
+      "decisao": "Decisao"
+    }
+  }
+}

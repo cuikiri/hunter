@@ -48,7 +48,7 @@ public class AgendaColaborador implements Serializable {
     private PeriodoDuracao periodoDuracao;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "agendaColaboradors", "tipoContratacaos", "dadosPessoais1" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "agendaColaboradors", "tipoContratacaos", "dadosPessoais" }, allowSetters = true)
     private Colaborador colaborador;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -1,0 +1,36 @@
+{
+  "hunterappApp": {
+    "reuniaoReuniao": {
+      "home": {
+        "title": "Reuniaos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Reuniao",
+        "createOrEditLabel": "Crear o editar Reuniao",
+        "notFound": "Ningún Reuniaos encontrado"
+      },
+      "created": "Un nuevo Reuniao ha sido creado con el identificador {{ param }}",
+      "updated": "Un Reuniao ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Reuniao ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Reuniao {{ id }}?"
+      },
+      "detail": {
+        "title": "Reuniao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "data": "Data",
+      "dataInicio": "Data Inicio",
+      "dataFim": "Data Fim",
+      "horaInicio": "Hora Inicio",
+      "horaFim": "Hora Fim",
+      "tipoReuniao": "Tipo Reuniao",
+      "obs": "Obs",
+      "pautas": "Pautas",
+      "decisoes": "Decisoes",
+      "acoes": "Acoes",
+      "participantes": "Participantes"
+    }
+  }
+}

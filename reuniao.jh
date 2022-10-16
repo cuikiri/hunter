@@ -15,10 +15,10 @@ entity Reuniao {
  obs String maxlength(100)
 }
 relationship OneToMany {
- Reuniao{pautas(nome)} to Pauta,
- Reuniao{decisoes(nome)} to Decisao,
- Reuniao{acoes(nome)} to Acao,
- Reuniao{participantes(nome)} to DadosPessoais
+ Reuniao{pautas} to Pauta,
+ Reuniao{decisoes} to Decisao,
+ Reuniao{acoes} to Acao,
+ Reuniao{participantes} to Participante
 }
 
 @clientRootFolder(reuniao)
@@ -33,12 +33,30 @@ entity Decisao {
  obs String maxlength(100)
 }
 relationship OneToMany {
- Decisao{votoSim(nome)} to DadosPessoais,
- Decisao{votoNao(nome)} to DadosPessoais
+ Decisao{votoSim} to VotoSimDecisao,
+ Decisao{votoNao} to VotoNaoDecisao
+}
+
+@clientRootFolder(reuniao)
+entity VotoSimDecisao {
+ nome String maxlength(50) required,
+ obs String maxlength(100)
+}
+
+@clientRootFolder(reuniao)
+entity VotoNaoDecisao {
+ nome String maxlength(50) required,
+ obs String maxlength(100)
 }
 
 @clientRootFolder(reuniao)
 entity Acao {
+ nome String maxlength(50) required,
+ obs String maxlength(100)
+}
+
+@clientRootFolder(reuniao)
+entity Participante {
  nome String maxlength(50) required,
  obs String maxlength(100)
 }

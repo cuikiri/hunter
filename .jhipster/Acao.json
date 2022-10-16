@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015032244",
+  "clientRootFolder": "reuniao",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "acao",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "obs",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Acao",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "reuniao",
+      "otherEntityRelationshipName": "acoes",
+      "relationshipName": "reuniao",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}
