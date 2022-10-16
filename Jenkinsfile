@@ -39,26 +39,15 @@ pipeline {
         }
         stage('backend tests') {
 			steps {
-				try {
-					sh "./mvnw -ntp verify -P-webapp"
-				} catch(err) {
-					throw err
-				} finally {
-					junit '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
-				}
+				sh "./mvnw -ntp verify -P-webapp"
 			}	
         }
 
         stage('frontend tests') {
 			steps {
-				try {
-				   sh "npm install"
-				   sh "npm test"
-				} catch(err) {
-					throw err
-				} finally {
-					junit '**/target/test-results/TESTS-results-jest.xml'
-				}
+			   sh "npm install"
+			   sh "npm test"
+			   junit '**/target/test-results/TESTS-results-jest.xml'
 			}	
         }
 
