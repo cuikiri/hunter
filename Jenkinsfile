@@ -1,24 +1,16 @@
 #!/usr/bin/env groovy
 
 node {
-    stage('checkout') {
-        checkout scm
-    }
+   stage 'test'
+   def whatThe = someFunc('textToFunc')
+   def whatThe2 = someFunc2('textToFunc2')
+}
 
-    stage('Build') {
-        steps {
-            echo 'Building..'
-        }
-    }
-    stage('Test') {
-        steps {
-            echo 'Testing..'
-        }
-    }
-    stage('Deploy') {
-        steps {
-            echo 'Deploying....'
-        }
-    }
-    
+def someFunc(String text){
+    echo text
+    text
+}
+def someFunc2(String text2){
+    echo text2
+    text2
 }
