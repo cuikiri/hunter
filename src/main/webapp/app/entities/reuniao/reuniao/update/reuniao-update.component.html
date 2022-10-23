@@ -1,24 +1,39 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-reuniao-heading" data-cy="ReuniaoCreateUpdateHeading" jhiTranslate="hunterappApp.reuniaoReuniao.home.createOrEditLabel">
-        Criar ou editar Reuniao
+      <h2 id="jhi-reuniao-heading" data-cy="ReuniaoCreateUpdateHeading" jhiTranslate="reuniaoappApp.reuniaoReuniao.home.createOrEditLabel">
+        Create or edit a Reuniao
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div [hidden]="editForm.get('id')!.value == null">
+          <button type="button" id="participantes" [routerLink]="['/participante/reuniao/', reuniao?.id]" class="btn btn-primary">
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.participantes">Participantes</span>
+          </button>
+          <button type="button" id="pautas" [routerLink]="['/pauta/reuniao/', reuniao?.id]" class="btn btn-primary">
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.pautas">Pautas</span>
+          </button>
+          <button type="button" id="decisoes" [routerLink]="['/decisao/reuniao/', reuniao?.id]" class="btn btn-primary">
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.decisoes">Decisões</span>
+          </button>
+          <button type="button" id="acoes" [routerLink]="['/acao/reuniao/', reuniao?.id]" class="btn btn-primary">
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.acoes">Ações</span>
+          </button>
+        </div>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.nome" for="field_nome">Nome</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.nome" for="field_nome">Nome</label>
           <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
           <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" jhiTranslate="entity.validation.required">
-              O campo é obrigatório.
+              This field is required.
             </small>
             <small
               class="form-text text-danger"
@@ -26,13 +41,13 @@
               jhiTranslate="entity.validation.maxlength"
               [translateValues]="{ max: 50 }"
             >
-              Este campo não pode ter mais de 50 caracteres.
+              This field cannot be longer than 50 characters.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.descricao" for="field_descricao">Descricao</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.descricao" for="field_descricao">Descricao</label>
           <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
           <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
             <small
@@ -40,7 +55,7 @@
               *ngIf="editForm.get('descricao')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
-              O campo é obrigatório.
+              This field is required.
             </small>
             <small
               class="form-text text-danger"
@@ -48,13 +63,13 @@
               jhiTranslate="entity.validation.maxlength"
               [translateValues]="{ max: 1000 }"
             >
-              Este campo não pode ter mais de 1000 caracteres.
+              This field cannot be longer than 1000 characters.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.data" for="field_data">Data</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.data" for="field_data">Data</label>
           <div class="input-group">
             <input
               id="field_data"
@@ -70,13 +85,13 @@
           </div>
           <div *ngIf="editForm.get('data')!.invalid && (editForm.get('data')!.dirty || editForm.get('data')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('data')?.errors?.required" jhiTranslate="entity.validation.required">
-              O campo é obrigatório.
+              This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.dataInicio" for="field_dataInicio">Data Inicio</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.dataInicio" for="field_dataInicio">Data Inicio</label>
           <div class="input-group">
             <input
               id="field_dataInicio"
@@ -93,7 +108,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.dataFim" for="field_dataFim">Data Fim</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.dataFim" for="field_dataFim">Data Fim</label>
           <div class="input-group">
             <input
               id="field_dataFim"
@@ -110,7 +125,7 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.horaInicio" for="field_horaInicio">Hora Inicio</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.horaInicio" for="field_horaInicio">Hora Inicio</label>
           <input
             type="text"
             class="form-control"
@@ -126,13 +141,13 @@
               jhiTranslate="entity.validation.maxlength"
               [translateValues]="{ max: 5 }"
             >
-              Este campo não pode ter mais de 5 caracteres.
+              This field cannot be longer than 5 characters.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.horaFim" for="field_horaFim">Hora Fim</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.horaFim" for="field_horaFim">Hora Fim</label>
           <input type="text" class="form-control" name="horaFim" id="field_horaFim" data-cy="horaFim" formControlName="horaFim" />
           <div *ngIf="editForm.get('horaFim')!.invalid && (editForm.get('horaFim')!.dirty || editForm.get('horaFim')!.touched)">
             <small
@@ -141,23 +156,23 @@
               jhiTranslate="entity.validation.maxlength"
               [translateValues]="{ max: 5 }"
             >
-              Este campo não pode ter mais de 5 caracteres.
+              This field cannot be longer than 5 characters.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.tipoReuniao" for="field_tipoReuniao">Tipo Reuniao</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.tipoReuniao" for="field_tipoReuniao">Tipo Reuniao</label>
           <select class="form-control" name="tipoReuniao" formControlName="tipoReuniao" id="field_tipoReuniao" data-cy="tipoReuniao">
-            <option [ngValue]="null">{{ 'hunterappApp.TipoReuniao.null' | translate }}</option>
+            <option [ngValue]="null">{{ 'reuniaoappApp.TipoReuniao.null' | translate }}</option>
             <option *ngFor="let tipoReuniao of tipoReuniaoValues" [value]="tipoReuniao">
-              {{ 'hunterappApp.TipoReuniao.' + tipoReuniao | translate }}
+              {{ 'reuniaoappApp.TipoReuniao.' + tipoReuniao | translate }}
             </option>
           </select>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.reuniaoReuniao.obs" for="field_obs">Obs</label>
+          <label class="form-label" jhiTranslate="reuniaoappApp.reuniaoReuniao.obs" for="field_obs">Obs</label>
           <input type="text" class="form-control" name="obs" id="field_obs" data-cy="obs" formControlName="obs" />
           <div *ngIf="editForm.get('obs')!.invalid && (editForm.get('obs')!.dirty || editForm.get('obs')!.touched)">
             <small
@@ -166,15 +181,15 @@
               jhiTranslate="entity.validation.maxlength"
               [translateValues]="{ max: 100 }"
             >
-              Este campo não pode ter mais de 100 caracteres.
+              This field cannot be longer than 100 characters.
             </small>
           </div>
         </div>
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" [routerLink]="['/reuniao']">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
         <button
@@ -184,7 +199,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>
     </form>

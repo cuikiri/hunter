@@ -2,6 +2,7 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import br.com.jhisolution.user.hunters.domain.Reuniao;
 import br.com.jhisolution.user.hunters.repository.ReuniaoRepository;
+import br.com.jhisolution.user.hunters.service.ReuniaoService;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,22 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +37,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ReuniaoResource {
 
     private final Logger log = LoggerFactory.getLogger(ReuniaoResource.class);
@@ -34,9 +46,12 @@ public class ReuniaoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ReuniaoService reuniaoService;
+
     private final ReuniaoRepository reuniaoRepository;
 
-    public ReuniaoResource(ReuniaoRepository reuniaoRepository) {
+    public ReuniaoResource(ReuniaoService reuniaoService, ReuniaoRepository reuniaoRepository) {
+        this.reuniaoService = reuniaoService;
         this.reuniaoRepository = reuniaoRepository;
     }
 
@@ -53,7 +68,7 @@ public class ReuniaoResource {
         if (reuniao.getId() != null) {
             throw new BadRequestAlertException("A new reuniao cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Reuniao result = reuniaoRepository.save(reuniao);
+        Reuniao result = reuniaoService.save(reuniao);
         return ResponseEntity
             .created(new URI("/api/reuniaos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +102,7 @@ public class ReuniaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Reuniao result = reuniaoRepository.save(reuniao);
+        Reuniao result = reuniaoService.update(reuniao);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, reuniao.getId().toString()))
@@ -122,40 +137,7 @@ public class ReuniaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Reuniao> result = reuniaoRepository
-            .findById(reuniao.getId())
-            .map(existingReuniao -> {
-                if (reuniao.getNome() != null) {
-                    existingReuniao.setNome(reuniao.getNome());
-                }
-                if (reuniao.getDescricao() != null) {
-                    existingReuniao.setDescricao(reuniao.getDescricao());
-                }
-                if (reuniao.getData() != null) {
-                    existingReuniao.setData(reuniao.getData());
-                }
-                if (reuniao.getDataInicio() != null) {
-                    existingReuniao.setDataInicio(reuniao.getDataInicio());
-                }
-                if (reuniao.getDataFim() != null) {
-                    existingReuniao.setDataFim(reuniao.getDataFim());
-                }
-                if (reuniao.getHoraInicio() != null) {
-                    existingReuniao.setHoraInicio(reuniao.getHoraInicio());
-                }
-                if (reuniao.getHoraFim() != null) {
-                    existingReuniao.setHoraFim(reuniao.getHoraFim());
-                }
-                if (reuniao.getTipoReuniao() != null) {
-                    existingReuniao.setTipoReuniao(reuniao.getTipoReuniao());
-                }
-                if (reuniao.getObs() != null) {
-                    existingReuniao.setObs(reuniao.getObs());
-                }
-
-                return existingReuniao;
-            })
-            .map(reuniaoRepository::save);
+        Optional<Reuniao> result = reuniaoService.partialUpdate(reuniao);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -166,12 +148,22 @@ public class ReuniaoResource {
     /**
      * {@code GET  /reuniaos} : get all the reuniaos.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reuniaos in body.
      */
     @GetMapping("/reuniaos")
-    public List<Reuniao> getAllReuniaos() {
-        log.debug("REST request to get all Reuniaos");
-        return reuniaoRepository.findAll();
+    public ResponseEntity<List<Reuniao>> getAllReuniaos(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Reuniaos");
+        Page<Reuniao> page = reuniaoService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/reuniaos/all/{id}")
+    public ResponseEntity<List<Reuniao>> getReunioesById(@PathVariable Long id) {
+        log.debug("REST request to get Reuniao : {}", id);
+        List<Reuniao> reunioes = reuniaoService.findAllByReuniaoId(id);
+        return ResponseEntity.ok().body(reunioes);
     }
 
     /**
@@ -183,7 +175,7 @@ public class ReuniaoResource {
     @GetMapping("/reuniaos/{id}")
     public ResponseEntity<Reuniao> getReuniao(@PathVariable Long id) {
         log.debug("REST request to get Reuniao : {}", id);
-        Optional<Reuniao> reuniao = reuniaoRepository.findById(id);
+        Optional<Reuniao> reuniao = reuniaoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(reuniao);
     }
 
@@ -196,7 +188,7 @@ public class ReuniaoResource {
     @DeleteMapping("/reuniaos/{id}")
     public ResponseEntity<Void> deleteReuniao(@PathVariable Long id) {
         log.debug("REST request to delete Reuniao : {}", id);
-        reuniaoRepository.deleteById(id);
+        reuniaoService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

@@ -2,6 +2,7 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import br.com.jhisolution.user.hunters.domain.Decisao;
 import br.com.jhisolution.user.hunters.repository.DecisaoRepository;
+import br.com.jhisolution.user.hunters.service.DecisaoService;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,22 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +37,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class DecisaoResource {
 
     private final Logger log = LoggerFactory.getLogger(DecisaoResource.class);
@@ -34,9 +46,12 @@ public class DecisaoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final DecisaoService decisaoService;
+
     private final DecisaoRepository decisaoRepository;
 
-    public DecisaoResource(DecisaoRepository decisaoRepository) {
+    public DecisaoResource(DecisaoService decisaoService, DecisaoRepository decisaoRepository) {
+        this.decisaoService = decisaoService;
         this.decisaoRepository = decisaoRepository;
     }
 
@@ -53,7 +68,7 @@ public class DecisaoResource {
         if (decisao.getId() != null) {
             throw new BadRequestAlertException("A new decisao cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Decisao result = decisaoRepository.save(decisao);
+        Decisao result = decisaoService.save(decisao);
         return ResponseEntity
             .created(new URI("/api/decisaos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +102,7 @@ public class DecisaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Decisao result = decisaoRepository.save(decisao);
+        Decisao result = decisaoService.update(decisao);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, decisao.getId().toString()))
@@ -122,19 +137,7 @@ public class DecisaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Decisao> result = decisaoRepository
-            .findById(decisao.getId())
-            .map(existingDecisao -> {
-                if (decisao.getNome() != null) {
-                    existingDecisao.setNome(decisao.getNome());
-                }
-                if (decisao.getObs() != null) {
-                    existingDecisao.setObs(decisao.getObs());
-                }
-
-                return existingDecisao;
-            })
-            .map(decisaoRepository::save);
+        Optional<Decisao> result = decisaoService.partialUpdate(decisao);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -145,12 +148,26 @@ public class DecisaoResource {
     /**
      * {@code GET  /decisaos} : get all the decisaos.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of decisaos in body.
      */
     @GetMapping("/decisaos")
-    public List<Decisao> getAllDecisaos() {
-        log.debug("REST request to get all Decisaos");
-        return decisaoRepository.findAll();
+    public ResponseEntity<List<Decisao>> getAllDecisaos(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Decisaos");
+        Page<Decisao> page = decisaoService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/decisaos/reuniao/{id}")
+    public ResponseEntity<List<Decisao>> getAllDecisaosByReuniaoId(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Decisaos");
+        Page<Decisao> page = decisaoService.findAllByReuniaoId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -162,7 +179,7 @@ public class DecisaoResource {
     @GetMapping("/decisaos/{id}")
     public ResponseEntity<Decisao> getDecisao(@PathVariable Long id) {
         log.debug("REST request to get Decisao : {}", id);
-        Optional<Decisao> decisao = decisaoRepository.findById(id);
+        Optional<Decisao> decisao = decisaoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(decisao);
     }
 
@@ -175,7 +192,7 @@ public class DecisaoResource {
     @DeleteMapping("/decisaos/{id}")
     public ResponseEntity<Void> deleteDecisao(@PathVariable Long id) {
         log.debug("REST request to delete Decisao : {}", id);
-        decisaoRepository.deleteById(id);
+        decisaoService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

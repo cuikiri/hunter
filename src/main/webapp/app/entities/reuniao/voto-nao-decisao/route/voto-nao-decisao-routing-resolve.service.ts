@@ -4,18 +4,18 @@ import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { IVotoNaoDecisao } from '../voto-nao-decisao.model';
+import { IVotoNaoDecisao, VotoNaoDecisao } from '../voto-nao-decisao.model';
 import { VotoNaoDecisaoService } from '../service/voto-nao-decisao.service';
 
 @Injectable({ providedIn: 'root' })
-export class VotoNaoDecisaoRoutingResolveService implements Resolve<IVotoNaoDecisao | null> {
+export class VotoNaoDecisaoRoutingResolveService implements Resolve<IVotoNaoDecisao> {
   constructor(protected service: VotoNaoDecisaoService, protected router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IVotoNaoDecisao | null | never> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IVotoNaoDecisao> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        mergeMap((votoNaoDecisao: HttpResponse<IVotoNaoDecisao>) => {
+        mergeMap((votoNaoDecisao: HttpResponse<VotoNaoDecisao>) => {
           if (votoNaoDecisao.body) {
             return of(votoNaoDecisao.body);
           } else {
@@ -25,6 +25,6 @@ export class VotoNaoDecisaoRoutingResolveService implements Resolve<IVotoNaoDeci
         })
       );
     }
-    return of(null);
+    return of(new VotoNaoDecisao());
   }
 }

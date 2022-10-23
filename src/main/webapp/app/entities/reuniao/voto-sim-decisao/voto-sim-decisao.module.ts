@@ -14,5 +14,6 @@ import { VotoSimDecisaoRoutingModule } from './route/voto-sim-decisao-routing.mo
     VotoSimDecisaoUpdateComponent,
     VotoSimDecisaoDeleteDialogComponent,
   ],
+  entryComponents: [VotoSimDecisaoDeleteDialogComponent],
 })
 export class VotoSimDecisaoModule {}

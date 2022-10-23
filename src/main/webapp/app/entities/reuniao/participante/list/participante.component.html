@@ -1,21 +1,19 @@
 <div>
   <h2 id="page-heading" data-cy="ParticipanteHeading">
-    <span jhiTranslate="hunterappApp.reuniaoParticipante.home.title">Participantes</span>
+    <span jhiTranslate="reuniaoappApp.reuniaoParticipante.home.title">Participantes</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.reuniaoParticipante.home.refreshListLabel">Atualizar lista</span>
+      <button class="btn btn-info me-2" [routerLink]="['/reuniao/', reuniao?.id, 'edit']" [disabled]="isLoading">
+        <fa-icon icon="arrow-left"></fa-icon>
       </button>
 
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-participante"
-        [routerLink]="['/participante/new']"
+        [routerLink]="['/participante/new/reuniao/', reuniao?.id]"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.reuniaoParticipante.home.createLabel"> Criar novo Participante </span>
       </button>
     </div>
   </h2>
@@ -25,36 +23,19 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="participantes?.length === 0">
-    <span jhiTranslate="hunterappApp.reuniaoParticipante.home.notFound">Nenhum Participante encontrado</span>
+    <span jhiTranslate="reuniaoappApp.reuniaoParticipante.home.notFound">No participantes found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="participantes && participantes.length > 0">
+  <div class="table-responsive" id="entities" *ngIf="participantes && participantes.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">Código</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="nome">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoParticipante.nome">Nome</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoParticipante.nome">Nome</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="obs">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoParticipante.obs">Obs</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="reuniao.id">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoParticipante.reuniao">Reuniao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoParticipante.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -66,23 +47,8 @@
           </td>
           <td>{{ participante.nome }}</td>
           <td>{{ participante.obs }}</td>
-          <td>
-            <div *ngIf="participante.reuniao">
-              <a [routerLink]="['/reuniao', participante.reuniao.id, 'view']">{{ participante.reuniao.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/participante', participante.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
-              </button>
-
               <button
                 type="submit"
                 [routerLink]="['/participante', participante.id, 'edit']"
@@ -90,17 +56,33 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
               </button>
 
               <button type="submit" (click)="delete(participante)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
               </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="participantes && participantes.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

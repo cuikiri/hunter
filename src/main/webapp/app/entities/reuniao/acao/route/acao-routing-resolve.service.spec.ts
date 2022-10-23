@@ -5,7 +5,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router, convertToParamMap } fro
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { IAcao } from '../acao.model';
+import { IAcao, Acao } from '../acao.model';
 import { AcaoService } from '../service/acao.service';
 
 import { AcaoRoutingResolveService } from './acao-routing-resolve.service';
@@ -15,7 +15,7 @@ describe('Acao routing resolve service', () => {
   let mockActivatedRouteSnapshot: ActivatedRouteSnapshot;
   let routingResolveService: AcaoRoutingResolveService;
   let service: AcaoService;
-  let resultAcao: IAcao | null | undefined;
+  let resultAcao: IAcao | undefined;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,7 +55,7 @@ describe('Acao routing resolve service', () => {
       expect(resultAcao).toEqual({ id: 123 });
     });
 
-    it('should return null if id is not provided', () => {
+    it('should return new IAcao if id is not provided', () => {
       // GIVEN
       service.find = jest.fn();
       mockActivatedRouteSnapshot.params = {};
@@ -67,12 +67,12 @@ describe('Acao routing resolve service', () => {
 
       // THEN
       expect(service.find).not.toBeCalled();
-      expect(resultAcao).toEqual(null);
+      expect(resultAcao).toEqual(new Acao());
     });
 
     it('should route to 404 page if data not found in server', () => {
       // GIVEN
-      jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse<IAcao>({ body: null })));
+      jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse({ body: null as unknown as Acao })));
       mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN

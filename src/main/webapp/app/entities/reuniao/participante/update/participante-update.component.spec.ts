@@ -6,9 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
-import { ParticipanteFormService } from './participante-form.service';
 import { ParticipanteService } from '../service/participante.service';
-import { IParticipante } from '../participante.model';
+import { IParticipante, Participante } from '../participante.model';
 import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
 import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
 
@@ -18,7 +17,6 @@ describe('Participante Management Update Component', () => {
   let comp: ParticipanteUpdateComponent;
   let fixture: ComponentFixture<ParticipanteUpdateComponent>;
   let activatedRoute: ActivatedRoute;
-  let participanteFormService: ParticipanteFormService;
   let participanteService: ParticipanteService;
   let reuniaoService: ReuniaoService;
 
@@ -41,7 +39,6 @@ describe('Participante Management Update Component', () => {
 
     fixture = TestBed.createComponent(ParticipanteUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
-    participanteFormService = TestBed.inject(ParticipanteFormService);
     participanteService = TestBed.inject(ParticipanteService);
     reuniaoService = TestBed.inject(ReuniaoService);
 
@@ -64,10 +61,7 @@ describe('Participante Management Update Component', () => {
       comp.ngOnInit();
 
       expect(reuniaoService.query).toHaveBeenCalled();
-      expect(reuniaoService.addReuniaoToCollectionIfMissing).toHaveBeenCalledWith(
-        reuniaoCollection,
-        ...additionalReuniaos.map(expect.objectContaining)
-      );
+      expect(reuniaoService.addReuniaoToCollectionIfMissing).toHaveBeenCalledWith(reuniaoCollection, ...additionalReuniaos);
       expect(comp.reuniaosSharedCollection).toEqual(expectedCollection);
     });
 
@@ -79,17 +73,16 @@ describe('Participante Management Update Component', () => {
       activatedRoute.data = of({ participante });
       comp.ngOnInit();
 
+      expect(comp.editForm.value).toEqual(expect.objectContaining(participante));
       expect(comp.reuniaosSharedCollection).toContain(reuniao);
-      expect(comp.participante).toEqual(participante);
     });
   });
 
   describe('save', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IParticipante>>();
+      const saveSubject = new Subject<HttpResponse<Participante>>();
       const participante = { id: 123 };
-      jest.spyOn(participanteFormService, 'getParticipante').mockReturnValue(participante);
       jest.spyOn(participanteService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ participante });
@@ -102,20 +95,18 @@ describe('Participante Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(participanteFormService.getParticipante).toHaveBeenCalled();
       expect(comp.previousState).toHaveBeenCalled();
-      expect(participanteService.update).toHaveBeenCalledWith(expect.objectContaining(participante));
+      expect(participanteService.update).toHaveBeenCalledWith(participante);
       expect(comp.isSaving).toEqual(false);
     });
 
     it('Should call create service on save for new entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IParticipante>>();
-      const participante = { id: 123 };
-      jest.spyOn(participanteFormService, 'getParticipante').mockReturnValue({ id: null });
+      const saveSubject = new Subject<HttpResponse<Participante>>();
+      const participante = new Participante();
       jest.spyOn(participanteService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
-      activatedRoute.data = of({ participante: null });
+      activatedRoute.data = of({ participante });
       comp.ngOnInit();
 
       // WHEN
@@ -125,15 +116,14 @@ describe('Participante Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(participanteFormService.getParticipante).toHaveBeenCalled();
-      expect(participanteService.create).toHaveBeenCalled();
+      expect(participanteService.create).toHaveBeenCalledWith(participante);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
     });
 
     it('Should set isSaving to false on error', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IParticipante>>();
+      const saveSubject = new Subject<HttpResponse<Participante>>();
       const participante = { id: 123 };
       jest.spyOn(participanteService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -146,20 +136,18 @@ describe('Participante Management Update Component', () => {
       saveSubject.error('This is an error!');
 
       // THEN
-      expect(participanteService.update).toHaveBeenCalled();
+      expect(participanteService.update).toHaveBeenCalledWith(participante);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
     });
   });
 
-  describe('Compare relationships', () => {
-    describe('compareReuniao', () => {
-      it('Should forward to reuniaoService', () => {
+  describe('Tracking relationships identifiers', () => {
+    describe('trackReuniaoById', () => {
+      it('Should return tracked Reuniao primary key', () => {
         const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(reuniaoService, 'compareReuniao');
-        comp.compareReuniao(entity, entity2);
-        expect(reuniaoService.compareReuniao).toHaveBeenCalledWith(entity, entity2);
+        const trackResult = comp.trackReuniaoById(0, entity);
+        expect(trackResult).toEqual(entity.id);
       });
     });
   });

@@ -6,14 +6,13 @@ import { ReuniaoComponent } from '../list/reuniao.component';
 import { ReuniaoDetailComponent } from '../detail/reuniao-detail.component';
 import { ReuniaoUpdateComponent } from '../update/reuniao-update.component';
 import { ReuniaoRoutingResolveService } from './reuniao-routing-resolve.service';
-import { ASC } from 'app/config/navigation.constants';
 
 const reuniaoRoute: Routes = [
   {
     path: '',
     component: ReuniaoComponent,
     data: {
-      defaultSort: 'id,' + ASC,
+      defaultSort: 'id,asc',
     },
     canActivate: [UserRouteAccessService],
   },

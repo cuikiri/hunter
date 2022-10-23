@@ -9,5 +9,6 @@ import { ParticipanteRoutingModule } from './route/participante-routing.module';
 @NgModule({
   imports: [SharedModule, ParticipanteRoutingModule],
   declarations: [ParticipanteComponent, ParticipanteDetailComponent, ParticipanteUpdateComponent, ParticipanteDeleteDialogComponent],
+  entryComponents: [ParticipanteDeleteDialogComponent],
 })
 export class ParticipanteModule {}

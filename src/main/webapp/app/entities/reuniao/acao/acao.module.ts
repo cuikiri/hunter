@@ -9,5 +9,6 @@ import { AcaoRoutingModule } from './route/acao-routing.module';
 @NgModule({
   imports: [SharedModule, AcaoRoutingModule],
   declarations: [AcaoComponent, AcaoDetailComponent, AcaoUpdateComponent, AcaoDeleteDialogComponent],
+  entryComponents: [AcaoDeleteDialogComponent],
 })
 export class AcaoModule {}

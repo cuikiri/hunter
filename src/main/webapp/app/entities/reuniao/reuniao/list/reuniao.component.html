@@ -1,11 +1,10 @@
 <div>
   <h2 id="page-heading" data-cy="ReuniaoHeading">
-    <span jhiTranslate="hunterappApp.reuniaoReuniao.home.title">Reuniaos</span>
+    <span jhiTranslate="reuniaoappApp.reuniaoReuniao.home.title">Reuniaos</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.reuniaoReuniao.home.refreshListLabel">Atualizar lista</span>
       </button>
 
       <button
@@ -15,7 +14,6 @@
         [routerLink]="['/reuniao/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.reuniaoReuniao.home.createLabel"> Criar novo Reuniao </span>
       </button>
     </div>
   </h2>
@@ -25,72 +23,40 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="reuniaos?.length === 0">
-    <span jhiTranslate="hunterappApp.reuniaoReuniao.home.notFound">Nenhum Reuniao encontrado</span>
+    <span jhiTranslate="reuniaoappApp.reuniaoReuniao.home.notFound">No reuniaos found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="reuniaos && reuniaos.length > 0">
+  <div class="table-responsive" id="entities" *ngIf="reuniaos && reuniaos.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">Código</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="nome">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.nome">Nome</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.nome">Nome</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="descricao">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.descricao">Descricao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.descricao">Descricao</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="data">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.data">Data</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.data">Data</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="dataInicio">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.dataInicio">Data Inicio</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.dataInicio">Data Inicio</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="dataFim">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.dataFim">Data Fim</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.dataFim">Data Fim</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="horaInicio">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.horaInicio">Hora Inicio</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.horaInicio">Hora Inicio</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="horaFim">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.horaFim">Hora Fim</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.horaFim">Hora Fim</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="tipoReuniao">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.tipoReuniao">Tipo Reuniao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.tipoReuniao">Tipo Reuniao</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="obs">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoReuniao.obs">Obs</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -107,20 +73,10 @@
           <td>{{ reuniao.dataFim | formatMediumDate }}</td>
           <td>{{ reuniao.horaInicio }}</td>
           <td>{{ reuniao.horaFim }}</td>
-          <td jhiTranslate="{{ 'hunterappApp.TipoReuniao.' + reuniao.tipoReuniao }}">{{ reuniao.tipoReuniao }}</td>
+          <td jhiTranslate="{{ 'reuniaoappApp.TipoReuniao.' + reuniao.tipoReuniao }}">{{ reuniao.tipoReuniao }}</td>
           <td>{{ reuniao.obs }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/reuniao', reuniao.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
-              </button>
-
               <button
                 type="submit"
                 [routerLink]="['/reuniao', reuniao.id, 'edit']"
@@ -128,17 +84,33 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
               </button>
 
               <button type="submit" (click)="delete(reuniao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
               </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="reuniaos && reuniaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

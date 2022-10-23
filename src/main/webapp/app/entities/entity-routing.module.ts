@@ -80,11 +80,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./config/tipo-documento/tipo-documento.module').then(m => m.TipoDocumentoModule),
       },
       {
-        path: 'dados-pessoais-1',
-        data: { pageTitle: 'hunterappApp.userDadosPessoais.home.title' },
-        loadChildren: () => import('./user/dados-pessoais/dados-pessoais.module').then(m => m.DadosPessoaisModule),
-      },
-      {
         path: 'matricula',
         data: { pageTitle: 'hunterappApp.matriculaMatricula.home.title' },
         loadChildren: () => import('./matricula/matricula/matricula.module').then(m => m.MatriculaModule),
@@ -184,6 +179,41 @@ import { RouterModule } from '@angular/router';
         path: 'endereco-evento',
         data: { pageTitle: 'hunterappApp.eventoEnderecoEvento.home.title' },
         loadChildren: () => import('./evento/endereco-evento/endereco-evento.module').then(m => m.EnderecoEventoModule),
+      },
+      {
+        path: 'reuniao',
+        data: { pageTitle: 'reuniaoappApp.reuniaoReuniao.home.title' },
+        loadChildren: () => import('./reuniao/reuniao/reuniao.module').then(m => m.ReuniaoModule),
+      },
+      {
+        path: 'pauta',
+        data: { pageTitle: 'reuniaoappApp.reuniaoPauta.home.title' },
+        loadChildren: () => import('./reuniao/pauta/pauta.module').then(m => m.PautaModule),
+      },
+      {
+        path: 'decisao',
+        data: { pageTitle: 'reuniaoappApp.reuniaoDecisao.home.title' },
+        loadChildren: () => import('./reuniao/decisao/decisao.module').then(m => m.DecisaoModule),
+      },
+      {
+        path: 'voto-sim-decisao',
+        data: { pageTitle: 'reuniaoappApp.reuniaoVotoSimDecisao.home.title' },
+        loadChildren: () => import('./reuniao/voto-sim-decisao/voto-sim-decisao.module').then(m => m.VotoSimDecisaoModule),
+      },
+      {
+        path: 'voto-nao-decisao',
+        data: { pageTitle: 'reuniaoappApp.reuniaoVotoNaoDecisao.home.title' },
+        loadChildren: () => import('./reuniao/voto-nao-decisao/voto-nao-decisao.module').then(m => m.VotoNaoDecisaoModule),
+      },
+      {
+        path: 'acao',
+        data: { pageTitle: 'reuniaoappApp.reuniaoAcao.home.title' },
+        loadChildren: () => import('./reuniao/acao/acao.module').then(m => m.AcaoModule),
+      },
+      {
+        path: 'participante',
+        data: { pageTitle: 'reuniaoappApp.reuniaoParticipante.home.title' },
+        loadChildren: () => import('./reuniao/participante/participante.module').then(m => m.ParticipanteModule),
       },
       {
         path: 'fluxo-caixa-report',

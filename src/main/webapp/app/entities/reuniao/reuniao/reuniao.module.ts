@@ -9,5 +9,6 @@ import { ReuniaoRoutingModule } from './route/reuniao-routing.module';
 @NgModule({
   imports: [SharedModule, ReuniaoRoutingModule],
   declarations: [ReuniaoComponent, ReuniaoDetailComponent, ReuniaoUpdateComponent, ReuniaoDeleteDialogComponent],
+  entryComponents: [ReuniaoDeleteDialogComponent],
 })
 export class ReuniaoModule {}

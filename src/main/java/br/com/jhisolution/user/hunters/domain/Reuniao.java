@@ -6,8 +6,18 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -71,7 +81,7 @@ public class Reuniao implements Serializable {
 
     @OneToMany(mappedBy = "reuniao")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "votoSims", "votoNaos", "reuniao" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reuniao" }, allowSetters = true)
     private Set<Decisao> decisoes = new HashSet<>();
 
     @OneToMany(mappedBy = "reuniao")

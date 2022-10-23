@@ -2,6 +2,7 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import br.com.jhisolution.user.hunters.domain.Pauta;
 import br.com.jhisolution.user.hunters.repository.PautaRepository;
+import br.com.jhisolution.user.hunters.service.PautaService;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,22 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +37,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class PautaResource {
 
     private final Logger log = LoggerFactory.getLogger(PautaResource.class);
@@ -34,9 +46,12 @@ public class PautaResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final PautaService pautaService;
+
     private final PautaRepository pautaRepository;
 
-    public PautaResource(PautaRepository pautaRepository) {
+    public PautaResource(PautaService pautaService, PautaRepository pautaRepository) {
+        this.pautaService = pautaService;
         this.pautaRepository = pautaRepository;
     }
 
@@ -53,7 +68,7 @@ public class PautaResource {
         if (pauta.getId() != null) {
             throw new BadRequestAlertException("A new pauta cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Pauta result = pautaRepository.save(pauta);
+        Pauta result = pautaService.save(pauta);
         return ResponseEntity
             .created(new URI("/api/pautas/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -85,7 +100,7 @@ public class PautaResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Pauta result = pautaRepository.save(pauta);
+        Pauta result = pautaService.update(pauta);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pauta.getId().toString()))
@@ -120,19 +135,7 @@ public class PautaResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Pauta> result = pautaRepository
-            .findById(pauta.getId())
-            .map(existingPauta -> {
-                if (pauta.getNome() != null) {
-                    existingPauta.setNome(pauta.getNome());
-                }
-                if (pauta.getObs() != null) {
-                    existingPauta.setObs(pauta.getObs());
-                }
-
-                return existingPauta;
-            })
-            .map(pautaRepository::save);
+        Optional<Pauta> result = pautaService.partialUpdate(pauta);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -143,12 +146,26 @@ public class PautaResource {
     /**
      * {@code GET  /pautas} : get all the pautas.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pautas in body.
      */
     @GetMapping("/pautas")
-    public List<Pauta> getAllPautas() {
-        log.debug("REST request to get all Pautas");
-        return pautaRepository.findAll();
+    public ResponseEntity<List<Pauta>> getAllPautas(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Pautas");
+        Page<Pauta> page = pautaService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/pautas/reuniao/{id}")
+    public ResponseEntity<List<Pauta>> getAllPautas(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Pautas");
+        Page<Pauta> page = pautaService.findAllByReuniaoId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -160,7 +177,7 @@ public class PautaResource {
     @GetMapping("/pautas/{id}")
     public ResponseEntity<Pauta> getPauta(@PathVariable Long id) {
         log.debug("REST request to get Pauta : {}", id);
-        Optional<Pauta> pauta = pautaRepository.findById(id);
+        Optional<Pauta> pauta = pautaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(pauta);
     }
 
@@ -173,7 +190,7 @@ public class PautaResource {
     @DeleteMapping("/pautas/{id}")
     public ResponseEntity<Void> deletePauta(@PathVariable Long id) {
         log.debug("REST request to delete Pauta : {}", id);
-        pautaRepository.deleteById(id);
+        pautaService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import { VotoSimDecisaoFormService, VotoSimDecisaoFormGroup } from './voto-sim-decisao-form.service';
-import { IVotoSimDecisao } from '../voto-sim-decisao.model';
+import { IVotoSimDecisao, VotoSimDecisao } from '../voto-sim-decisao.model';
 import { VotoSimDecisaoService } from '../service/voto-sim-decisao.service';
-import { IDecisao } from 'app/entities/reuniao/decisao/decisao.model';
-import { DecisaoService } from 'app/entities/reuniao/decisao/service/decisao.service';
+import { IDecisao } from '../../decisao/decisao.model';
+import { IReuniao } from '../../reuniao/reuniao.model';
+import { DecisaoService } from '../../decisao/service/decisao.service';
 
 @Component({
   selector: 'jhi-voto-sim-decisao-update',
@@ -16,29 +17,29 @@ import { DecisaoService } from 'app/entities/reuniao/decisao/service/decisao.ser
 })
 export class VotoSimDecisaoUpdateComponent implements OnInit {
   isSaving = false;
-  votoSimDecisao: IVotoSimDecisao | null = null;
+  decisao?: IDecisao;
+  reuniao?: IReuniao;
 
   decisaosSharedCollection: IDecisao[] = [];
 
-  editForm: VotoSimDecisaoFormGroup = this.votoSimDecisaoFormService.createVotoSimDecisaoFormGroup();
+  editForm = this.fb.group({
+    id: [],
+    nome: [null, [Validators.required, Validators.maxLength(50)]],
+    obs: [null, [Validators.maxLength(100)]],
+  });
 
   constructor(
     protected votoSimDecisaoService: VotoSimDecisaoService,
-    protected votoSimDecisaoFormService: VotoSimDecisaoFormService,
     protected decisaoService: DecisaoService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder
   ) {}
 
-  compareDecisao = (o1: IDecisao | null, o2: IDecisao | null): boolean => this.decisaoService.compareDecisao(o1, o2);
-
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ votoSimDecisao }) => {
-      this.votoSimDecisao = votoSimDecisao;
-      if (votoSimDecisao) {
-        this.updateForm(votoSimDecisao);
-      }
-
-      this.loadRelationshipsOptions();
+    this.activatedRoute.data.subscribe(({ votoSimDecisao, decisao, reuniao }) => {
+      this.decisao = decisao;
+      this.reuniao = reuniao;
+      this.updateForm(votoSimDecisao);
     });
   }
 
@@ -48,8 +49,9 @@ export class VotoSimDecisaoUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const votoSimDecisao = this.votoSimDecisaoFormService.getVotoSimDecisao(this.editForm);
-    if (votoSimDecisao.id !== null) {
+    const votoSimDecisao = this.createFromForm();
+    votoSimDecisao.decisao = this.decisao;
+    if (votoSimDecisao.id !== undefined) {
       this.subscribeToSaveResponse(this.votoSimDecisaoService.update(votoSimDecisao));
     } else {
       this.subscribeToSaveResponse(this.votoSimDecisaoService.create(votoSimDecisao));
@@ -76,22 +78,24 @@ export class VotoSimDecisaoUpdateComponent implements OnInit {
   }
 
   protected updateForm(votoSimDecisao: IVotoSimDecisao): void {
-    this.votoSimDecisao = votoSimDecisao;
-    this.votoSimDecisaoFormService.resetForm(this.editForm, votoSimDecisao);
+    this.editForm.patchValue({
+      id: votoSimDecisao.id,
+      nome: votoSimDecisao.nome,
+      obs: votoSimDecisao.obs,
+    });
 
-    this.decisaosSharedCollection = this.decisaoService.addDecisaoToCollectionIfMissing<IDecisao>(
+    this.decisaosSharedCollection = this.decisaoService.addDecisaoToCollectionIfMissing(
       this.decisaosSharedCollection,
       votoSimDecisao.decisao
     );
   }
 
-  protected loadRelationshipsOptions(): void {
-    this.decisaoService
-      .query()
-      .pipe(map((res: HttpResponse<IDecisao[]>) => res.body ?? []))
-      .pipe(
-        map((decisaos: IDecisao[]) => this.decisaoService.addDecisaoToCollectionIfMissing<IDecisao>(decisaos, this.votoSimDecisao?.decisao))
-      )
-      .subscribe((decisaos: IDecisao[]) => (this.decisaosSharedCollection = decisaos));
+  protected createFromForm(): IVotoSimDecisao {
+    return {
+      ...new VotoSimDecisao(),
+      id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
+      obs: this.editForm.get(['obs'])!.value,
+    };
   }
 }

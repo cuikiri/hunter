@@ -1,21 +1,19 @@
 <div>
   <h2 id="page-heading" data-cy="VotoNaoDecisaoHeading">
-    <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.home.title">Voto Nao Decisaos</span>
+    <span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.home.title">Voto Nao Decisaos</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.home.refreshListLabel">Atualizar lista</span>
+      <button class="btn btn-info me-2" [routerLink]="['/decisao/', decisao?.id, 'edit', 'reuniao', reuniao?.id]" [disabled]="isLoading">
+        <fa-icon icon="arrow-left"></fa-icon>
       </button>
 
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-voto-nao-decisao"
-        [routerLink]="['/voto-nao-decisao/new']"
+        [routerLink]="['/voto-nao-decisao/new/reuniao', reuniao?.id, 'decisao', decisao?.id]"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.home.createLabel"> Criar novo Voto Nao Decisao </span>
       </button>
     </div>
   </h2>
@@ -25,36 +23,19 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="votoNaoDecisaos?.length === 0">
-    <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.home.notFound">Nenhum Voto Nao Decisao encontrado</span>
+    <span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.home.notFound">No votoNaoDecisaos found</span>
   </div>
 
-  <div class="table-responsive table-entities" id="entities" *ngIf="votoNaoDecisaos && votoNaoDecisaos.length > 0">
+  <div class="table-responsive" id="entities" *ngIf="votoNaoDecisaos && votoNaoDecisaos.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span jhiTranslate="global.field.id">Código</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="nome">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.nome">Nome</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.nome">Nome</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="obs">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.obs">Obs</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="decisao.id">
-            <div class="d-flex">
-              <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.decisao">Decisao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
+            <span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -66,41 +47,42 @@
           </td>
           <td>{{ votoNaoDecisao.nome }}</td>
           <td>{{ votoNaoDecisao.obs }}</td>
-          <td>
-            <div *ngIf="votoNaoDecisao.decisao">
-              <a [routerLink]="['/decisao', votoNaoDecisao.decisao.id, 'view']">{{ votoNaoDecisao.decisao.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/voto-nao-decisao', votoNaoDecisao.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/voto-nao-decisao', votoNaoDecisao.id, 'edit']"
+                [routerLink]="['/voto-nao-decisao', votoNaoDecisao.id, 'edit', 'reuniao', reuniao?.id, 'decisao', decisao?.id]"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
               </button>
 
               <button type="submit" (click)="delete(votoNaoDecisao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
               </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div *ngIf="votoNaoDecisaos && votoNaoDecisaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

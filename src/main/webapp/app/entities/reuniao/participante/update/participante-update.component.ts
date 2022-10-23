@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import { ParticipanteFormService, ParticipanteFormGroup } from './participante-form.service';
-import { IParticipante } from '../participante.model';
+import { IReuniao } from '../../reuniao/reuniao.model';
+import { IParticipante, Participante } from '../participante.model';
 import { ParticipanteService } from '../service/participante.service';
-import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
-import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
 
 @Component({
   selector: 'jhi-participante-update',
@@ -16,29 +15,20 @@ import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.ser
 })
 export class ParticipanteUpdateComponent implements OnInit {
   isSaving = false;
-  participante: IParticipante | null = null;
+  reuniao?: IReuniao;
 
-  reuniaosSharedCollection: IReuniao[] = [];
+  editForm = this.fb.group({
+    id: [],
+    nome: [null, [Validators.required, Validators.maxLength(50)]],
+    obs: [null, [Validators.maxLength(100)]],
+  });
 
-  editForm: ParticipanteFormGroup = this.participanteFormService.createParticipanteFormGroup();
-
-  constructor(
-    protected participanteService: ParticipanteService,
-    protected participanteFormService: ParticipanteFormService,
-    protected reuniaoService: ReuniaoService,
-    protected activatedRoute: ActivatedRoute
-  ) {}
-
-  compareReuniao = (o1: IReuniao | null, o2: IReuniao | null): boolean => this.reuniaoService.compareReuniao(o1, o2);
+  constructor(protected participanteService: ParticipanteService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ participante }) => {
-      this.participante = participante;
-      if (participante) {
-        this.updateForm(participante);
-      }
-
-      this.loadRelationshipsOptions();
+    this.activatedRoute.data.subscribe(({ participante, reuniao }) => {
+      this.reuniao = reuniao;
+      this.updateForm(participante);
     });
   }
 
@@ -48,8 +38,9 @@ export class ParticipanteUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const participante = this.participanteFormService.getParticipante(this.editForm);
-    if (participante.id !== null) {
+    const participante = this.createFromForm();
+    participante.reuniao = this.reuniao;
+    if (participante.id !== undefined) {
       this.subscribeToSaveResponse(this.participanteService.update(participante));
     } else {
       this.subscribeToSaveResponse(this.participanteService.create(participante));
@@ -76,22 +67,19 @@ export class ParticipanteUpdateComponent implements OnInit {
   }
 
   protected updateForm(participante: IParticipante): void {
-    this.participante = participante;
-    this.participanteFormService.resetForm(this.editForm, participante);
-
-    this.reuniaosSharedCollection = this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(
-      this.reuniaosSharedCollection,
-      participante.reuniao
-    );
+    this.editForm.patchValue({
+      id: participante.id,
+      nome: participante.nome,
+      obs: participante.obs,
+    });
   }
 
-  protected loadRelationshipsOptions(): void {
-    this.reuniaoService
-      .query()
-      .pipe(map((res: HttpResponse<IReuniao[]>) => res.body ?? []))
-      .pipe(
-        map((reuniaos: IReuniao[]) => this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(reuniaos, this.participante?.reuniao))
-      )
-      .subscribe((reuniaos: IReuniao[]) => (this.reuniaosSharedCollection = reuniaos));
+  protected createFromForm(): IParticipante {
+    return {
+      ...new Participante(),
+      id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
+      obs: this.editForm.get(['obs'])!.value,
+    };
   }
 }

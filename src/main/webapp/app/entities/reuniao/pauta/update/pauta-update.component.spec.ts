@@ -6,9 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
-import { PautaFormService } from './pauta-form.service';
 import { PautaService } from '../service/pauta.service';
-import { IPauta } from '../pauta.model';
+import { IPauta, Pauta } from '../pauta.model';
 import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
 import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
 
@@ -18,7 +17,6 @@ describe('Pauta Management Update Component', () => {
   let comp: PautaUpdateComponent;
   let fixture: ComponentFixture<PautaUpdateComponent>;
   let activatedRoute: ActivatedRoute;
-  let pautaFormService: PautaFormService;
   let pautaService: PautaService;
   let reuniaoService: ReuniaoService;
 
@@ -41,7 +39,6 @@ describe('Pauta Management Update Component', () => {
 
     fixture = TestBed.createComponent(PautaUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
-    pautaFormService = TestBed.inject(PautaFormService);
     pautaService = TestBed.inject(PautaService);
     reuniaoService = TestBed.inject(ReuniaoService);
 
@@ -64,10 +61,7 @@ describe('Pauta Management Update Component', () => {
       comp.ngOnInit();
 
       expect(reuniaoService.query).toHaveBeenCalled();
-      expect(reuniaoService.addReuniaoToCollectionIfMissing).toHaveBeenCalledWith(
-        reuniaoCollection,
-        ...additionalReuniaos.map(expect.objectContaining)
-      );
+      expect(reuniaoService.addReuniaoToCollectionIfMissing).toHaveBeenCalledWith(reuniaoCollection, ...additionalReuniaos);
       expect(comp.reuniaosSharedCollection).toEqual(expectedCollection);
     });
 
@@ -79,17 +73,16 @@ describe('Pauta Management Update Component', () => {
       activatedRoute.data = of({ pauta });
       comp.ngOnInit();
 
+      expect(comp.editForm.value).toEqual(expect.objectContaining(pauta));
       expect(comp.reuniaosSharedCollection).toContain(reuniao);
-      expect(comp.pauta).toEqual(pauta);
     });
   });
 
   describe('save', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IPauta>>();
+      const saveSubject = new Subject<HttpResponse<Pauta>>();
       const pauta = { id: 123 };
-      jest.spyOn(pautaFormService, 'getPauta').mockReturnValue(pauta);
       jest.spyOn(pautaService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ pauta });
@@ -102,20 +95,18 @@ describe('Pauta Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(pautaFormService.getPauta).toHaveBeenCalled();
       expect(comp.previousState).toHaveBeenCalled();
-      expect(pautaService.update).toHaveBeenCalledWith(expect.objectContaining(pauta));
+      expect(pautaService.update).toHaveBeenCalledWith(pauta);
       expect(comp.isSaving).toEqual(false);
     });
 
     it('Should call create service on save for new entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IPauta>>();
-      const pauta = { id: 123 };
-      jest.spyOn(pautaFormService, 'getPauta').mockReturnValue({ id: null });
+      const saveSubject = new Subject<HttpResponse<Pauta>>();
+      const pauta = new Pauta();
       jest.spyOn(pautaService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
-      activatedRoute.data = of({ pauta: null });
+      activatedRoute.data = of({ pauta });
       comp.ngOnInit();
 
       // WHEN
@@ -125,15 +116,14 @@ describe('Pauta Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(pautaFormService.getPauta).toHaveBeenCalled();
-      expect(pautaService.create).toHaveBeenCalled();
+      expect(pautaService.create).toHaveBeenCalledWith(pauta);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
     });
 
     it('Should set isSaving to false on error', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IPauta>>();
+      const saveSubject = new Subject<HttpResponse<Pauta>>();
       const pauta = { id: 123 };
       jest.spyOn(pautaService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -146,20 +136,18 @@ describe('Pauta Management Update Component', () => {
       saveSubject.error('This is an error!');
 
       // THEN
-      expect(pautaService.update).toHaveBeenCalled();
+      expect(pautaService.update).toHaveBeenCalledWith(pauta);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
     });
   });
 
-  describe('Compare relationships', () => {
-    describe('compareReuniao', () => {
-      it('Should forward to reuniaoService', () => {
+  describe('Tracking relationships identifiers', () => {
+    describe('trackReuniaoById', () => {
+      it('Should return tracked Reuniao primary key', () => {
         const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(reuniaoService, 'compareReuniao');
-        comp.compareReuniao(entity, entity2);
-        expect(reuniaoService.compareReuniao).toHaveBeenCalledWith(entity, entity2);
+        const trackResult = comp.trackReuniaoById(0, entity);
+        expect(trackResult).toEqual(entity.id);
       });
     });
   });

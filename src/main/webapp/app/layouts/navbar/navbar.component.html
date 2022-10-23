@@ -48,6 +48,18 @@
             <li>
               <a
                 class="dropdown-item"
+                routerLink="reuniao"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.reuniaoReuniao">Reunião</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
                 routerLink="fluxo-caixa-report"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"

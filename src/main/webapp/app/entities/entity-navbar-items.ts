@@ -74,4 +74,39 @@ export const EntityNavbarItems = [
     route: 'tipo-documento',
     translationKey: 'global.menu.entities.configTipoDocumento',
   },
+  {
+    name: 'Reuniao',
+    route: 'reuniao',
+    translationKey: 'global.menu.entities.reuniaoReuniao',
+  },
+  {
+    name: 'Pauta',
+    route: 'pauta',
+    translationKey: 'global.menu.entities.reuniaoPauta',
+  },
+  {
+    name: 'Decisao',
+    route: 'decisao',
+    translationKey: 'global.menu.entities.reuniaoDecisao',
+  },
+  {
+    name: 'VotoSimDecisao',
+    route: 'voto-sim-decisao',
+    translationKey: 'global.menu.entities.reuniaoVotoSimDecisao',
+  },
+  {
+    name: 'VotoNaoDecisao',
+    route: 'voto-nao-decisao',
+    translationKey: 'global.menu.entities.reuniaoVotoNaoDecisao',
+  },
+  {
+    name: 'Acao',
+    route: 'acao',
+    translationKey: 'global.menu.entities.reuniaoAcao',
+  },
+  {
+    name: 'Participante',
+    route: 'participante',
+    translationKey: 'global.menu.entities.reuniaoParticipante',
+  },
 ];

@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IPauta } from '../pauta.model';
 import { PautaService } from '../service/pauta.service';
-import { ITEM_DELETED_EVENT } from 'app/config/navigation.constants';
 
 @Component({
   templateUrl: './pauta-delete-dialog.component.html',
@@ -19,7 +18,7 @@ export class PautaDeleteDialogComponent {
 
   confirmDelete(id: number): void {
     this.pautaService.delete(id).subscribe(() => {
-      this.activeModal.close(ITEM_DELETED_EVENT);
+      this.activeModal.close('deleted');
     });
   }
 }

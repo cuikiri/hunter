@@ -6,9 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
-import { VotoSimDecisaoFormService } from './voto-sim-decisao-form.service';
 import { VotoSimDecisaoService } from '../service/voto-sim-decisao.service';
-import { IVotoSimDecisao } from '../voto-sim-decisao.model';
+import { IVotoSimDecisao, VotoSimDecisao } from '../voto-sim-decisao.model';
 import { IDecisao } from 'app/entities/reuniao/decisao/decisao.model';
 import { DecisaoService } from 'app/entities/reuniao/decisao/service/decisao.service';
 
@@ -18,7 +17,6 @@ describe('VotoSimDecisao Management Update Component', () => {
   let comp: VotoSimDecisaoUpdateComponent;
   let fixture: ComponentFixture<VotoSimDecisaoUpdateComponent>;
   let activatedRoute: ActivatedRoute;
-  let votoSimDecisaoFormService: VotoSimDecisaoFormService;
   let votoSimDecisaoService: VotoSimDecisaoService;
   let decisaoService: DecisaoService;
 
@@ -41,7 +39,6 @@ describe('VotoSimDecisao Management Update Component', () => {
 
     fixture = TestBed.createComponent(VotoSimDecisaoUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
-    votoSimDecisaoFormService = TestBed.inject(VotoSimDecisaoFormService);
     votoSimDecisaoService = TestBed.inject(VotoSimDecisaoService);
     decisaoService = TestBed.inject(DecisaoService);
 
@@ -64,10 +61,7 @@ describe('VotoSimDecisao Management Update Component', () => {
       comp.ngOnInit();
 
       expect(decisaoService.query).toHaveBeenCalled();
-      expect(decisaoService.addDecisaoToCollectionIfMissing).toHaveBeenCalledWith(
-        decisaoCollection,
-        ...additionalDecisaos.map(expect.objectContaining)
-      );
+      expect(decisaoService.addDecisaoToCollectionIfMissing).toHaveBeenCalledWith(decisaoCollection, ...additionalDecisaos);
       expect(comp.decisaosSharedCollection).toEqual(expectedCollection);
     });
 
@@ -79,17 +73,16 @@ describe('VotoSimDecisao Management Update Component', () => {
       activatedRoute.data = of({ votoSimDecisao });
       comp.ngOnInit();
 
+      expect(comp.editForm.value).toEqual(expect.objectContaining(votoSimDecisao));
       expect(comp.decisaosSharedCollection).toContain(decisao);
-      expect(comp.votoSimDecisao).toEqual(votoSimDecisao);
     });
   });
 
   describe('save', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IVotoSimDecisao>>();
+      const saveSubject = new Subject<HttpResponse<VotoSimDecisao>>();
       const votoSimDecisao = { id: 123 };
-      jest.spyOn(votoSimDecisaoFormService, 'getVotoSimDecisao').mockReturnValue(votoSimDecisao);
       jest.spyOn(votoSimDecisaoService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ votoSimDecisao });
@@ -102,20 +95,18 @@ describe('VotoSimDecisao Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(votoSimDecisaoFormService.getVotoSimDecisao).toHaveBeenCalled();
       expect(comp.previousState).toHaveBeenCalled();
-      expect(votoSimDecisaoService.update).toHaveBeenCalledWith(expect.objectContaining(votoSimDecisao));
+      expect(votoSimDecisaoService.update).toHaveBeenCalledWith(votoSimDecisao);
       expect(comp.isSaving).toEqual(false);
     });
 
     it('Should call create service on save for new entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IVotoSimDecisao>>();
-      const votoSimDecisao = { id: 123 };
-      jest.spyOn(votoSimDecisaoFormService, 'getVotoSimDecisao').mockReturnValue({ id: null });
+      const saveSubject = new Subject<HttpResponse<VotoSimDecisao>>();
+      const votoSimDecisao = new VotoSimDecisao();
       jest.spyOn(votoSimDecisaoService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
-      activatedRoute.data = of({ votoSimDecisao: null });
+      activatedRoute.data = of({ votoSimDecisao });
       comp.ngOnInit();
 
       // WHEN
@@ -125,15 +116,14 @@ describe('VotoSimDecisao Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(votoSimDecisaoFormService.getVotoSimDecisao).toHaveBeenCalled();
-      expect(votoSimDecisaoService.create).toHaveBeenCalled();
+      expect(votoSimDecisaoService.create).toHaveBeenCalledWith(votoSimDecisao);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
     });
 
     it('Should set isSaving to false on error', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IVotoSimDecisao>>();
+      const saveSubject = new Subject<HttpResponse<VotoSimDecisao>>();
       const votoSimDecisao = { id: 123 };
       jest.spyOn(votoSimDecisaoService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -146,20 +136,18 @@ describe('VotoSimDecisao Management Update Component', () => {
       saveSubject.error('This is an error!');
 
       // THEN
-      expect(votoSimDecisaoService.update).toHaveBeenCalled();
+      expect(votoSimDecisaoService.update).toHaveBeenCalledWith(votoSimDecisao);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
     });
   });
 
-  describe('Compare relationships', () => {
-    describe('compareDecisao', () => {
-      it('Should forward to decisaoService', () => {
+  describe('Tracking relationships identifiers', () => {
+    describe('trackDecisaoById', () => {
+      it('Should return tracked Decisao primary key', () => {
         const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(decisaoService, 'compareDecisao');
-        comp.compareDecisao(entity, entity2);
-        expect(decisaoService.compareDecisao).toHaveBeenCalledWith(entity, entity2);
+        const trackResult = comp.trackDecisaoById(0, entity);
+        expect(trackResult).toEqual(entity.id);
       });
     });
   });

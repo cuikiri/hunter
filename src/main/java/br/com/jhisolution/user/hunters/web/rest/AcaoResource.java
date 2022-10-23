@@ -2,6 +2,7 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import br.com.jhisolution.user.hunters.domain.Acao;
 import br.com.jhisolution.user.hunters.repository.AcaoRepository;
+import br.com.jhisolution.user.hunters.service.AcaoService;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,15 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +30,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class AcaoResource {
 
     private final Logger log = LoggerFactory.getLogger(AcaoResource.class);
@@ -34,9 +39,12 @@ public class AcaoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final AcaoService acaoService;
+
     private final AcaoRepository acaoRepository;
 
-    public AcaoResource(AcaoRepository acaoRepository) {
+    public AcaoResource(AcaoService acaoService, AcaoRepository acaoRepository) {
+        this.acaoService = acaoService;
         this.acaoRepository = acaoRepository;
     }
 
@@ -53,7 +61,7 @@ public class AcaoResource {
         if (acao.getId() != null) {
             throw new BadRequestAlertException("A new acao cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Acao result = acaoRepository.save(acao);
+        Acao result = acaoService.save(acao);
         return ResponseEntity
             .created(new URI("/api/acaos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -85,7 +93,7 @@ public class AcaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Acao result = acaoRepository.save(acao);
+        Acao result = acaoService.update(acao);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, acao.getId().toString()))
@@ -120,19 +128,7 @@ public class AcaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Acao> result = acaoRepository
-            .findById(acao.getId())
-            .map(existingAcao -> {
-                if (acao.getNome() != null) {
-                    existingAcao.setNome(acao.getNome());
-                }
-                if (acao.getObs() != null) {
-                    existingAcao.setObs(acao.getObs());
-                }
-
-                return existingAcao;
-            })
-            .map(acaoRepository::save);
+        Optional<Acao> result = acaoService.partialUpdate(acao);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -143,12 +139,26 @@ public class AcaoResource {
     /**
      * {@code GET  /acaos} : get all the acaos.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of acaos in body.
      */
     @GetMapping("/acaos")
-    public List<Acao> getAllAcaos() {
-        log.debug("REST request to get all Acaos");
-        return acaoRepository.findAll();
+    public ResponseEntity<List<Acao>> getAllAcaos(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Acaos");
+        Page<Acao> page = acaoService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/acaos/reuniao/{id}")
+    public ResponseEntity<List<Acao>> getAllAcaosByReuniaoId(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Acaos");
+        Page<Acao> page = acaoService.findAllByReuniaoId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -160,7 +170,7 @@ public class AcaoResource {
     @GetMapping("/acaos/{id}")
     public ResponseEntity<Acao> getAcao(@PathVariable Long id) {
         log.debug("REST request to get Acao : {}", id);
-        Optional<Acao> acao = acaoRepository.findById(id);
+        Optional<Acao> acao = acaoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(acao);
     }
 
@@ -173,7 +183,7 @@ public class AcaoResource {
     @DeleteMapping("/acaos/{id}")
     public ResponseEntity<Void> deleteAcao(@PathVariable Long id) {
         log.debug("REST request to delete Acao : {}", id);
-        acaoRepository.deleteById(id);
+        acaoService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

@@ -1,5 +1,5 @@
 {
-  "hunterappApp": {
+  "reuniaoappApp": {
     "reuniaoReuniao": {
       "home": {
         "title": "Reuniaos",
@@ -30,7 +30,9 @@
       "pautas": "Pautas",
       "decisoes": "Decisoes",
       "acoes": "Acoes",
-      "participantes": "Participantes"
+      "participantes": "Participantes",
+      "votoSim": "Votos Sim",
+      "votoNao": "Votos Não"
     }
   }
 }

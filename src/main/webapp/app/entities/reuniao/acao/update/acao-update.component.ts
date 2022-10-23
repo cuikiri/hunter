@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import { AcaoFormService, AcaoFormGroup } from './acao-form.service';
-import { IAcao } from '../acao.model';
+import { IReuniao } from '../../reuniao/reuniao.model';
+import { IAcao, Acao } from '../acao.model';
 import { AcaoService } from '../service/acao.service';
-import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
-import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
 
 @Component({
   selector: 'jhi-acao-update',
@@ -16,29 +15,20 @@ import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.ser
 })
 export class AcaoUpdateComponent implements OnInit {
   isSaving = false;
-  acao: IAcao | null = null;
+  reuniao?: IReuniao;
 
-  reuniaosSharedCollection: IReuniao[] = [];
+  editForm = this.fb.group({
+    id: [],
+    nome: [null, [Validators.required, Validators.maxLength(50)]],
+    obs: [null, [Validators.maxLength(100)]],
+  });
 
-  editForm: AcaoFormGroup = this.acaoFormService.createAcaoFormGroup();
-
-  constructor(
-    protected acaoService: AcaoService,
-    protected acaoFormService: AcaoFormService,
-    protected reuniaoService: ReuniaoService,
-    protected activatedRoute: ActivatedRoute
-  ) {}
-
-  compareReuniao = (o1: IReuniao | null, o2: IReuniao | null): boolean => this.reuniaoService.compareReuniao(o1, o2);
+  constructor(protected acaoService: AcaoService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ acao }) => {
-      this.acao = acao;
-      if (acao) {
-        this.updateForm(acao);
-      }
-
-      this.loadRelationshipsOptions();
+    this.activatedRoute.data.subscribe(({ acao, reuniao }) => {
+      this.reuniao = reuniao;
+      this.updateForm(acao);
     });
   }
 
@@ -48,8 +38,10 @@ export class AcaoUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const acao = this.acaoFormService.getAcao(this.editForm);
-    if (acao.id !== null) {
+    const acao = this.createFromForm();
+    acao.reuniao = this.reuniao;
+
+    if (acao.id !== undefined) {
       this.subscribeToSaveResponse(this.acaoService.update(acao));
     } else {
       this.subscribeToSaveResponse(this.acaoService.create(acao));
@@ -76,20 +68,19 @@ export class AcaoUpdateComponent implements OnInit {
   }
 
   protected updateForm(acao: IAcao): void {
-    this.acao = acao;
-    this.acaoFormService.resetForm(this.editForm, acao);
-
-    this.reuniaosSharedCollection = this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(
-      this.reuniaosSharedCollection,
-      acao.reuniao
-    );
+    this.editForm.patchValue({
+      id: acao.id,
+      nome: acao.nome,
+      obs: acao.obs,
+    });
   }
 
-  protected loadRelationshipsOptions(): void {
-    this.reuniaoService
-      .query()
-      .pipe(map((res: HttpResponse<IReuniao[]>) => res.body ?? []))
-      .pipe(map((reuniaos: IReuniao[]) => this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(reuniaos, this.acao?.reuniao)))
-      .subscribe((reuniaos: IReuniao[]) => (this.reuniaosSharedCollection = reuniaos));
+  protected createFromForm(): IAcao {
+    return {
+      ...new Acao(),
+      id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
+      obs: this.editForm.get(['obs'])!.value,
+    };
   }
 }

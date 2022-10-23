@@ -9,5 +9,6 @@ import { DecisaoRoutingModule } from './route/decisao-routing.module';
 @NgModule({
   imports: [SharedModule, DecisaoRoutingModule],
   declarations: [DecisaoComponent, DecisaoDetailComponent, DecisaoUpdateComponent, DecisaoDeleteDialogComponent],
+  entryComponents: [DecisaoDeleteDialogComponent],
 })
 export class DecisaoModule {}

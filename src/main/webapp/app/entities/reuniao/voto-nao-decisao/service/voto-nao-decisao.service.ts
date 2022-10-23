@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IVotoNaoDecisao, NewVotoNaoDecisao } from '../voto-nao-decisao.model';
-
-export type PartialUpdateVotoNaoDecisao = Partial<IVotoNaoDecisao> & Pick<IVotoNaoDecisao, 'id'>;
+import { IVotoNaoDecisao, getVotoNaoDecisaoIdentifier } from '../voto-nao-decisao.model';
 
 export type EntityResponseType = HttpResponse<IVotoNaoDecisao>;
 export type EntityArrayResponseType = HttpResponse<IVotoNaoDecisao[]>;
@@ -18,24 +16,31 @@ export class VotoNaoDecisaoService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(votoNaoDecisao: NewVotoNaoDecisao): Observable<EntityResponseType> {
+  create(votoNaoDecisao: IVotoNaoDecisao): Observable<EntityResponseType> {
     return this.http.post<IVotoNaoDecisao>(this.resourceUrl, votoNaoDecisao, { observe: 'response' });
   }
 
   update(votoNaoDecisao: IVotoNaoDecisao): Observable<EntityResponseType> {
-    return this.http.put<IVotoNaoDecisao>(`${this.resourceUrl}/${this.getVotoNaoDecisaoIdentifier(votoNaoDecisao)}`, votoNaoDecisao, {
+    return this.http.put<IVotoNaoDecisao>(`${this.resourceUrl}/${getVotoNaoDecisaoIdentifier(votoNaoDecisao) as number}`, votoNaoDecisao, {
       observe: 'response',
     });
   }
 
-  partialUpdate(votoNaoDecisao: PartialUpdateVotoNaoDecisao): Observable<EntityResponseType> {
-    return this.http.patch<IVotoNaoDecisao>(`${this.resourceUrl}/${this.getVotoNaoDecisaoIdentifier(votoNaoDecisao)}`, votoNaoDecisao, {
-      observe: 'response',
-    });
+  partialUpdate(votoNaoDecisao: IVotoNaoDecisao): Observable<EntityResponseType> {
+    return this.http.patch<IVotoNaoDecisao>(
+      `${this.resourceUrl}/${getVotoNaoDecisaoIdentifier(votoNaoDecisao) as number}`,
+      votoNaoDecisao,
+      { observe: 'response' }
+    );
   }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IVotoNaoDecisao>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findAllByDecicaoId(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IVotoNaoDecisao[]>(`${this.resourceUrl}/decisao/${id}`, { params: options, observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -47,26 +52,18 @@ export class VotoNaoDecisaoService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getVotoNaoDecisaoIdentifier(votoNaoDecisao: Pick<IVotoNaoDecisao, 'id'>): number {
-    return votoNaoDecisao.id;
-  }
-
-  compareVotoNaoDecisao(o1: Pick<IVotoNaoDecisao, 'id'> | null, o2: Pick<IVotoNaoDecisao, 'id'> | null): boolean {
-    return o1 && o2 ? this.getVotoNaoDecisaoIdentifier(o1) === this.getVotoNaoDecisaoIdentifier(o2) : o1 === o2;
-  }
-
-  addVotoNaoDecisaoToCollectionIfMissing<Type extends Pick<IVotoNaoDecisao, 'id'>>(
-    votoNaoDecisaoCollection: Type[],
-    ...votoNaoDecisaosToCheck: (Type | null | undefined)[]
-  ): Type[] {
-    const votoNaoDecisaos: Type[] = votoNaoDecisaosToCheck.filter(isPresent);
+  addVotoNaoDecisaoToCollectionIfMissing(
+    votoNaoDecisaoCollection: IVotoNaoDecisao[],
+    ...votoNaoDecisaosToCheck: (IVotoNaoDecisao | null | undefined)[]
+  ): IVotoNaoDecisao[] {
+    const votoNaoDecisaos: IVotoNaoDecisao[] = votoNaoDecisaosToCheck.filter(isPresent);
     if (votoNaoDecisaos.length > 0) {
       const votoNaoDecisaoCollectionIdentifiers = votoNaoDecisaoCollection.map(
-        votoNaoDecisaoItem => this.getVotoNaoDecisaoIdentifier(votoNaoDecisaoItem)!
+        votoNaoDecisaoItem => getVotoNaoDecisaoIdentifier(votoNaoDecisaoItem)!
       );
       const votoNaoDecisaosToAdd = votoNaoDecisaos.filter(votoNaoDecisaoItem => {
-        const votoNaoDecisaoIdentifier = this.getVotoNaoDecisaoIdentifier(votoNaoDecisaoItem);
-        if (votoNaoDecisaoCollectionIdentifiers.includes(votoNaoDecisaoIdentifier)) {
+        const votoNaoDecisaoIdentifier = getVotoNaoDecisaoIdentifier(votoNaoDecisaoItem);
+        if (votoNaoDecisaoIdentifier == null || votoNaoDecisaoCollectionIdentifiers.includes(votoNaoDecisaoIdentifier)) {
           return false;
         }
         votoNaoDecisaoCollectionIdentifiers.push(votoNaoDecisaoIdentifier);

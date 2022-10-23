@@ -5,7 +5,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router, convertToParamMap } fro
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { IVotoNaoDecisao } from '../voto-nao-decisao.model';
+import { IVotoNaoDecisao, VotoNaoDecisao } from '../voto-nao-decisao.model';
 import { VotoNaoDecisaoService } from '../service/voto-nao-decisao.service';
 
 import { VotoNaoDecisaoRoutingResolveService } from './voto-nao-decisao-routing-resolve.service';
@@ -15,7 +15,7 @@ describe('VotoNaoDecisao routing resolve service', () => {
   let mockActivatedRouteSnapshot: ActivatedRouteSnapshot;
   let routingResolveService: VotoNaoDecisaoRoutingResolveService;
   let service: VotoNaoDecisaoService;
-  let resultVotoNaoDecisao: IVotoNaoDecisao | null | undefined;
+  let resultVotoNaoDecisao: IVotoNaoDecisao | undefined;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,7 +55,7 @@ describe('VotoNaoDecisao routing resolve service', () => {
       expect(resultVotoNaoDecisao).toEqual({ id: 123 });
     });
 
-    it('should return null if id is not provided', () => {
+    it('should return new IVotoNaoDecisao if id is not provided', () => {
       // GIVEN
       service.find = jest.fn();
       mockActivatedRouteSnapshot.params = {};
@@ -67,12 +67,12 @@ describe('VotoNaoDecisao routing resolve service', () => {
 
       // THEN
       expect(service.find).not.toBeCalled();
-      expect(resultVotoNaoDecisao).toEqual(null);
+      expect(resultVotoNaoDecisao).toEqual(new VotoNaoDecisao());
     });
 
     it('should route to 404 page if data not found in server', () => {
       // GIVEN
-      jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse<IVotoNaoDecisao>({ body: null })));
+      jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse({ body: null as unknown as VotoNaoDecisao })));
       mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN

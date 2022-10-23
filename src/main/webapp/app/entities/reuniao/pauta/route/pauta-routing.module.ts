@@ -6,14 +6,25 @@ import { PautaComponent } from '../list/pauta.component';
 import { PautaDetailComponent } from '../detail/pauta-detail.component';
 import { PautaUpdateComponent } from '../update/pauta-update.component';
 import { PautaRoutingResolveService } from './pauta-routing-resolve.service';
-import { ASC } from 'app/config/navigation.constants';
+import { PautaRoutingResolveReuniaoService } from './pauta-routing-resolve-reuniao.service';
 
 const pautaRoute: Routes = [
   {
     path: '',
     component: PautaComponent,
     data: {
-      defaultSort: 'id,' + ASC,
+      defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'reuniao/:idReuniao',
+    component: PautaComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    resolve: {
+      reuniao: PautaRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -30,6 +41,15 @@ const pautaRoute: Routes = [
     component: PautaUpdateComponent,
     resolve: {
       pauta: PautaRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new/reuniao/:idReuniao',
+    component: PautaUpdateComponent,
+    resolve: {
+      pauta: PautaRoutingResolveService,
+      reuniao: PautaRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },

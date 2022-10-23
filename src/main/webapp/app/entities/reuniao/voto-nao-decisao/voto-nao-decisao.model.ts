@@ -1,10 +1,16 @@
 import { IDecisao } from 'app/entities/reuniao/decisao/decisao.model';
 
 export interface IVotoNaoDecisao {
-  id: number;
-  nome?: string | null;
+  id?: number;
+  nome?: string;
   obs?: string | null;
-  decisao?: Pick<IDecisao, 'id'> | null;
+  decisao?: IDecisao | null;
 }
 
-export type NewVotoNaoDecisao = Omit<IVotoNaoDecisao, 'id'> & { id: null };
+export class VotoNaoDecisao implements IVotoNaoDecisao {
+  constructor(public id?: number, public nome?: string, public obs?: string | null, public decisao?: IDecisao | null) {}
+}
+
+export function getVotoNaoDecisaoIdentifier(votoNaoDecisao: IVotoNaoDecisao): number | undefined {
+  return votoNaoDecisao.id;
+}

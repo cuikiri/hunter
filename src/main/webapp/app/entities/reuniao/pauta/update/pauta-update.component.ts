@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import { PautaFormService, PautaFormGroup } from './pauta-form.service';
-import { IPauta } from '../pauta.model';
+import { IPauta, Pauta } from '../pauta.model';
 import { PautaService } from '../service/pauta.service';
-import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
-import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
+import { IReuniao } from '../../reuniao/reuniao.model';
 
 @Component({
   selector: 'jhi-pauta-update',
@@ -16,29 +15,20 @@ import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.ser
 })
 export class PautaUpdateComponent implements OnInit {
   isSaving = false;
-  pauta: IPauta | null = null;
+  reuniao?: IReuniao;
 
-  reuniaosSharedCollection: IReuniao[] = [];
+  editForm = this.fb.group({
+    id: [],
+    nome: [null, [Validators.required, Validators.maxLength(50)]],
+    obs: [null, [Validators.maxLength(100)]],
+  });
 
-  editForm: PautaFormGroup = this.pautaFormService.createPautaFormGroup();
-
-  constructor(
-    protected pautaService: PautaService,
-    protected pautaFormService: PautaFormService,
-    protected reuniaoService: ReuniaoService,
-    protected activatedRoute: ActivatedRoute
-  ) {}
-
-  compareReuniao = (o1: IReuniao | null, o2: IReuniao | null): boolean => this.reuniaoService.compareReuniao(o1, o2);
+  constructor(protected pautaService: PautaService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ pauta }) => {
-      this.pauta = pauta;
-      if (pauta) {
-        this.updateForm(pauta);
-      }
-
-      this.loadRelationshipsOptions();
+    this.activatedRoute.data.subscribe(({ pauta, reuniao }) => {
+      this.reuniao = reuniao;
+      this.updateForm(pauta);
     });
   }
 
@@ -48,8 +38,9 @@ export class PautaUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const pauta = this.pautaFormService.getPauta(this.editForm);
-    if (pauta.id !== null) {
+    const pauta = this.createFromForm();
+    pauta.reuniao = this.reuniao;
+    if (pauta.id !== undefined) {
       this.subscribeToSaveResponse(this.pautaService.update(pauta));
     } else {
       this.subscribeToSaveResponse(this.pautaService.create(pauta));
@@ -76,20 +67,19 @@ export class PautaUpdateComponent implements OnInit {
   }
 
   protected updateForm(pauta: IPauta): void {
-    this.pauta = pauta;
-    this.pautaFormService.resetForm(this.editForm, pauta);
-
-    this.reuniaosSharedCollection = this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(
-      this.reuniaosSharedCollection,
-      pauta.reuniao
-    );
+    this.editForm.patchValue({
+      id: pauta.id,
+      nome: pauta.nome,
+      obs: pauta.obs,
+    });
   }
 
-  protected loadRelationshipsOptions(): void {
-    this.reuniaoService
-      .query()
-      .pipe(map((res: HttpResponse<IReuniao[]>) => res.body ?? []))
-      .pipe(map((reuniaos: IReuniao[]) => this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(reuniaos, this.pauta?.reuniao)))
-      .subscribe((reuniaos: IReuniao[]) => (this.reuniaosSharedCollection = reuniaos));
+  protected createFromForm(): IPauta {
+    return {
+      ...new Pauta(),
+      id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
+      obs: this.editForm.get(['obs'])!.value,
+    };
   }
 }

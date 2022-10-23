@@ -4,18 +4,18 @@ import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { IAcao } from '../acao.model';
+import { IAcao, Acao } from '../acao.model';
 import { AcaoService } from '../service/acao.service';
 
 @Injectable({ providedIn: 'root' })
-export class AcaoRoutingResolveService implements Resolve<IAcao | null> {
+export class AcaoRoutingResolveService implements Resolve<IAcao> {
   constructor(protected service: AcaoService, protected router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IAcao | null | never> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IAcao> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        mergeMap((acao: HttpResponse<IAcao>) => {
+        mergeMap((acao: HttpResponse<Acao>) => {
           if (acao.body) {
             return of(acao.body);
           } else {
@@ -25,6 +25,6 @@ export class AcaoRoutingResolveService implements Resolve<IAcao | null> {
         })
       );
     }
-    return of(null);
+    return of(new Acao());
   }
 }

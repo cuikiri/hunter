@@ -6,14 +6,27 @@ import { VotoNaoDecisaoComponent } from '../list/voto-nao-decisao.component';
 import { VotoNaoDecisaoDetailComponent } from '../detail/voto-nao-decisao-detail.component';
 import { VotoNaoDecisaoUpdateComponent } from '../update/voto-nao-decisao-update.component';
 import { VotoNaoDecisaoRoutingResolveService } from './voto-nao-decisao-routing-resolve.service';
-import { ASC } from 'app/config/navigation.constants';
+import { VotoNaoRoutingResolveDecisaoService } from './voto-nao-decisao-routing-resolve-decisao.service';
+import { VotoNaoRoutingResolveReuniaoService } from './voto-nao-decisao-routing-resolve-reuniao.service';
 
 const votoNaoDecisaoRoute: Routes = [
   {
     path: '',
     component: VotoNaoDecisaoComponent,
     data: {
-      defaultSort: 'id,' + ASC,
+      defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'reuniao/:idReuniao/decisao/:idDecisao',
+    component: VotoNaoDecisaoComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    resolve: {
+      decisao: VotoNaoRoutingResolveDecisaoService,
+      reuniao: VotoNaoRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -34,10 +47,30 @@ const votoNaoDecisaoRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'new/reuniao/:idReuniao/decisao/:idDecisao',
+    component: VotoNaoDecisaoUpdateComponent,
+    resolve: {
+      votoNaoDecisao: VotoNaoDecisaoRoutingResolveService,
+      decisao: VotoNaoRoutingResolveDecisaoService,
+      reuniao: VotoNaoRoutingResolveReuniaoService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: ':id/edit',
     component: VotoNaoDecisaoUpdateComponent,
     resolve: {
       votoNaoDecisao: VotoNaoDecisaoRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/edit/reuniao/:idReuniao/decisao/:idDecisao',
+    component: VotoNaoDecisaoUpdateComponent,
+    resolve: {
+      votoNaoDecisao: VotoNaoDecisaoRoutingResolveService,
+      decisao: VotoNaoRoutingResolveDecisaoService,
+      reuniao: VotoNaoRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },

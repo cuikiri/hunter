@@ -6,14 +6,25 @@ import { AcaoComponent } from '../list/acao.component';
 import { AcaoDetailComponent } from '../detail/acao-detail.component';
 import { AcaoUpdateComponent } from '../update/acao-update.component';
 import { AcaoRoutingResolveService } from './acao-routing-resolve.service';
-import { ASC } from 'app/config/navigation.constants';
+import { AcaoRoutingResolveReuniaoService } from './acao-routing-resolve-reuniao.service';
 
 const acaoRoute: Routes = [
   {
     path: '',
     component: AcaoComponent,
     data: {
-      defaultSort: 'id,' + ASC,
+      defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'reuniao/:idReuniao',
+    component: AcaoComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    resolve: {
+      reuniao: AcaoRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -30,6 +41,15 @@ const acaoRoute: Routes = [
     component: AcaoUpdateComponent,
     resolve: {
       acao: AcaoRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new/reuniao/:idReuniao',
+    component: AcaoUpdateComponent,
+    resolve: {
+      acao: AcaoRoutingResolveService,
+      reuniao: AcaoRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },

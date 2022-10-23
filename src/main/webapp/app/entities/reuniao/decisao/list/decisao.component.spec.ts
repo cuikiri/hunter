@@ -32,7 +32,6 @@ describe('Decisao Management Component', () => {
                 sort: 'id,desc',
               })
             ),
-            snapshot: { queryParams: {} },
           },
         },
       ],
@@ -64,13 +63,34 @@ describe('Decisao Management Component', () => {
     expect(comp.decisaos?.[0]).toEqual(expect.objectContaining({ id: 123 }));
   });
 
-  describe('trackId', () => {
-    it('Should forward to decisaoService', () => {
-      const entity = { id: 123 };
-      jest.spyOn(service, 'getDecisaoIdentifier');
-      const id = comp.trackId(0, entity);
-      expect(service.getDecisaoIdentifier).toHaveBeenCalledWith(entity);
-      expect(id).toBe(entity.id);
-    });
+  it('should load a page', () => {
+    // WHEN
+    comp.loadPage(1);
+
+    // THEN
+    expect(service.query).toHaveBeenCalled();
+    expect(comp.decisaos?.[0]).toEqual(expect.objectContaining({ id: 123 }));
+  });
+
+  it('should calculate the sort attribute for an id', () => {
+    // WHEN
+    comp.ngOnInit();
+
+    // THEN
+    expect(service.query).toHaveBeenCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
+  });
+
+  it('should calculate the sort attribute for a non-id attribute', () => {
+    // INIT
+    comp.ngOnInit();
+
+    // GIVEN
+    comp.predicate = 'name';
+
+    // WHEN
+    comp.loadPage(1);
+
+    // THEN
+    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['name,desc', 'id'] }));
   });
 });

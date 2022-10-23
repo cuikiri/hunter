@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
-import { DecisaoFormService, DecisaoFormGroup } from './decisao-form.service';
-import { IDecisao } from '../decisao.model';
+import { IReuniao } from '../../reuniao/reuniao.model';
+import { IDecisao, Decisao } from '../decisao.model';
 import { DecisaoService } from '../service/decisao.service';
-import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
-import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
 
 @Component({
   selector: 'jhi-decisao-update',
@@ -16,29 +15,22 @@ import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.ser
 })
 export class DecisaoUpdateComponent implements OnInit {
   isSaving = false;
-  decisao: IDecisao | null = null;
+  reuniao?: IReuniao;
+  decisao?: IDecisao;
 
-  reuniaosSharedCollection: IReuniao[] = [];
+  editForm = this.fb.group({
+    id: [],
+    nome: [null, [Validators.required, Validators.maxLength(50)]],
+    obs: [null, [Validators.maxLength(100)]],
+  });
 
-  editForm: DecisaoFormGroup = this.decisaoFormService.createDecisaoFormGroup();
-
-  constructor(
-    protected decisaoService: DecisaoService,
-    protected decisaoFormService: DecisaoFormService,
-    protected reuniaoService: ReuniaoService,
-    protected activatedRoute: ActivatedRoute
-  ) {}
-
-  compareReuniao = (o1: IReuniao | null, o2: IReuniao | null): boolean => this.reuniaoService.compareReuniao(o1, o2);
+  constructor(protected decisaoService: DecisaoService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ decisao }) => {
+    this.activatedRoute.data.subscribe(({ decisao, reuniao }) => {
+      this.reuniao = reuniao;
       this.decisao = decisao;
-      if (decisao) {
-        this.updateForm(decisao);
-      }
-
-      this.loadRelationshipsOptions();
+      this.updateForm(decisao);
     });
   }
 
@@ -48,8 +40,9 @@ export class DecisaoUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const decisao = this.decisaoFormService.getDecisao(this.editForm);
-    if (decisao.id !== null) {
+    const decisao = this.createFromForm();
+    decisao.reuniao = this.reuniao;
+    if (decisao.id !== undefined) {
       this.subscribeToSaveResponse(this.decisaoService.update(decisao));
     } else {
       this.subscribeToSaveResponse(this.decisaoService.create(decisao));
@@ -76,20 +69,19 @@ export class DecisaoUpdateComponent implements OnInit {
   }
 
   protected updateForm(decisao: IDecisao): void {
-    this.decisao = decisao;
-    this.decisaoFormService.resetForm(this.editForm, decisao);
-
-    this.reuniaosSharedCollection = this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(
-      this.reuniaosSharedCollection,
-      decisao.reuniao
-    );
+    this.editForm.patchValue({
+      id: decisao.id,
+      nome: decisao.nome,
+      obs: decisao.obs,
+    });
   }
 
-  protected loadRelationshipsOptions(): void {
-    this.reuniaoService
-      .query()
-      .pipe(map((res: HttpResponse<IReuniao[]>) => res.body ?? []))
-      .pipe(map((reuniaos: IReuniao[]) => this.reuniaoService.addReuniaoToCollectionIfMissing<IReuniao>(reuniaos, this.decisao?.reuniao)))
-      .subscribe((reuniaos: IReuniao[]) => (this.reuniaosSharedCollection = reuniaos));
+  protected createFromForm(): IDecisao {
+    return {
+      ...new Decisao(),
+      id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
+      obs: this.editForm.get(['obs'])!.value,
+    };
   }
 }

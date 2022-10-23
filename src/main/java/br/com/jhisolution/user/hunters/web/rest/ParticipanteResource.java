@@ -2,6 +2,7 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import br.com.jhisolution.user.hunters.domain.Participante;
 import br.com.jhisolution.user.hunters.repository.ParticipanteRepository;
+import br.com.jhisolution.user.hunters.service.ParticipanteService;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,22 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +37,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ParticipanteResource {
 
     private final Logger log = LoggerFactory.getLogger(ParticipanteResource.class);
@@ -34,9 +46,12 @@ public class ParticipanteResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ParticipanteService participanteService;
+
     private final ParticipanteRepository participanteRepository;
 
-    public ParticipanteResource(ParticipanteRepository participanteRepository) {
+    public ParticipanteResource(ParticipanteService participanteService, ParticipanteRepository participanteRepository) {
+        this.participanteService = participanteService;
         this.participanteRepository = participanteRepository;
     }
 
@@ -53,7 +68,7 @@ public class ParticipanteResource {
         if (participante.getId() != null) {
             throw new BadRequestAlertException("A new participante cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Participante result = participanteRepository.save(participante);
+        Participante result = participanteService.save(participante);
         return ResponseEntity
             .created(new URI("/api/participantes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +102,7 @@ public class ParticipanteResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Participante result = participanteRepository.save(participante);
+        Participante result = participanteService.update(participante);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, participante.getId().toString()))
@@ -122,19 +137,7 @@ public class ParticipanteResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Participante> result = participanteRepository
-            .findById(participante.getId())
-            .map(existingParticipante -> {
-                if (participante.getNome() != null) {
-                    existingParticipante.setNome(participante.getNome());
-                }
-                if (participante.getObs() != null) {
-                    existingParticipante.setObs(participante.getObs());
-                }
-
-                return existingParticipante;
-            })
-            .map(participanteRepository::save);
+        Optional<Participante> result = participanteService.partialUpdate(participante);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -145,12 +148,26 @@ public class ParticipanteResource {
     /**
      * {@code GET  /participantes} : get all the participantes.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of participantes in body.
      */
     @GetMapping("/participantes")
-    public List<Participante> getAllParticipantes() {
-        log.debug("REST request to get all Participantes");
-        return participanteRepository.findAll();
+    public ResponseEntity<List<Participante>> getAllParticipantes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of Participantes");
+        Page<Participante> page = participanteService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/participantes/reuniao/{id}")
+    public ResponseEntity<List<Participante>> getAllParticipantesByReuniaoId(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Participantes");
+        Page<Participante> page = participanteService.findAllByReuniaoId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -162,7 +179,7 @@ public class ParticipanteResource {
     @GetMapping("/participantes/{id}")
     public ResponseEntity<Participante> getParticipante(@PathVariable Long id) {
         log.debug("REST request to get Participante : {}", id);
-        Optional<Participante> participante = participanteRepository.findById(id);
+        Optional<Participante> participante = participanteService.findOne(id);
         return ResponseUtil.wrapOrNotFound(participante);
     }
 
@@ -175,7 +192,7 @@ public class ParticipanteResource {
     @DeleteMapping("/participantes/{id}")
     public ResponseEntity<Void> deleteParticipante(@PathVariable Long id) {
         log.debug("REST request to delete Participante : {}", id);
-        participanteRepository.deleteById(id);
+        participanteService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

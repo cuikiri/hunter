@@ -6,9 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
-import { AcaoFormService } from './acao-form.service';
 import { AcaoService } from '../service/acao.service';
-import { IAcao } from '../acao.model';
+import { IAcao, Acao } from '../acao.model';
 import { IReuniao } from 'app/entities/reuniao/reuniao/reuniao.model';
 import { ReuniaoService } from 'app/entities/reuniao/reuniao/service/reuniao.service';
 
@@ -18,7 +17,6 @@ describe('Acao Management Update Component', () => {
   let comp: AcaoUpdateComponent;
   let fixture: ComponentFixture<AcaoUpdateComponent>;
   let activatedRoute: ActivatedRoute;
-  let acaoFormService: AcaoFormService;
   let acaoService: AcaoService;
   let reuniaoService: ReuniaoService;
 
@@ -41,7 +39,6 @@ describe('Acao Management Update Component', () => {
 
     fixture = TestBed.createComponent(AcaoUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
-    acaoFormService = TestBed.inject(AcaoFormService);
     acaoService = TestBed.inject(AcaoService);
     reuniaoService = TestBed.inject(ReuniaoService);
 
@@ -64,10 +61,7 @@ describe('Acao Management Update Component', () => {
       comp.ngOnInit();
 
       expect(reuniaoService.query).toHaveBeenCalled();
-      expect(reuniaoService.addReuniaoToCollectionIfMissing).toHaveBeenCalledWith(
-        reuniaoCollection,
-        ...additionalReuniaos.map(expect.objectContaining)
-      );
+      expect(reuniaoService.addReuniaoToCollectionIfMissing).toHaveBeenCalledWith(reuniaoCollection, ...additionalReuniaos);
       expect(comp.reuniaosSharedCollection).toEqual(expectedCollection);
     });
 
@@ -79,17 +73,16 @@ describe('Acao Management Update Component', () => {
       activatedRoute.data = of({ acao });
       comp.ngOnInit();
 
+      expect(comp.editForm.value).toEqual(expect.objectContaining(acao));
       expect(comp.reuniaosSharedCollection).toContain(reuniao);
-      expect(comp.acao).toEqual(acao);
     });
   });
 
   describe('save', () => {
     it('Should call update service on save for existing entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IAcao>>();
+      const saveSubject = new Subject<HttpResponse<Acao>>();
       const acao = { id: 123 };
-      jest.spyOn(acaoFormService, 'getAcao').mockReturnValue(acao);
       jest.spyOn(acaoService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ acao });
@@ -102,20 +95,18 @@ describe('Acao Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(acaoFormService.getAcao).toHaveBeenCalled();
       expect(comp.previousState).toHaveBeenCalled();
-      expect(acaoService.update).toHaveBeenCalledWith(expect.objectContaining(acao));
+      expect(acaoService.update).toHaveBeenCalledWith(acao);
       expect(comp.isSaving).toEqual(false);
     });
 
     it('Should call create service on save for new entity', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IAcao>>();
-      const acao = { id: 123 };
-      jest.spyOn(acaoFormService, 'getAcao').mockReturnValue({ id: null });
+      const saveSubject = new Subject<HttpResponse<Acao>>();
+      const acao = new Acao();
       jest.spyOn(acaoService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
-      activatedRoute.data = of({ acao: null });
+      activatedRoute.data = of({ acao });
       comp.ngOnInit();
 
       // WHEN
@@ -125,15 +116,14 @@ describe('Acao Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(acaoFormService.getAcao).toHaveBeenCalled();
-      expect(acaoService.create).toHaveBeenCalled();
+      expect(acaoService.create).toHaveBeenCalledWith(acao);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
     });
 
     it('Should set isSaving to false on error', () => {
       // GIVEN
-      const saveSubject = new Subject<HttpResponse<IAcao>>();
+      const saveSubject = new Subject<HttpResponse<Acao>>();
       const acao = { id: 123 };
       jest.spyOn(acaoService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
@@ -146,20 +136,18 @@ describe('Acao Management Update Component', () => {
       saveSubject.error('This is an error!');
 
       // THEN
-      expect(acaoService.update).toHaveBeenCalled();
+      expect(acaoService.update).toHaveBeenCalledWith(acao);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
     });
   });
 
-  describe('Compare relationships', () => {
-    describe('compareReuniao', () => {
-      it('Should forward to reuniaoService', () => {
+  describe('Tracking relationships identifiers', () => {
+    describe('trackReuniaoById', () => {
+      it('Should return tracked Reuniao primary key', () => {
         const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(reuniaoService, 'compareReuniao');
-        comp.compareReuniao(entity, entity2);
-        expect(reuniaoService.compareReuniao).toHaveBeenCalledWith(entity, entity2);
+        const trackResult = comp.trackReuniaoById(0, entity);
+        expect(trackResult).toEqual(entity.id);
       });
     });
   });

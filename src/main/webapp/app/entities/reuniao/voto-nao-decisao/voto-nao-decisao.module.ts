@@ -14,5 +14,6 @@ import { VotoNaoDecisaoRoutingModule } from './route/voto-nao-decisao-routing.mo
     VotoNaoDecisaoUpdateComponent,
     VotoNaoDecisaoDeleteDialogComponent,
   ],
+  entryComponents: [VotoNaoDecisaoDeleteDialogComponent],
 })
 export class VotoNaoDecisaoModule {}

@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IVotoSimDecisao, NewVotoSimDecisao } from '../voto-sim-decisao.model';
-
-export type PartialUpdateVotoSimDecisao = Partial<IVotoSimDecisao> & Pick<IVotoSimDecisao, 'id'>;
+import { IVotoSimDecisao, getVotoSimDecisaoIdentifier } from '../voto-sim-decisao.model';
 
 export type EntityResponseType = HttpResponse<IVotoSimDecisao>;
 export type EntityArrayResponseType = HttpResponse<IVotoSimDecisao[]>;
@@ -18,24 +16,31 @@ export class VotoSimDecisaoService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(votoSimDecisao: NewVotoSimDecisao): Observable<EntityResponseType> {
+  create(votoSimDecisao: IVotoSimDecisao): Observable<EntityResponseType> {
     return this.http.post<IVotoSimDecisao>(this.resourceUrl, votoSimDecisao, { observe: 'response' });
   }
 
   update(votoSimDecisao: IVotoSimDecisao): Observable<EntityResponseType> {
-    return this.http.put<IVotoSimDecisao>(`${this.resourceUrl}/${this.getVotoSimDecisaoIdentifier(votoSimDecisao)}`, votoSimDecisao, {
+    return this.http.put<IVotoSimDecisao>(`${this.resourceUrl}/${getVotoSimDecisaoIdentifier(votoSimDecisao) as number}`, votoSimDecisao, {
       observe: 'response',
     });
   }
 
-  partialUpdate(votoSimDecisao: PartialUpdateVotoSimDecisao): Observable<EntityResponseType> {
-    return this.http.patch<IVotoSimDecisao>(`${this.resourceUrl}/${this.getVotoSimDecisaoIdentifier(votoSimDecisao)}`, votoSimDecisao, {
-      observe: 'response',
-    });
+  partialUpdate(votoSimDecisao: IVotoSimDecisao): Observable<EntityResponseType> {
+    return this.http.patch<IVotoSimDecisao>(
+      `${this.resourceUrl}/${getVotoSimDecisaoIdentifier(votoSimDecisao) as number}`,
+      votoSimDecisao,
+      { observe: 'response' }
+    );
   }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IVotoSimDecisao>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findAllByDecicaoId(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IVotoSimDecisao[]>(`${this.resourceUrl}/decisao/${id}`, { params: options, observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -47,26 +52,18 @@ export class VotoSimDecisaoService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getVotoSimDecisaoIdentifier(votoSimDecisao: Pick<IVotoSimDecisao, 'id'>): number {
-    return votoSimDecisao.id;
-  }
-
-  compareVotoSimDecisao(o1: Pick<IVotoSimDecisao, 'id'> | null, o2: Pick<IVotoSimDecisao, 'id'> | null): boolean {
-    return o1 && o2 ? this.getVotoSimDecisaoIdentifier(o1) === this.getVotoSimDecisaoIdentifier(o2) : o1 === o2;
-  }
-
-  addVotoSimDecisaoToCollectionIfMissing<Type extends Pick<IVotoSimDecisao, 'id'>>(
-    votoSimDecisaoCollection: Type[],
-    ...votoSimDecisaosToCheck: (Type | null | undefined)[]
-  ): Type[] {
-    const votoSimDecisaos: Type[] = votoSimDecisaosToCheck.filter(isPresent);
+  addVotoSimDecisaoToCollectionIfMissing(
+    votoSimDecisaoCollection: IVotoSimDecisao[],
+    ...votoSimDecisaosToCheck: (IVotoSimDecisao | null | undefined)[]
+  ): IVotoSimDecisao[] {
+    const votoSimDecisaos: IVotoSimDecisao[] = votoSimDecisaosToCheck.filter(isPresent);
     if (votoSimDecisaos.length > 0) {
       const votoSimDecisaoCollectionIdentifiers = votoSimDecisaoCollection.map(
-        votoSimDecisaoItem => this.getVotoSimDecisaoIdentifier(votoSimDecisaoItem)!
+        votoSimDecisaoItem => getVotoSimDecisaoIdentifier(votoSimDecisaoItem)!
       );
       const votoSimDecisaosToAdd = votoSimDecisaos.filter(votoSimDecisaoItem => {
-        const votoSimDecisaoIdentifier = this.getVotoSimDecisaoIdentifier(votoSimDecisaoItem);
-        if (votoSimDecisaoCollectionIdentifiers.includes(votoSimDecisaoIdentifier)) {
+        const votoSimDecisaoIdentifier = getVotoSimDecisaoIdentifier(votoSimDecisaoItem);
+        if (votoSimDecisaoIdentifier == null || votoSimDecisaoCollectionIdentifiers.includes(votoSimDecisaoIdentifier)) {
           return false;
         }
         votoSimDecisaoCollectionIdentifiers.push(votoSimDecisaoIdentifier);

@@ -5,7 +5,7 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router, convertToParamMap } fro
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { IPauta } from '../pauta.model';
+import { IPauta, Pauta } from '../pauta.model';
 import { PautaService } from '../service/pauta.service';
 
 import { PautaRoutingResolveService } from './pauta-routing-resolve.service';
@@ -15,7 +15,7 @@ describe('Pauta routing resolve service', () => {
   let mockActivatedRouteSnapshot: ActivatedRouteSnapshot;
   let routingResolveService: PautaRoutingResolveService;
   let service: PautaService;
-  let resultPauta: IPauta | null | undefined;
+  let resultPauta: IPauta | undefined;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,7 +55,7 @@ describe('Pauta routing resolve service', () => {
       expect(resultPauta).toEqual({ id: 123 });
     });
 
-    it('should return null if id is not provided', () => {
+    it('should return new IPauta if id is not provided', () => {
       // GIVEN
       service.find = jest.fn();
       mockActivatedRouteSnapshot.params = {};
@@ -67,12 +67,12 @@ describe('Pauta routing resolve service', () => {
 
       // THEN
       expect(service.find).not.toBeCalled();
-      expect(resultPauta).toEqual(null);
+      expect(resultPauta).toEqual(new Pauta());
     });
 
     it('should route to 404 page if data not found in server', () => {
       // GIVEN
-      jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse<IPauta>({ body: null })));
+      jest.spyOn(service, 'find').mockReturnValue(of(new HttpResponse({ body: null as unknown as Pauta })));
       mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN

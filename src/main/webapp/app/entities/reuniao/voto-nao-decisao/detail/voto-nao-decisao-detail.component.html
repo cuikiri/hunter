@@ -2,7 +2,7 @@
   <div class="col-8">
     <div *ngIf="votoNaoDecisao">
       <h2 data-cy="votoNaoDecisaoDetailsHeading">
-        <span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.detail.title">Voto Nao Decisao</span>
+        <span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.detail.title">Voto Nao Decisao</span>
       </h2>
 
       <hr />
@@ -12,32 +12,26 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
         <dd>
           <span>{{ votoNaoDecisao.id }}</span>
         </dd>
-        <dt><span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.nome">Nome</span></dt>
+        <dt><span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.nome">Nome</span></dt>
         <dd>
           <span>{{ votoNaoDecisao.nome }}</span>
         </dd>
-        <dt><span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.obs">Obs</span></dt>
+        <dt><span jhiTranslate="reuniaoappApp.reuniaoVotoNaoDecisao.obs">Obs</span></dt>
         <dd>
           <span>{{ votoNaoDecisao.obs }}</span>
-        </dd>
-        <dt><span jhiTranslate="hunterappApp.reuniaoVotoNaoDecisao.decisao">Decisao</span></dt>
-        <dd>
-          <div *ngIf="votoNaoDecisao.decisao">
-            <a [routerLink]="['/decisao', votoNaoDecisao.decisao.id, 'view']">{{ votoNaoDecisao.decisao.id }}</a>
-          </div>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/voto-nao-decisao', votoNaoDecisao.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

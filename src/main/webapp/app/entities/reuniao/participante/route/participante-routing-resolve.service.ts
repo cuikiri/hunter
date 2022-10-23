@@ -4,18 +4,18 @@ import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { IParticipante } from '../participante.model';
+import { IParticipante, Participante } from '../participante.model';
 import { ParticipanteService } from '../service/participante.service';
 
 @Injectable({ providedIn: 'root' })
-export class ParticipanteRoutingResolveService implements Resolve<IParticipante | null> {
+export class ParticipanteRoutingResolveService implements Resolve<IParticipante> {
   constructor(protected service: ParticipanteService, protected router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IParticipante | null | never> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IParticipante> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        mergeMap((participante: HttpResponse<IParticipante>) => {
+        mergeMap((participante: HttpResponse<Participante>) => {
           if (participante.body) {
             return of(participante.body);
           } else {
@@ -25,6 +25,6 @@ export class ParticipanteRoutingResolveService implements Resolve<IParticipante 
         })
       );
     }
-    return of(null);
+    return of(new Participante());
   }
 }

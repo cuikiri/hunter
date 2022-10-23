@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="decisao">
-      <h2 data-cy="decisaoDetailsHeading"><span jhiTranslate="hunterappApp.reuniaoDecisao.detail.title">Decisao</span></h2>
+      <h2 data-cy="decisaoDetailsHeading"><span jhiTranslate="reuniaoappApp.reuniaoDecisao.detail.title">Decisao</span></h2>
 
       <hr />
 
@@ -10,32 +10,32 @@
       <jhi-alert></jhi-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">Código</span></dt>
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
         <dd>
           <span>{{ decisao.id }}</span>
         </dd>
-        <dt><span jhiTranslate="hunterappApp.reuniaoDecisao.nome">Nome</span></dt>
+        <dt><span jhiTranslate="reuniaoappApp.reuniaoDecisao.nome">Nome</span></dt>
         <dd>
           <span>{{ decisao.nome }}</span>
         </dd>
-        <dt><span jhiTranslate="hunterappApp.reuniaoDecisao.obs">Obs</span></dt>
+        <dt><span jhiTranslate="reuniaoappApp.reuniaoDecisao.obs">Obs</span></dt>
         <dd>
           <span>{{ decisao.obs }}</span>
         </dd>
-        <dt><span jhiTranslate="hunterappApp.reuniaoDecisao.reuniao">Reuniao</span></dt>
+        <dt><span jhiTranslate="reuniaoappApp.reuniaoDecisao.reuniao">Reuniao</span></dt>
         <dd>
           <div *ngIf="decisao.reuniao">
-            <a [routerLink]="['/reuniao', decisao.reuniao.id, 'view']">{{ decisao.reuniao.id }}</a>
+            <a [routerLink]="['/reuniao', decisao.reuniao?.id, 'view']">{{ decisao.reuniao?.id }}</a>
           </div>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/decisao', decisao.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

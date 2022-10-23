@@ -8,21 +8,7 @@ import { isPresent } from 'app/core/util/operators';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IReuniao, NewReuniao } from '../reuniao.model';
-
-export type PartialUpdateReuniao = Partial<IReuniao> & Pick<IReuniao, 'id'>;
-
-type RestOf<T extends IReuniao | NewReuniao> = Omit<T, 'data' | 'dataInicio' | 'dataFim'> & {
-  data?: string | null;
-  dataInicio?: string | null;
-  dataFim?: string | null;
-};
-
-export type RestReuniao = RestOf<IReuniao>;
-
-export type NewRestReuniao = RestOf<NewReuniao>;
-
-export type PartialUpdateRestReuniao = RestOf<PartialUpdateReuniao>;
+import { IReuniao, getReuniaoIdentifier } from '../reuniao.model';
 
 export type EntityResponseType = HttpResponse<IReuniao>;
 export type EntityArrayResponseType = HttpResponse<IReuniao[]>;
@@ -33,62 +19,51 @@ export class ReuniaoService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(reuniao: NewReuniao): Observable<EntityResponseType> {
+  create(reuniao: IReuniao): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(reuniao);
     return this.http
-      .post<RestReuniao>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+      .post<IReuniao>(this.resourceUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   update(reuniao: IReuniao): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(reuniao);
     return this.http
-      .put<RestReuniao>(`${this.resourceUrl}/${this.getReuniaoIdentifier(reuniao)}`, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+      .put<IReuniao>(`${this.resourceUrl}/${getReuniaoIdentifier(reuniao) as number}`, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  partialUpdate(reuniao: PartialUpdateReuniao): Observable<EntityResponseType> {
+  partialUpdate(reuniao: IReuniao): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(reuniao);
     return this.http
-      .patch<RestReuniao>(`${this.resourceUrl}/${this.getReuniaoIdentifier(reuniao)}`, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+      .patch<IReuniao>(`${this.resourceUrl}/${getReuniaoIdentifier(reuniao) as number}`, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http
-      .get<RestReuniao>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+      .get<IReuniao>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<RestReuniao[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map(res => this.convertResponseArrayFromServer(res)));
+      .get<IReuniao[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getReuniaoIdentifier(reuniao: Pick<IReuniao, 'id'>): number {
-    return reuniao.id;
-  }
-
-  compareReuniao(o1: Pick<IReuniao, 'id'> | null, o2: Pick<IReuniao, 'id'> | null): boolean {
-    return o1 && o2 ? this.getReuniaoIdentifier(o1) === this.getReuniaoIdentifier(o2) : o1 === o2;
-  }
-
-  addReuniaoToCollectionIfMissing<Type extends Pick<IReuniao, 'id'>>(
-    reuniaoCollection: Type[],
-    ...reuniaosToCheck: (Type | null | undefined)[]
-  ): Type[] {
-    const reuniaos: Type[] = reuniaosToCheck.filter(isPresent);
+  addReuniaoToCollectionIfMissing(reuniaoCollection: IReuniao[], ...reuniaosToCheck: (IReuniao | null | undefined)[]): IReuniao[] {
+    const reuniaos: IReuniao[] = reuniaosToCheck.filter(isPresent);
     if (reuniaos.length > 0) {
-      const reuniaoCollectionIdentifiers = reuniaoCollection.map(reuniaoItem => this.getReuniaoIdentifier(reuniaoItem)!);
+      const reuniaoCollectionIdentifiers = reuniaoCollection.map(reuniaoItem => getReuniaoIdentifier(reuniaoItem)!);
       const reuniaosToAdd = reuniaos.filter(reuniaoItem => {
-        const reuniaoIdentifier = this.getReuniaoIdentifier(reuniaoItem);
-        if (reuniaoCollectionIdentifiers.includes(reuniaoIdentifier)) {
+        const reuniaoIdentifier = getReuniaoIdentifier(reuniaoItem);
+        if (reuniaoIdentifier == null || reuniaoCollectionIdentifiers.includes(reuniaoIdentifier)) {
           return false;
         }
         reuniaoCollectionIdentifiers.push(reuniaoIdentifier);
@@ -99,33 +74,31 @@ export class ReuniaoService {
     return reuniaoCollection;
   }
 
-  protected convertDateFromClient<T extends IReuniao | NewReuniao | PartialUpdateReuniao>(reuniao: T): RestOf<T> {
-    return {
-      ...reuniao,
-      data: reuniao.data?.format(DATE_FORMAT) ?? null,
-      dataInicio: reuniao.dataInicio?.format(DATE_FORMAT) ?? null,
-      dataFim: reuniao.dataFim?.format(DATE_FORMAT) ?? null,
-    };
-  }
-
-  protected convertDateFromServer(restReuniao: RestReuniao): IReuniao {
-    return {
-      ...restReuniao,
-      data: restReuniao.data ? dayjs(restReuniao.data) : undefined,
-      dataInicio: restReuniao.dataInicio ? dayjs(restReuniao.dataInicio) : undefined,
-      dataFim: restReuniao.dataFim ? dayjs(restReuniao.dataFim) : undefined,
-    };
-  }
-
-  protected convertResponseFromServer(res: HttpResponse<RestReuniao>): HttpResponse<IReuniao> {
-    return res.clone({
-      body: res.body ? this.convertDateFromServer(res.body) : null,
+  protected convertDateFromClient(reuniao: IReuniao): IReuniao {
+    return Object.assign({}, reuniao, {
+      data: reuniao.data?.isValid() ? reuniao.data.format(DATE_FORMAT) : undefined,
+      dataInicio: reuniao.dataInicio?.isValid() ? reuniao.dataInicio.format(DATE_FORMAT) : undefined,
+      dataFim: reuniao.dataFim?.isValid() ? reuniao.dataFim.format(DATE_FORMAT) : undefined,
     });
   }
 
-  protected convertResponseArrayFromServer(res: HttpResponse<RestReuniao[]>): HttpResponse<IReuniao[]> {
-    return res.clone({
-      body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
-    });
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.data = res.body.data ? dayjs(res.body.data) : undefined;
+      res.body.dataInicio = res.body.dataInicio ? dayjs(res.body.dataInicio) : undefined;
+      res.body.dataFim = res.body.dataFim ? dayjs(res.body.dataFim) : undefined;
+    }
+    return res;
+  }
+
+  protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
+    if (res.body) {
+      res.body.forEach((reuniao: IReuniao) => {
+        reuniao.data = reuniao.data ? dayjs(reuniao.data) : undefined;
+        reuniao.dataInicio = reuniao.dataInicio ? dayjs(reuniao.dataInicio) : undefined;
+        reuniao.dataFim = reuniao.dataFim ? dayjs(reuniao.dataFim) : undefined;
+      });
+    }
+    return res;
   }
 }

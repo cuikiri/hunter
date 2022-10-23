@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { ReuniaoFormService, ReuniaoFormGroup } from './reuniao-form.service';
-import { IReuniao } from '../reuniao.model';
+import { IReuniao, Reuniao } from '../reuniao.model';
 import { ReuniaoService } from '../service/reuniao.service';
 import { TipoReuniao } from 'app/entities/enumerations/tipo-reuniao.model';
 
@@ -15,23 +15,28 @@ import { TipoReuniao } from 'app/entities/enumerations/tipo-reuniao.model';
 })
 export class ReuniaoUpdateComponent implements OnInit {
   isSaving = false;
-  reuniao: IReuniao | null = null;
   tipoReuniaoValues = Object.keys(TipoReuniao);
+  reuniao: IReuniao | null = null;
 
-  editForm: ReuniaoFormGroup = this.reuniaoFormService.createReuniaoFormGroup();
+  editForm = this.fb.group({
+    id: [],
+    nome: [null, [Validators.required, Validators.maxLength(50)]],
+    descricao: [null, [Validators.required, Validators.maxLength(1000)]],
+    data: [null, [Validators.required]],
+    dataInicio: [],
+    dataFim: [],
+    horaInicio: [null, [Validators.maxLength(5)]],
+    horaFim: [null, [Validators.maxLength(5)]],
+    tipoReuniao: [],
+    obs: [null, [Validators.maxLength(100)]],
+  });
 
-  constructor(
-    protected reuniaoService: ReuniaoService,
-    protected reuniaoFormService: ReuniaoFormService,
-    protected activatedRoute: ActivatedRoute
-  ) {}
+  constructor(protected reuniaoService: ReuniaoService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ reuniao }) => {
       this.reuniao = reuniao;
-      if (reuniao) {
-        this.updateForm(reuniao);
-      }
+      this.updateForm(reuniao);
     });
   }
 
@@ -41,8 +46,8 @@ export class ReuniaoUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const reuniao = this.reuniaoFormService.getReuniao(this.editForm);
-    if (reuniao.id !== null) {
+    const reuniao = this.createFromForm();
+    if (reuniao.id !== undefined) {
       this.subscribeToSaveResponse(this.reuniaoService.update(reuniao));
     } else {
       this.subscribeToSaveResponse(this.reuniaoService.create(reuniao));
@@ -69,7 +74,33 @@ export class ReuniaoUpdateComponent implements OnInit {
   }
 
   protected updateForm(reuniao: IReuniao): void {
-    this.reuniao = reuniao;
-    this.reuniaoFormService.resetForm(this.editForm, reuniao);
+    this.editForm.patchValue({
+      id: reuniao.id,
+      nome: reuniao.nome,
+      descricao: reuniao.descricao,
+      data: reuniao.data,
+      dataInicio: reuniao.dataInicio,
+      dataFim: reuniao.dataFim,
+      horaInicio: reuniao.horaInicio,
+      horaFim: reuniao.horaFim,
+      tipoReuniao: reuniao.tipoReuniao,
+      obs: reuniao.obs,
+    });
+  }
+
+  protected createFromForm(): IReuniao {
+    return {
+      ...new Reuniao(),
+      id: this.editForm.get(['id'])!.value,
+      nome: this.editForm.get(['nome'])!.value,
+      descricao: this.editForm.get(['descricao'])!.value,
+      data: this.editForm.get(['data'])!.value,
+      dataInicio: this.editForm.get(['dataInicio'])!.value,
+      dataFim: this.editForm.get(['dataFim'])!.value,
+      horaInicio: this.editForm.get(['horaInicio'])!.value,
+      horaFim: this.editForm.get(['horaFim'])!.value,
+      tipoReuniao: this.editForm.get(['tipoReuniao'])!.value,
+      obs: this.editForm.get(['obs'])!.value,
+    };
   }
 }

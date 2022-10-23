@@ -2,6 +2,7 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import br.com.jhisolution.user.hunters.domain.VotoNaoDecisao;
 import br.com.jhisolution.user.hunters.repository.VotoNaoDecisaoRepository;
+import br.com.jhisolution.user.hunters.service.VotoNaoDecisaoService;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,10 +14,22 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -24,7 +37,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class VotoNaoDecisaoResource {
 
     private final Logger log = LoggerFactory.getLogger(VotoNaoDecisaoResource.class);
@@ -34,9 +46,12 @@ public class VotoNaoDecisaoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final VotoNaoDecisaoService votoNaoDecisaoService;
+
     private final VotoNaoDecisaoRepository votoNaoDecisaoRepository;
 
-    public VotoNaoDecisaoResource(VotoNaoDecisaoRepository votoNaoDecisaoRepository) {
+    public VotoNaoDecisaoResource(VotoNaoDecisaoService votoNaoDecisaoService, VotoNaoDecisaoRepository votoNaoDecisaoRepository) {
+        this.votoNaoDecisaoService = votoNaoDecisaoService;
         this.votoNaoDecisaoRepository = votoNaoDecisaoRepository;
     }
 
@@ -54,7 +69,7 @@ public class VotoNaoDecisaoResource {
         if (votoNaoDecisao.getId() != null) {
             throw new BadRequestAlertException("A new votoNaoDecisao cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        VotoNaoDecisao result = votoNaoDecisaoRepository.save(votoNaoDecisao);
+        VotoNaoDecisao result = votoNaoDecisaoService.save(votoNaoDecisao);
         return ResponseEntity
             .created(new URI("/api/voto-nao-decisaos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -88,7 +103,7 @@ public class VotoNaoDecisaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        VotoNaoDecisao result = votoNaoDecisaoRepository.save(votoNaoDecisao);
+        VotoNaoDecisao result = votoNaoDecisaoService.update(votoNaoDecisao);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, votoNaoDecisao.getId().toString()))
@@ -123,19 +138,7 @@ public class VotoNaoDecisaoResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<VotoNaoDecisao> result = votoNaoDecisaoRepository
-            .findById(votoNaoDecisao.getId())
-            .map(existingVotoNaoDecisao -> {
-                if (votoNaoDecisao.getNome() != null) {
-                    existingVotoNaoDecisao.setNome(votoNaoDecisao.getNome());
-                }
-                if (votoNaoDecisao.getObs() != null) {
-                    existingVotoNaoDecisao.setObs(votoNaoDecisao.getObs());
-                }
-
-                return existingVotoNaoDecisao;
-            })
-            .map(votoNaoDecisaoRepository::save);
+        Optional<VotoNaoDecisao> result = votoNaoDecisaoService.partialUpdate(votoNaoDecisao);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -146,12 +149,26 @@ public class VotoNaoDecisaoResource {
     /**
      * {@code GET  /voto-nao-decisaos} : get all the votoNaoDecisaos.
      *
+     * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of votoNaoDecisaos in body.
      */
     @GetMapping("/voto-nao-decisaos")
-    public List<VotoNaoDecisao> getAllVotoNaoDecisaos() {
-        log.debug("REST request to get all VotoNaoDecisaos");
-        return votoNaoDecisaoRepository.findAll();
+    public ResponseEntity<List<VotoNaoDecisao>> getAllVotoNaoDecisaos(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get a page of VotoNaoDecisaos");
+        Page<VotoNaoDecisao> page = votoNaoDecisaoService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/voto-nao-decisaos/decisao/{id}")
+    public ResponseEntity<List<VotoNaoDecisao>> getAllVotoNaoDecisaosByDecisaoId(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of VotoNaoDecisaos");
+        Page<VotoNaoDecisao> page = votoNaoDecisaoService.findAllByDecisaoId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -163,7 +180,7 @@ public class VotoNaoDecisaoResource {
     @GetMapping("/voto-nao-decisaos/{id}")
     public ResponseEntity<VotoNaoDecisao> getVotoNaoDecisao(@PathVariable Long id) {
         log.debug("REST request to get VotoNaoDecisao : {}", id);
-        Optional<VotoNaoDecisao> votoNaoDecisao = votoNaoDecisaoRepository.findById(id);
+        Optional<VotoNaoDecisao> votoNaoDecisao = votoNaoDecisaoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(votoNaoDecisao);
     }
 
@@ -176,7 +193,7 @@ public class VotoNaoDecisaoResource {
     @DeleteMapping("/voto-nao-decisaos/{id}")
     public ResponseEntity<Void> deleteVotoNaoDecisao(@PathVariable Long id) {
         log.debug("REST request to delete VotoNaoDecisao : {}", id);
-        votoNaoDecisaoRepository.deleteById(id);
+        votoNaoDecisaoService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

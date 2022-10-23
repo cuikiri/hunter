@@ -9,5 +9,6 @@ import { PautaRoutingModule } from './route/pauta-routing.module';
 @NgModule({
   imports: [SharedModule, PautaRoutingModule],
   declarations: [PautaComponent, PautaDetailComponent, PautaUpdateComponent, PautaDeleteDialogComponent],
+  entryComponents: [PautaDeleteDialogComponent],
 })
 export class PautaModule {}

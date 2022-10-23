@@ -6,14 +6,25 @@ import { ParticipanteComponent } from '../list/participante.component';
 import { ParticipanteDetailComponent } from '../detail/participante-detail.component';
 import { ParticipanteUpdateComponent } from '../update/participante-update.component';
 import { ParticipanteRoutingResolveService } from './participante-routing-resolve.service';
-import { ASC } from 'app/config/navigation.constants';
+import { ParticipanteRoutingResolveReuniaoService } from './participante-routing-resolve-reuniao.service';
 
 const participanteRoute: Routes = [
   {
     path: '',
     component: ParticipanteComponent,
     data: {
-      defaultSort: 'id,' + ASC,
+      defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'reuniao/:idReuniao',
+    component: ParticipanteComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    resolve: {
+      reuniao: ParticipanteRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -30,6 +41,15 @@ const participanteRoute: Routes = [
     component: ParticipanteUpdateComponent,
     resolve: {
       participante: ParticipanteRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new/reuniao/:idReuniao',
+    component: ParticipanteUpdateComponent,
+    resolve: {
+      participante: ParticipanteRoutingResolveService,
+      reuniao: ParticipanteRoutingResolveReuniaoService,
     },
     canActivate: [UserRouteAccessService],
   },

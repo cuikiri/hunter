@@ -3,7 +3,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IVotoNaoDecisao } from '../voto-nao-decisao.model';
 import { VotoNaoDecisaoService } from '../service/voto-nao-decisao.service';
-import { ITEM_DELETED_EVENT } from 'app/config/navigation.constants';
 
 @Component({
   templateUrl: './voto-nao-decisao-delete-dialog.component.html',
@@ -19,7 +18,7 @@ export class VotoNaoDecisaoDeleteDialogComponent {
 
   confirmDelete(id: number): void {
     this.votoNaoDecisaoService.delete(id).subscribe(() => {
-      this.activeModal.close(ITEM_DELETED_EVENT);
+      this.activeModal.close('deleted');
     });
   }
 }

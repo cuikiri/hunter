@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IParticipante, NewParticipante } from '../participante.model';
-
-export type PartialUpdateParticipante = Partial<IParticipante> & Pick<IParticipante, 'id'>;
+import { IParticipante, getParticipanteIdentifier } from '../participante.model';
 
 export type EntityResponseType = HttpResponse<IParticipante>;
 export type EntityArrayResponseType = HttpResponse<IParticipante[]>;
@@ -18,24 +16,29 @@ export class ParticipanteService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(participante: NewParticipante): Observable<EntityResponseType> {
+  create(participante: IParticipante): Observable<EntityResponseType> {
     return this.http.post<IParticipante>(this.resourceUrl, participante, { observe: 'response' });
   }
 
   update(participante: IParticipante): Observable<EntityResponseType> {
-    return this.http.put<IParticipante>(`${this.resourceUrl}/${this.getParticipanteIdentifier(participante)}`, participante, {
+    return this.http.put<IParticipante>(`${this.resourceUrl}/${getParticipanteIdentifier(participante) as number}`, participante, {
       observe: 'response',
     });
   }
 
-  partialUpdate(participante: PartialUpdateParticipante): Observable<EntityResponseType> {
-    return this.http.patch<IParticipante>(`${this.resourceUrl}/${this.getParticipanteIdentifier(participante)}`, participante, {
+  partialUpdate(participante: IParticipante): Observable<EntityResponseType> {
+    return this.http.patch<IParticipante>(`${this.resourceUrl}/${getParticipanteIdentifier(participante) as number}`, participante, {
       observe: 'response',
     });
   }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IParticipante>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findAllByReuniaoId(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IParticipante[]>(`${this.resourceUrl}/reuniao/${id}`, { params: options, observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -47,26 +50,18 @@ export class ParticipanteService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  getParticipanteIdentifier(participante: Pick<IParticipante, 'id'>): number {
-    return participante.id;
-  }
-
-  compareParticipante(o1: Pick<IParticipante, 'id'> | null, o2: Pick<IParticipante, 'id'> | null): boolean {
-    return o1 && o2 ? this.getParticipanteIdentifier(o1) === this.getParticipanteIdentifier(o2) : o1 === o2;
-  }
-
-  addParticipanteToCollectionIfMissing<Type extends Pick<IParticipante, 'id'>>(
-    participanteCollection: Type[],
-    ...participantesToCheck: (Type | null | undefined)[]
-  ): Type[] {
-    const participantes: Type[] = participantesToCheck.filter(isPresent);
+  addParticipanteToCollectionIfMissing(
+    participanteCollection: IParticipante[],
+    ...participantesToCheck: (IParticipante | null | undefined)[]
+  ): IParticipante[] {
+    const participantes: IParticipante[] = participantesToCheck.filter(isPresent);
     if (participantes.length > 0) {
       const participanteCollectionIdentifiers = participanteCollection.map(
-        participanteItem => this.getParticipanteIdentifier(participanteItem)!
+        participanteItem => getParticipanteIdentifier(participanteItem)!
       );
       const participantesToAdd = participantes.filter(participanteItem => {
-        const participanteIdentifier = this.getParticipanteIdentifier(participanteItem);
-        if (participanteCollectionIdentifiers.includes(participanteIdentifier)) {
+        const participanteIdentifier = getParticipanteIdentifier(participanteItem);
+        if (participanteIdentifier == null || participanteCollectionIdentifiers.includes(participanteIdentifier)) {
           return false;
         }
         participanteCollectionIdentifiers.push(participanteIdentifier);
