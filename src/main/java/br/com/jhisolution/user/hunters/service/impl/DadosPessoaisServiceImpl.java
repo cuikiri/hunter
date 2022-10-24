@@ -53,70 +53,14 @@ public class DadosPessoaisServiceImpl implements DadosPessoaisService {
     @Override
     public DadosPessoais save(DadosPessoais dadosPessoais) {
         log.debug("Request to save DadosPessoais : {}", dadosPessoais);
-
-        Long idFotoIcon = null;
-        Long idFotoAvatar = null;
-
-        BufferedImage fotoSmall = null;
-        BufferedImage fotoMediu = null;
-
-        FotoIcon fotoIcon = null;
-        FotoAvatar fotoAvatar = null;
-
-        try {
-            Foto foto = dadosPessoais.getFoto();
-
-            if (Objects.nonNull(foto)) {
-                if (Objects.nonNull(dadosPessoais.getId())) {
-                    Optional<DadosPessoais> dadosAux = dadosPessoaisRepository.findById(dadosPessoais.getId());
-                    if (dadosAux.isPresent()) {
-                        idFotoIcon = Objects.nonNull(dadosAux.get().getFotoIcon()) ? dadosAux.get().getFotoIcon().getId() : null;
-                        idFotoAvatar = Objects.nonNull(dadosAux.get().getFotoAvatar()) ? dadosAux.get().getFotoAvatar().getId() : null;
-                    }
-                }
-
-                if (Objects.nonNull(foto.getConteudo())) {
-                    ByteArrayInputStream bais = new ByteArrayInputStream(dadosPessoais.getFoto().getConteudo());
-                    BufferedImage fotoAux = ImageIO.read(bais);
-
-                    fotoSmall = Scalr.resize(fotoAux, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH, 60, 60, Scalr.OP_ANTIALIAS);
-                    fotoMediu = Scalr.resize(fotoAux, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH, 200, 200, Scalr.OP_ANTIALIAS);
-
-                    fotoIcon =
-                        FotoIcon.getInstance(
-                            idFotoIcon,
-                            UtilDomain.convertBufferedImageToByte(fotoSmall, foto.getConteudoContentType()),
-                            foto.getConteudoContentType()
-                        );
-                    fotoAvatar =
-                        FotoAvatar.getInstance(
-                            idFotoAvatar,
-                            UtilDomain.convertBufferedImageToByte(fotoMediu, foto.getConteudoContentType()),
-                            foto.getConteudoContentType()
-                        );
-                } else {
-                    fotoIcon = FotoIcon.getInstance(idFotoIcon, new byte[0], "");
-                    fotoAvatar = FotoAvatar.getInstance(idFotoAvatar, new byte[0], "");
-                }
-
-                Foto fotoSave = fotoRepository.save(foto);
-                FotoIcon fotoIconSave = fotoIconRepository.save(fotoIcon);
-                FotoAvatar fotoAvatarSave = fotoAvatarRepository.save(fotoAvatar);
-
-                dadosPessoais.setFoto(fotoSave);
-                dadosPessoais.setFotoIcon(fotoIconSave);
-                dadosPessoais.setFotoAvatar(fotoAvatarSave);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
+        trataFoto(dadosPessoais);
         return dadosPessoaisRepository.save(dadosPessoais);
     }
 
     @Override
     public DadosPessoais update(DadosPessoais dadosPessoais) {
         log.debug("Request to save DadosPessoais : {}", dadosPessoais);
+        trataFoto(dadosPessoais);
         return dadosPessoaisRepository.save(dadosPessoais);
     }
 
@@ -179,5 +123,68 @@ public class DadosPessoaisServiceImpl implements DadosPessoaisService {
     public void delete(Long id) {
         log.debug("Request to delete DadosPessoais : {}", id);
         dadosPessoaisRepository.deleteById(id);
+    }
+
+    private DadosPessoais trataFoto(DadosPessoais dadosPessoais) {
+        log.debug("Trata as fotos : {}", dadosPessoais);
+
+        Long idFotoIcon = null;
+        Long idFotoAvatar = null;
+
+        BufferedImage fotoSmall = null;
+        BufferedImage fotoMediu = null;
+
+        FotoIcon fotoIcon = null;
+        FotoAvatar fotoAvatar = null;
+
+        try {
+            Foto foto = dadosPessoais.getFoto();
+
+            if (Objects.nonNull(foto)) {
+                if (Objects.nonNull(dadosPessoais.getId())) {
+                    Optional<DadosPessoais> dadosAux = dadosPessoaisRepository.findById(dadosPessoais.getId());
+                    if (dadosAux.isPresent()) {
+                        idFotoIcon = Objects.nonNull(dadosAux.get().getFotoIcon()) ? dadosAux.get().getFotoIcon().getId() : null;
+                        idFotoAvatar = Objects.nonNull(dadosAux.get().getFotoAvatar()) ? dadosAux.get().getFotoAvatar().getId() : null;
+                    }
+                }
+
+                if (Objects.nonNull(foto.getConteudo())) {
+                    ByteArrayInputStream bais = new ByteArrayInputStream(dadosPessoais.getFoto().getConteudo());
+                    BufferedImage fotoAux = ImageIO.read(bais);
+
+                    fotoSmall = Scalr.resize(fotoAux, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH, 60, 60, Scalr.OP_ANTIALIAS);
+                    fotoMediu = Scalr.resize(fotoAux, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH, 200, 200, Scalr.OP_ANTIALIAS);
+
+                    fotoIcon =
+                        FotoIcon.getInstance(
+                            idFotoIcon,
+                            UtilDomain.convertBufferedImageToByte(fotoSmall, foto.getConteudoContentType()),
+                            foto.getConteudoContentType()
+                        );
+                    fotoAvatar =
+                        FotoAvatar.getInstance(
+                            idFotoAvatar,
+                            UtilDomain.convertBufferedImageToByte(fotoMediu, foto.getConteudoContentType()),
+                            foto.getConteudoContentType()
+                        );
+                } else {
+                    fotoIcon = FotoIcon.getInstance(idFotoIcon, new byte[0], "");
+                    fotoAvatar = FotoAvatar.getInstance(idFotoAvatar, new byte[0], "");
+                }
+
+                Foto fotoSave = fotoRepository.save(foto);
+                FotoIcon fotoIconSave = fotoIconRepository.save(fotoIcon);
+                FotoAvatar fotoAvatarSave = fotoAvatarRepository.save(fotoAvatar);
+
+                dadosPessoais.setFoto(fotoSave);
+                dadosPessoais.setFotoIcon(fotoIconSave);
+                dadosPessoais.setFotoAvatar(fotoAvatarSave);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return dadosPessoais;
     }
 }

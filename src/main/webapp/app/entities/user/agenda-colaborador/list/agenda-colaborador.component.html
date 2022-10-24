@@ -5,7 +5,6 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.userAgendaColaborador.home.refreshListLabel">Refresh List</span>
       </button>
 
       <button
@@ -15,7 +14,6 @@
         [routerLink]="['/agenda-colaborador/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.userAgendaColaborador.home.createLabel"> Create a new Agenda Colaborador </span>
       </button>
     </div>
   </h2>
@@ -42,9 +40,6 @@
           <th scope="col" jhiSortBy="periodoDuracao.nome">
             <span jhiTranslate="hunterappApp.userAgendaColaborador.periodoDuracao">Periodo Duracao</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="colaborador.id">
-            <span jhiTranslate="hunterappApp.userAgendaColaborador.colaborador">Colaborador</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -55,30 +50,9 @@
           </td>
           <td>{{ agendaColaborador.nome }}</td>
           <td>{{ agendaColaborador.obs }}</td>
-          <td>
-            <div *ngIf="agendaColaborador.periodoDuracao">
-              <a [routerLink]="['/periodo-duracao', agendaColaborador.periodoDuracao?.id, 'view']">{{
-                agendaColaborador.periodoDuracao?.nome
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="agendaColaborador.colaborador">
-              <a [routerLink]="['/colaborador', agendaColaborador.colaborador?.id, 'view']">{{ agendaColaborador.colaborador?.id }}</a>
-            </div>
-          </td>
+          <td>{{ agendaColaborador.periodoDuracao?.nome }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/agenda-colaborador', agendaColaborador.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
               <button
                 type="submit"
                 [routerLink]="['/agenda-colaborador', agendaColaborador.id, 'edit']"
@@ -86,12 +60,10 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(agendaColaborador)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

@@ -5,7 +5,6 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.userColaborador.home.refreshListLabel">Refresh List</span>
       </button>
 
       <button
@@ -15,7 +14,6 @@
         [routerLink]="['/colaborador/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.userColaborador.home.createLabel"> Create a new Colaborador </span>
       </button>
     </div>
   </h2>
@@ -51,9 +49,6 @@
           <th scope="col" jhiSortBy="obs">
             <span jhiTranslate="hunterappApp.userColaborador.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="dadosPessoais.id">
-            <span jhiTranslate="hunterappApp.userColaborador.dadosPessoais">Dados Pessoais 1</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -68,23 +63,8 @@
           <td>{{ colaborador.salario }}</td>
           <td>{{ colaborador.ativo }}</td>
           <td>{{ colaborador.obs }}</td>
-          <td>
-            <div *ngIf="colaborador.dadosPessoais">
-              <a [routerLink]="['/dados-pessoais', colaborador.dadosPessoais?.id, 'view']">{{ colaborador.dadosPessoais?.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/colaborador', colaborador.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
-
               <button
                 type="submit"
                 [routerLink]="['/colaborador', colaborador.id, 'edit']"
@@ -92,12 +72,10 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(colaborador)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>
