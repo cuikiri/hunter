@@ -41,15 +41,9 @@ public class Endereco implements Serializable {
     @Column(name = "logradouro", length = 50, nullable = false)
     private String logradouro;
 
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "complemento_1", length = 50, nullable = false)
     private String complemento1;
-
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "complemento_2", length = 50, nullable = false)
-    private String complemento2;
 
     @NotNull
     @Size(min = 1, max = 10)
@@ -70,29 +64,6 @@ public class Endereco implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "uf", length = 50, nullable = false)
     private String uf;
-
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "unidade", length = 20, nullable = false)
-    private String unidade;
-
-    @NotNull
-    @Size(min = 10, max = 20)
-    @Column(name = "ibge", length = 20, nullable = false)
-    private String ibge;
-
-    @NotNull
-    @Size(min = 10, max = 20)
-    @Column(name = "gia", length = 20, nullable = false)
-    private String gia;
-
-    @NotNull
-    @Column(name = "latitude", nullable = false)
-    private Float latitude;
-
-    @NotNull
-    @Column(name = "longitude", nullable = false)
-    private Float longitude;
 
     @ManyToOne
     @JsonIgnoreProperties(
@@ -168,19 +139,6 @@ public class Endereco implements Serializable {
         this.complemento1 = complemento1;
     }
 
-    public String getComplemento2() {
-        return this.complemento2;
-    }
-
-    public Endereco complemento2(String complemento2) {
-        this.setComplemento2(complemento2);
-        return this;
-    }
-
-    public void setComplemento2(String complemento2) {
-        this.complemento2 = complemento2;
-    }
-
     public String getNumero() {
         return this.numero;
     }
@@ -233,71 +191,6 @@ public class Endereco implements Serializable {
         this.uf = uf;
     }
 
-    public String getUnidade() {
-        return this.unidade;
-    }
-
-    public Endereco unidade(String unidade) {
-        this.setUnidade(unidade);
-        return this;
-    }
-
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
-    }
-
-    public String getIbge() {
-        return this.ibge;
-    }
-
-    public Endereco ibge(String ibge) {
-        this.setIbge(ibge);
-        return this;
-    }
-
-    public void setIbge(String ibge) {
-        this.ibge = ibge;
-    }
-
-    public String getGia() {
-        return this.gia;
-    }
-
-    public Endereco gia(String gia) {
-        this.setGia(gia);
-        return this;
-    }
-
-    public void setGia(String gia) {
-        this.gia = gia;
-    }
-
-    public Float getLatitude() {
-        return this.latitude;
-    }
-
-    public Endereco latitude(Float latitude) {
-        this.setLatitude(latitude);
-        return this;
-    }
-
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
-
-    public Float getLongitude() {
-        return this.longitude;
-    }
-
-    public Endereco longitude(Float longitude) {
-        this.setLongitude(longitude);
-        return this;
-    }
-
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
-    }
-
     public DadosPessoais getDadosPessoais() {
         return this.dadosPessoais;
     }
@@ -338,16 +231,10 @@ public class Endereco implements Serializable {
             ", cep='" + getCep() + "'" +
             ", logradouro='" + getLogradouro() + "'" +
             ", complemento1='" + getComplemento1() + "'" +
-            ", complemento2='" + getComplemento2() + "'" +
             ", numero='" + getNumero() + "'" +
             ", bairro='" + getBairro() + "'" +
             ", localidade='" + getLocalidade() + "'" +
             ", uf='" + getUf() + "'" +
-            ", unidade='" + getUnidade() + "'" +
-            ", ibge='" + getIbge() + "'" +
-            ", gia='" + getGia() + "'" +
-            ", latitude=" + getLatitude() +
-            ", longitude=" + getLongitude() +
             "}";
     }
 }

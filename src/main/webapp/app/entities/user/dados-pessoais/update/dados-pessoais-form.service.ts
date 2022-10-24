@@ -25,7 +25,6 @@ type DadosPessoaisFormGroupContent = {
   telefone: FormControl<IDadosPessoais['telefone']>;
   celular: FormControl<IDadosPessoais['celular']>;
   whatsapp: FormControl<IDadosPessoais['whatsapp']>;
-  email: FormControl<IDadosPessoais['email']>;
   tipoPessoa: FormControl<IDadosPessoais['tipoPessoa']>;
   estadoCivil: FormControl<IDadosPessoais['estadoCivil']>;
   raca: FormControl<IDadosPessoais['raca']>;
@@ -72,9 +71,6 @@ export class DadosPessoaisFormService {
       }),
       whatsapp: new FormControl(dadosPessoaisRawValue.whatsapp, {
         validators: [Validators.minLength(8), Validators.maxLength(20)],
-      }),
-      email: new FormControl(dadosPessoaisRawValue.email, {
-        validators: [Validators.required, Validators.minLength(9), Validators.maxLength(50)],
       }),
       tipoPessoa: new FormControl(dadosPessoaisRawValue.tipoPessoa, {
         validators: [Validators.required],

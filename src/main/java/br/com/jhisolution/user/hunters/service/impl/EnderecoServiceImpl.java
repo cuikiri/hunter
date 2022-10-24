@@ -77,21 +77,6 @@ public class EnderecoServiceImpl implements EnderecoService {
                 if (endereco.getUf() != null) {
                     existingEndereco.setUf(endereco.getUf());
                 }
-                if (endereco.getUnidade() != null) {
-                    existingEndereco.setUnidade(endereco.getUnidade());
-                }
-                if (endereco.getIbge() != null) {
-                    existingEndereco.setIbge(endereco.getIbge());
-                }
-                if (endereco.getGia() != null) {
-                    existingEndereco.setGia(endereco.getGia());
-                }
-                if (endereco.getLatitude() != null) {
-                    existingEndereco.setLatitude(endereco.getLatitude());
-                }
-                if (endereco.getLongitude() != null) {
-                    existingEndereco.setLongitude(endereco.getLongitude());
-                }
 
                 return existingEndereco;
             })

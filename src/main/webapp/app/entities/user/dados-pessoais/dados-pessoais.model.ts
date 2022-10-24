@@ -19,7 +19,6 @@ export interface IDadosPessoais {
   telefone?: string | null;
   celular?: string;
   whatsapp?: string | null;
-  email?: string;
   tipoPessoa?: ITipoPessoa;
   estadoCivil?: IEstadoCivil;
   raca?: IRaca;
@@ -43,7 +42,6 @@ export class DadosPessoais implements IDadosPessoais {
     public telefone?: string | null,
     public celular?: string,
     public whatsapp?: string | null,
-    public email?: string,
     public tipoPessoa?: ITipoPessoa,
     public estadoCivil?: IEstadoCivil,
     public raca?: IRaca,

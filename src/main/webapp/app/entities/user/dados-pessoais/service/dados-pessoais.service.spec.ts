@@ -28,7 +28,6 @@ describe('DadosPessoais Service', () => {
       telefone: 'AAAAAAA',
       celular: 'AAAAAAA',
       whatsapp: 'AAAAAAA',
-      email: 'AAAAAAA',
     };
   });
 
@@ -71,7 +70,6 @@ describe('DadosPessoais Service', () => {
           telefone: 'BBBBBB',
           celular: 'BBBBBB',
           whatsapp: 'BBBBBB',
-          email: 'BBBBBB',
         },
         elemDefault
       );
@@ -117,7 +115,6 @@ describe('DadosPessoais Service', () => {
           telefone: 'BBBBBB',
           celular: 'BBBBBB',
           whatsapp: 'BBBBBB',
-          email: 'BBBBBB',
         },
         elemDefault
       );

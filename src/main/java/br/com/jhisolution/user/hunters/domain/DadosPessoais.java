@@ -68,11 +68,6 @@ public class DadosPessoais implements Serializable {
     @Column(name = "whatsapp", length = 20)
     private String whatsapp;
 
-    @NotNull
-    @Size(min = 9, max = 50)
-    @Column(name = "email", length = 50, nullable = false)
-    private String email;
-
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
@@ -293,19 +288,6 @@ public class DadosPessoais implements Serializable {
 
     public void setWhatsapp(String whatsapp) {
         this.whatsapp = whatsapp;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public DadosPessoais email(String email) {
-        this.setEmail(email);
-        return this;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public TipoPessoa getTipoPessoa() {
@@ -663,7 +645,6 @@ public class DadosPessoais implements Serializable {
             ", telefone='" + getTelefone() + "'" +
             ", celular='" + getCelular() + "'" +
             ", whatsapp='" + getWhatsapp() + "'" +
-            ", email='" + getEmail() + "'" +
             "}";
     }
 }

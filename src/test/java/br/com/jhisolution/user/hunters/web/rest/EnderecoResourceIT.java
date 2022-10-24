@@ -96,16 +96,10 @@ class EnderecoResourceIT {
             .cep(DEFAULT_CEP)
             .logradouro(DEFAULT_LOGRADOURO)
             .complemento1(DEFAULT_COMPLEMENTO_1)
-            .complemento2(DEFAULT_COMPLEMENTO_2)
             .numero(DEFAULT_NUMERO)
             .bairro(DEFAULT_BAIRRO)
             .localidade(DEFAULT_LOCALIDADE)
-            .uf(DEFAULT_UF)
-            .unidade(DEFAULT_UNIDADE)
-            .ibge(DEFAULT_IBGE)
-            .gia(DEFAULT_GIA)
-            .latitude(DEFAULT_LATITUDE)
-            .longitude(DEFAULT_LONGITUDE);
+            .uf(DEFAULT_UF);
         return endereco;
     }
 
@@ -120,16 +114,11 @@ class EnderecoResourceIT {
             .cep(UPDATED_CEP)
             .logradouro(UPDATED_LOGRADOURO)
             .complemento1(UPDATED_COMPLEMENTO_1)
-            .complemento2(UPDATED_COMPLEMENTO_2)
             .numero(UPDATED_NUMERO)
             .bairro(UPDATED_BAIRRO)
             .localidade(UPDATED_LOCALIDADE)
-            .uf(UPDATED_UF)
-            .unidade(UPDATED_UNIDADE)
-            .ibge(UPDATED_IBGE)
-            .gia(UPDATED_GIA)
-            .latitude(UPDATED_LATITUDE)
-            .longitude(UPDATED_LONGITUDE);
+            .uf(UPDATED_UF);
+
         return endereco;
     }
 
@@ -154,16 +143,10 @@ class EnderecoResourceIT {
         assertThat(testEndereco.getCep()).isEqualTo(DEFAULT_CEP);
         assertThat(testEndereco.getLogradouro()).isEqualTo(DEFAULT_LOGRADOURO);
         assertThat(testEndereco.getComplemento1()).isEqualTo(DEFAULT_COMPLEMENTO_1);
-        assertThat(testEndereco.getComplemento2()).isEqualTo(DEFAULT_COMPLEMENTO_2);
         assertThat(testEndereco.getNumero()).isEqualTo(DEFAULT_NUMERO);
         assertThat(testEndereco.getBairro()).isEqualTo(DEFAULT_BAIRRO);
         assertThat(testEndereco.getLocalidade()).isEqualTo(DEFAULT_LOCALIDADE);
         assertThat(testEndereco.getUf()).isEqualTo(DEFAULT_UF);
-        assertThat(testEndereco.getUnidade()).isEqualTo(DEFAULT_UNIDADE);
-        assertThat(testEndereco.getIbge()).isEqualTo(DEFAULT_IBGE);
-        assertThat(testEndereco.getGia()).isEqualTo(DEFAULT_GIA);
-        assertThat(testEndereco.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
-        assertThat(testEndereco.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
     }
 
     @Test
@@ -224,23 +207,6 @@ class EnderecoResourceIT {
         int databaseSizeBeforeTest = enderecoRepository.findAll().size();
         // set the field null
         endereco.setComplemento1(null);
-
-        // Create the Endereco, which fails.
-
-        restEnderecoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(endereco)))
-            .andExpect(status().isBadRequest());
-
-        List<Endereco> enderecoList = enderecoRepository.findAll();
-        assertThat(enderecoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkComplemento2IsRequired() throws Exception {
-        int databaseSizeBeforeTest = enderecoRepository.findAll().size();
-        // set the field null
-        endereco.setComplemento2(null);
 
         // Create the Endereco, which fails.
 
@@ -322,91 +288,6 @@ class EnderecoResourceIT {
 
     @Test
     @Transactional
-    void checkUnidadeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = enderecoRepository.findAll().size();
-        // set the field null
-        endereco.setUnidade(null);
-
-        // Create the Endereco, which fails.
-
-        restEnderecoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(endereco)))
-            .andExpect(status().isBadRequest());
-
-        List<Endereco> enderecoList = enderecoRepository.findAll();
-        assertThat(enderecoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkIbgeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = enderecoRepository.findAll().size();
-        // set the field null
-        endereco.setIbge(null);
-
-        // Create the Endereco, which fails.
-
-        restEnderecoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(endereco)))
-            .andExpect(status().isBadRequest());
-
-        List<Endereco> enderecoList = enderecoRepository.findAll();
-        assertThat(enderecoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkGiaIsRequired() throws Exception {
-        int databaseSizeBeforeTest = enderecoRepository.findAll().size();
-        // set the field null
-        endereco.setGia(null);
-
-        // Create the Endereco, which fails.
-
-        restEnderecoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(endereco)))
-            .andExpect(status().isBadRequest());
-
-        List<Endereco> enderecoList = enderecoRepository.findAll();
-        assertThat(enderecoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkLatitudeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = enderecoRepository.findAll().size();
-        // set the field null
-        endereco.setLatitude(null);
-
-        // Create the Endereco, which fails.
-
-        restEnderecoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(endereco)))
-            .andExpect(status().isBadRequest());
-
-        List<Endereco> enderecoList = enderecoRepository.findAll();
-        assertThat(enderecoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkLongitudeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = enderecoRepository.findAll().size();
-        // set the field null
-        endereco.setLongitude(null);
-
-        // Create the Endereco, which fails.
-
-        restEnderecoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(endereco)))
-            .andExpect(status().isBadRequest());
-
-        List<Endereco> enderecoList = enderecoRepository.findAll();
-        assertThat(enderecoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllEnderecos() throws Exception {
         // Initialize the database
         enderecoRepository.saveAndFlush(endereco);
@@ -420,16 +301,10 @@ class EnderecoResourceIT {
             .andExpect(jsonPath("$.[*].cep").value(hasItem(DEFAULT_CEP)))
             .andExpect(jsonPath("$.[*].logradouro").value(hasItem(DEFAULT_LOGRADOURO)))
             .andExpect(jsonPath("$.[*].complemento1").value(hasItem(DEFAULT_COMPLEMENTO_1)))
-            .andExpect(jsonPath("$.[*].complemento2").value(hasItem(DEFAULT_COMPLEMENTO_2)))
             .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO)))
             .andExpect(jsonPath("$.[*].bairro").value(hasItem(DEFAULT_BAIRRO)))
             .andExpect(jsonPath("$.[*].localidade").value(hasItem(DEFAULT_LOCALIDADE)))
-            .andExpect(jsonPath("$.[*].uf").value(hasItem(DEFAULT_UF)))
-            .andExpect(jsonPath("$.[*].unidade").value(hasItem(DEFAULT_UNIDADE)))
-            .andExpect(jsonPath("$.[*].ibge").value(hasItem(DEFAULT_IBGE)))
-            .andExpect(jsonPath("$.[*].gia").value(hasItem(DEFAULT_GIA)))
-            .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE.doubleValue())))
-            .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE.doubleValue())));
+            .andExpect(jsonPath("$.[*].uf").value(hasItem(DEFAULT_UF)));
     }
 
     @Test
@@ -447,16 +322,10 @@ class EnderecoResourceIT {
             .andExpect(jsonPath("$.cep").value(DEFAULT_CEP))
             .andExpect(jsonPath("$.logradouro").value(DEFAULT_LOGRADOURO))
             .andExpect(jsonPath("$.complemento1").value(DEFAULT_COMPLEMENTO_1))
-            .andExpect(jsonPath("$.complemento2").value(DEFAULT_COMPLEMENTO_2))
             .andExpect(jsonPath("$.numero").value(DEFAULT_NUMERO))
             .andExpect(jsonPath("$.bairro").value(DEFAULT_BAIRRO))
             .andExpect(jsonPath("$.localidade").value(DEFAULT_LOCALIDADE))
-            .andExpect(jsonPath("$.uf").value(DEFAULT_UF))
-            .andExpect(jsonPath("$.unidade").value(DEFAULT_UNIDADE))
-            .andExpect(jsonPath("$.ibge").value(DEFAULT_IBGE))
-            .andExpect(jsonPath("$.gia").value(DEFAULT_GIA))
-            .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE.doubleValue()))
-            .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE.doubleValue()));
+            .andExpect(jsonPath("$.uf").value(DEFAULT_UF));
     }
 
     @Test
@@ -482,16 +351,10 @@ class EnderecoResourceIT {
             .cep(UPDATED_CEP)
             .logradouro(UPDATED_LOGRADOURO)
             .complemento1(UPDATED_COMPLEMENTO_1)
-            .complemento2(UPDATED_COMPLEMENTO_2)
             .numero(UPDATED_NUMERO)
             .bairro(UPDATED_BAIRRO)
             .localidade(UPDATED_LOCALIDADE)
-            .uf(UPDATED_UF)
-            .unidade(UPDATED_UNIDADE)
-            .ibge(UPDATED_IBGE)
-            .gia(UPDATED_GIA)
-            .latitude(UPDATED_LATITUDE)
-            .longitude(UPDATED_LONGITUDE);
+            .uf(UPDATED_UF);
 
         restEnderecoMockMvc
             .perform(
@@ -508,16 +371,10 @@ class EnderecoResourceIT {
         assertThat(testEndereco.getCep()).isEqualTo(UPDATED_CEP);
         assertThat(testEndereco.getLogradouro()).isEqualTo(UPDATED_LOGRADOURO);
         assertThat(testEndereco.getComplemento1()).isEqualTo(UPDATED_COMPLEMENTO_1);
-        assertThat(testEndereco.getComplemento2()).isEqualTo(UPDATED_COMPLEMENTO_2);
         assertThat(testEndereco.getNumero()).isEqualTo(UPDATED_NUMERO);
         assertThat(testEndereco.getBairro()).isEqualTo(UPDATED_BAIRRO);
         assertThat(testEndereco.getLocalidade()).isEqualTo(UPDATED_LOCALIDADE);
         assertThat(testEndereco.getUf()).isEqualTo(UPDATED_UF);
-        assertThat(testEndereco.getUnidade()).isEqualTo(UPDATED_UNIDADE);
-        assertThat(testEndereco.getIbge()).isEqualTo(UPDATED_IBGE);
-        assertThat(testEndereco.getGia()).isEqualTo(UPDATED_GIA);
-        assertThat(testEndereco.getLatitude()).isEqualTo(UPDATED_LATITUDE);
-        assertThat(testEndereco.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
     }
 
     @Test
@@ -590,13 +447,10 @@ class EnderecoResourceIT {
 
         partialUpdatedEndereco
             .complemento1(UPDATED_COMPLEMENTO_1)
-            .complemento2(UPDATED_COMPLEMENTO_2)
             .numero(UPDATED_NUMERO)
             .bairro(UPDATED_BAIRRO)
             .localidade(UPDATED_LOCALIDADE)
-            .uf(UPDATED_UF)
-            .latitude(UPDATED_LATITUDE)
-            .longitude(UPDATED_LONGITUDE);
+            .uf(UPDATED_UF);
 
         restEnderecoMockMvc
             .perform(
@@ -613,16 +467,10 @@ class EnderecoResourceIT {
         assertThat(testEndereco.getCep()).isEqualTo(DEFAULT_CEP);
         assertThat(testEndereco.getLogradouro()).isEqualTo(DEFAULT_LOGRADOURO);
         assertThat(testEndereco.getComplemento1()).isEqualTo(UPDATED_COMPLEMENTO_1);
-        assertThat(testEndereco.getComplemento2()).isEqualTo(UPDATED_COMPLEMENTO_2);
         assertThat(testEndereco.getNumero()).isEqualTo(UPDATED_NUMERO);
         assertThat(testEndereco.getBairro()).isEqualTo(UPDATED_BAIRRO);
         assertThat(testEndereco.getLocalidade()).isEqualTo(UPDATED_LOCALIDADE);
         assertThat(testEndereco.getUf()).isEqualTo(UPDATED_UF);
-        assertThat(testEndereco.getUnidade()).isEqualTo(DEFAULT_UNIDADE);
-        assertThat(testEndereco.getIbge()).isEqualTo(DEFAULT_IBGE);
-        assertThat(testEndereco.getGia()).isEqualTo(DEFAULT_GIA);
-        assertThat(testEndereco.getLatitude()).isEqualTo(UPDATED_LATITUDE);
-        assertThat(testEndereco.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
     }
 
     @Test
@@ -641,16 +489,10 @@ class EnderecoResourceIT {
             .cep(UPDATED_CEP)
             .logradouro(UPDATED_LOGRADOURO)
             .complemento1(UPDATED_COMPLEMENTO_1)
-            .complemento2(UPDATED_COMPLEMENTO_2)
             .numero(UPDATED_NUMERO)
             .bairro(UPDATED_BAIRRO)
             .localidade(UPDATED_LOCALIDADE)
-            .uf(UPDATED_UF)
-            .unidade(UPDATED_UNIDADE)
-            .ibge(UPDATED_IBGE)
-            .gia(UPDATED_GIA)
-            .latitude(UPDATED_LATITUDE)
-            .longitude(UPDATED_LONGITUDE);
+            .uf(UPDATED_UF);
 
         restEnderecoMockMvc
             .perform(
@@ -667,16 +509,10 @@ class EnderecoResourceIT {
         assertThat(testEndereco.getCep()).isEqualTo(UPDATED_CEP);
         assertThat(testEndereco.getLogradouro()).isEqualTo(UPDATED_LOGRADOURO);
         assertThat(testEndereco.getComplemento1()).isEqualTo(UPDATED_COMPLEMENTO_1);
-        assertThat(testEndereco.getComplemento2()).isEqualTo(UPDATED_COMPLEMENTO_2);
         assertThat(testEndereco.getNumero()).isEqualTo(UPDATED_NUMERO);
         assertThat(testEndereco.getBairro()).isEqualTo(UPDATED_BAIRRO);
         assertThat(testEndereco.getLocalidade()).isEqualTo(UPDATED_LOCALIDADE);
         assertThat(testEndereco.getUf()).isEqualTo(UPDATED_UF);
-        assertThat(testEndereco.getUnidade()).isEqualTo(UPDATED_UNIDADE);
-        assertThat(testEndereco.getIbge()).isEqualTo(UPDATED_IBGE);
-        assertThat(testEndereco.getGia()).isEqualTo(UPDATED_GIA);
-        assertThat(testEndereco.getLatitude()).isEqualTo(UPDATED_LATITUDE);
-        assertThat(testEndereco.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
     }
 
     @Test

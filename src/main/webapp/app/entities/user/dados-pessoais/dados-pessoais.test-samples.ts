@@ -6,7 +6,6 @@ export const sampleWithRequiredData: IDadosPessoais = {
   sobreNome: 'connect Guiné Buckinghamshire',
   mae: 'Developer',
   celular: 'Calças Mobility Cuba',
-  email: 'Lorenzo43@gmail.com',
 };
 
 export const sampleWithPartialData: IDadosPessoais = {
@@ -17,7 +16,6 @@ export const sampleWithPartialData: IDadosPessoais = {
   telefone: 'Synergistic transmit',
   celular: 'Rua functionalities',
   whatsapp: 'Grécia Goiás Maranhã',
-  email: 'Bruna51@live.com',
 };
 
 export const sampleWithFullData: IDadosPessoais = {
@@ -29,7 +27,6 @@ export const sampleWithFullData: IDadosPessoais = {
   telefone: 'approach',
   celular: 'input Alameda',
   whatsapp: 'Congelado capacitor',
-  email: 'Carlos_Melo@hotmail.com',
 };
 
 export const sampleWithNewData: NewDadosPessoais = {
@@ -37,7 +34,6 @@ export const sampleWithNewData: NewDadosPessoais = {
   sobreNome: 'pele Amazonas Future',
   mae: 'protocol âmbar artificial',
   celular: 'Configuration',
-  email: 'Arthur47@live.com',
   id: null,
 };
 

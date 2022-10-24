@@ -54,13 +54,6 @@
       "fieldValidateRules": ["minlength", "maxlength"],
       "fieldValidateRulesMaxlength": "20",
       "fieldValidateRulesMinlength": "8"
-    },
-    {
-      "fieldName": "email",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "minlength", "maxlength"],
-      "fieldValidateRulesMaxlength": "50",
-      "fieldValidateRulesMinlength": "9"
     }
   ],
   "fluentMethods": true,

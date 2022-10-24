@@ -2,9 +2,18 @@ package br.com.jhisolution.user.hunters.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.com.jhisolution.user.hunters.IntegrationTest;
 import br.com.jhisolution.user.hunters.domain.DadosPessoais;
@@ -27,7 +36,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -103,8 +111,7 @@ class DadosPessoaisResourceIT {
             .mae(DEFAULT_MAE)
             .telefone(DEFAULT_TELEFONE)
             .celular(DEFAULT_CELULAR)
-            .whatsapp(DEFAULT_WHATSAPP)
-            .email(DEFAULT_EMAIL);
+            .whatsapp(DEFAULT_WHATSAPP);
         // Add required entity
         TipoPessoa tipoPessoa;
         if (TestUtil.findAll(em, TipoPessoa.class).isEmpty()) {
@@ -162,8 +169,7 @@ class DadosPessoaisResourceIT {
             .mae(UPDATED_MAE)
             .telefone(UPDATED_TELEFONE)
             .celular(UPDATED_CELULAR)
-            .whatsapp(UPDATED_WHATSAPP)
-            .email(UPDATED_EMAIL);
+            .whatsapp(UPDATED_WHATSAPP);
         // Add required entity
         TipoPessoa tipoPessoa;
         if (TestUtil.findAll(em, TipoPessoa.class).isEmpty()) {
@@ -232,7 +238,6 @@ class DadosPessoaisResourceIT {
         assertThat(testDadosPessoais.getTelefone()).isEqualTo(DEFAULT_TELEFONE);
         assertThat(testDadosPessoais.getCelular()).isEqualTo(DEFAULT_CELULAR);
         assertThat(testDadosPessoais.getWhatsapp()).isEqualTo(DEFAULT_WHATSAPP);
-        assertThat(testDadosPessoais.getEmail()).isEqualTo(DEFAULT_EMAIL);
     }
 
     @Test
@@ -325,8 +330,6 @@ class DadosPessoaisResourceIT {
     @Transactional
     void checkEmailIsRequired() throws Exception {
         int databaseSizeBeforeTest = dadosPessoaisRepository.findAll().size();
-        // set the field null
-        dadosPessoais.setEmail(null);
 
         // Create the DadosPessoais, which fails.
 
@@ -426,8 +429,7 @@ class DadosPessoaisResourceIT {
             .mae(UPDATED_MAE)
             .telefone(UPDATED_TELEFONE)
             .celular(UPDATED_CELULAR)
-            .whatsapp(UPDATED_WHATSAPP)
-            .email(UPDATED_EMAIL);
+            .whatsapp(UPDATED_WHATSAPP);
 
         restDadosPessoaisMockMvc
             .perform(
@@ -448,7 +450,6 @@ class DadosPessoaisResourceIT {
         assertThat(testDadosPessoais.getTelefone()).isEqualTo(UPDATED_TELEFONE);
         assertThat(testDadosPessoais.getCelular()).isEqualTo(UPDATED_CELULAR);
         assertThat(testDadosPessoais.getWhatsapp()).isEqualTo(UPDATED_WHATSAPP);
-        assertThat(testDadosPessoais.getEmail()).isEqualTo(UPDATED_EMAIL);
     }
 
     @Test
@@ -540,7 +541,6 @@ class DadosPessoaisResourceIT {
         assertThat(testDadosPessoais.getTelefone()).isEqualTo(DEFAULT_TELEFONE);
         assertThat(testDadosPessoais.getCelular()).isEqualTo(UPDATED_CELULAR);
         assertThat(testDadosPessoais.getWhatsapp()).isEqualTo(DEFAULT_WHATSAPP);
-        assertThat(testDadosPessoais.getEmail()).isEqualTo(DEFAULT_EMAIL);
     }
 
     @Test
@@ -562,8 +562,7 @@ class DadosPessoaisResourceIT {
             .mae(UPDATED_MAE)
             .telefone(UPDATED_TELEFONE)
             .celular(UPDATED_CELULAR)
-            .whatsapp(UPDATED_WHATSAPP)
-            .email(UPDATED_EMAIL);
+            .whatsapp(UPDATED_WHATSAPP);
 
         restDadosPessoaisMockMvc
             .perform(
@@ -584,7 +583,6 @@ class DadosPessoaisResourceIT {
         assertThat(testDadosPessoais.getTelefone()).isEqualTo(UPDATED_TELEFONE);
         assertThat(testDadosPessoais.getCelular()).isEqualTo(UPDATED_CELULAR);
         assertThat(testDadosPessoais.getWhatsapp()).isEqualTo(UPDATED_WHATSAPP);
-        assertThat(testDadosPessoais.getEmail()).isEqualTo(UPDATED_EMAIL);
     }
 
     @Test

@@ -21,10 +21,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="complemento_1" type="varchar(50)">
-                <constraints nullable="false" />
-            </column>
-            <column name="complemento_2" type="varchar(50)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="numero" type="varchar(10)">
                 <constraints nullable="false" />
@@ -36,21 +33,6 @@
                 <constraints nullable="false" />
             </column>
             <column name="uf" type="varchar(50)">
-                <constraints nullable="false" />
-            </column>
-            <column name="unidade" type="varchar(20)">
-                <constraints nullable="false" />
-            </column>
-            <column name="ibge" type="varchar(20)">
-                <constraints nullable="false" />
-            </column>
-            <column name="gia" type="varchar(20)">
-                <constraints nullable="false" />
-            </column>
-            <column name="latitude" type="${floatType}">
-                <constraints nullable="false" />
-            </column>
-            <column name="longitude" type="${floatType}">
                 <constraints nullable="false" />
             </column>
             <column name="dados_pessoais_id" type="bigint">
@@ -80,16 +62,10 @@
             <column name="cep" type="string"/>
             <column name="logradouro" type="string"/>
             <column name="complemento_1" type="string"/>
-            <column name="complemento_2" type="string"/>
             <column name="numero" type="string"/>
             <column name="bairro" type="string"/>
             <column name="localidade" type="string"/>
             <column name="uf" type="string"/>
-            <column name="unidade" type="string"/>
-            <column name="ibge" type="string"/>
-            <column name="gia" type="string"/>
-            <column name="latitude" type="numeric"/>
-            <column name="longitude" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
