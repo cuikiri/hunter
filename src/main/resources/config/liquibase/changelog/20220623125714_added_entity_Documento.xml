@@ -18,7 +18,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="tipo_documento_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_documento__tipo_documento_id" />
+                <constraints nullable="true" />
             </column>
             <column name="dados_pessoais_id" type="bigint">
                 <constraints nullable="true" />

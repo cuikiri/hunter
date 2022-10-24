@@ -27,7 +27,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="produto_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_saida_estoque__produto_id" />
+                <constraints nullable="true" />
             </column>
             <column name="dados_pessoais_id" type="bigint">
                 <constraints nullable="true" />

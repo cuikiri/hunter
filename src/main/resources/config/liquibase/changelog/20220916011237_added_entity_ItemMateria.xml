@@ -21,7 +21,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="materia_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_item_materia__materia_id" />
+                <constraints nullable="true" />
             </column>
             <column name="acompanhamento_aluno_id" type="bigint">
                 <constraints nullable="true" />

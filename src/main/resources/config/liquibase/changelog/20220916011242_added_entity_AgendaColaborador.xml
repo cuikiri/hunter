@@ -21,7 +21,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="periodo_duracao_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_agenda_colaborador__periodo_duracao_id" />
+                <constraints nullable="true" />
             </column>
             <column name="colaborador_id" type="bigint">
                 <constraints nullable="true" />

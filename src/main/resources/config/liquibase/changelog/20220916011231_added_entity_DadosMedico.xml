@@ -36,13 +36,13 @@
                 <constraints nullable="true" />
             </column>
             <column name="vacina_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_dados_medico__vacina_id" />
+                <constraints nullable="true" />
             </column>
             <column name="alergia_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_dados_medico__alergia_id" />
+                <constraints nullable="true" />
             </column>
             <column name="doenca_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_dados_medico__doenca_id" />
+                <constraints nullable="true" />
             </column>
             <column name="dados_pessoais_id" type="bigint">
                 <constraints nullable="true" />
