@@ -1,10 +1,13 @@
 package br.com.jhisolution.user.hunters.domain;
 
 import br.com.jhisolution.user.hunters.domain.enumeration.TipoReuniao;
+import br.com.jhisolution.user.hunters.web.rest.dto.ReuniaoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,7 +79,7 @@ public class Reuniao implements Serializable {
 
     @OneToMany(mappedBy = "reuniao")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reuniao" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reuniao" })
     private Set<Pauta> pautas = new HashSet<>();
 
     @OneToMany(mappedBy = "reuniao")
@@ -384,5 +387,25 @@ public class Reuniao implements Serializable {
             ", tipoReuniao='" + getTipoReuniao() + "'" +
             ", obs='" + getObs() + "'" +
             "}";
+    }
+
+    public ReuniaoDTO toReuniaoDTO() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYY");
+        return ReuniaoDTO.getInstance(
+            getId(),
+            getNome(),
+            getDescricao(),
+            Objects.nonNull(getData()) ? getData().format(formatter) : "",
+            Objects.nonNull(getDataInicio()) ? getDataInicio().format(formatter) : "",
+            Objects.nonNull(getDataFim()) ? getDataFim().format(formatter) : "",
+            getHoraInicio(),
+            getHoraFim(),
+            getTipoReuniao(),
+            getObs(),
+            getPautas(),
+            getDecisoes(),
+            getAcoes(),
+            getParticipantes()
+        );
     }
 }

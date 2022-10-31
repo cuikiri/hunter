@@ -1,11 +1,13 @@
 package br.com.jhisolution.user.hunters.service;
 
 import br.com.jhisolution.user.hunters.domain.Reuniao;
+import br.com.jhisolution.user.hunters.web.rest.dto.FiltroReuniaoDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.ReuniaoDTO;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Service Interface for managing {@link Reuniao}.
@@ -42,7 +44,9 @@ public interface ReuniaoService {
      * @return the list of entities.
      */
     Page<Reuniao> findAll(Pageable pageable);
-    List<Reuniao> findAllByReuniaoId(Long id);
+    List<ReuniaoDTO> findAllByReuniaoId(Long id);
+
+    public Resource findAllByReuniaoIdJasper(FiltroReuniaoDTO filtro);
 
     /**
      * Get the "id" reuniao.

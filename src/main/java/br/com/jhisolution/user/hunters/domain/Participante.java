@@ -34,7 +34,7 @@ public class Participante implements Serializable {
     private String obs;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "pautas", "decisoes", "acoes", "participantes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reuniao", "pautas", "decisoes", "acoes", "participantes" }, allowSetters = true)
     private Reuniao reuniao;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

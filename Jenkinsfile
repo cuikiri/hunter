@@ -37,20 +37,6 @@ pipeline {
 				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
 			}	
         }
-        stage('backend tests') {
-			steps {
-				sh "./mvnw -ntp verify -P-webapp"
-			}	
-        }
-
-        stage('frontend tests') {
-			steps {
-			   sh "npm install"
-			   sh "npm test"
-			   junit '**/target/test-results/TESTS-results-jest.xml'
-			}	
-        }
-
         stage('packaging') {
 			steps {
 				sh "./mvnw -ntp verify -P-webapp -Pprod -DskipTests"

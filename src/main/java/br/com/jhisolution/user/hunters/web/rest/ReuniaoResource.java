@@ -3,20 +3,26 @@ package br.com.jhisolution.user.hunters.web.rest;
 import br.com.jhisolution.user.hunters.domain.Reuniao;
 import br.com.jhisolution.user.hunters.repository.ReuniaoRepository;
 import br.com.jhisolution.user.hunters.service.ReuniaoService;
+import br.com.jhisolution.user.hunters.web.rest.dto.FiltroReuniaoDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.ReuniaoDTO;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
+import io.jsonwebtoken.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -160,10 +166,40 @@ public class ReuniaoResource {
     }
 
     @GetMapping("/reuniaos/all/{id}")
-    public ResponseEntity<List<Reuniao>> getReunioesById(@PathVariable Long id) {
+    public ResponseEntity<List<ReuniaoDTO>> getReunioesById(@PathVariable Long id) {
         log.debug("REST request to get Reuniao : {}", id);
-        List<Reuniao> reunioes = reuniaoService.findAllByReuniaoId(id);
+        List<ReuniaoDTO> reunioes = reuniaoService.findAllByReuniaoId(id);
         return ResponseEntity.ok().body(reunioes);
+    }
+
+    @PostMapping("/reuniaos/all/jasper")
+    public ResponseEntity<Resource> getReunioesByIdJasper(@Valid @RequestBody FiltroReuniaoDTO filtro, HttpServletRequest request)
+        throws URISyntaxException, IOException, java.io.IOException {
+        log.debug("***************************************************************************************");
+        log.debug("REST request to get a list of Meeting IF:{}", filtro.getIdReuniao());
+        log.debug("***************************************************************************************");
+        // Load file as Resource
+        Resource resource = reuniaoService.findAllByReuniaoIdJasper(filtro);
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            log.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.parseMediaType(contentType))
+            .contentLength(resource.getFile().length())
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + resource.getFilename())
+            .headers(HeaderUtil.createAlert(applicationName, "Meeting exported successfully", resource.toString()))
+            .body(resource);
     }
 
     /**

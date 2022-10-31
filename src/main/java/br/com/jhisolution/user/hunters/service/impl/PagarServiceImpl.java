@@ -128,7 +128,7 @@ public class PagarServiceImpl implements PagarService {
             .map(obj ->
                 PagarDTO.getInstance(
                     obj.getId(),
-                    obj.getData().format(formatter),
+                    Objects.nonNull(obj.getData()) ? obj.getData().format(formatter) : "",
                     obj.getValor(),
                     obj.getStatus().toString(),
                     Objects.nonNull(obj.getTipoPagar()) ? obj.getTipoPagar().getNome() : "",

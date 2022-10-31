@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ata_reuniao" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac8c345f-6ae8-4a9d-b5a0-ff1ccdc32cb1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ReuniaoJson.jrdax"/>
+	<queryString language="JSON">
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="data" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="data"/>
+		<property name="com.jaspersoft.studio.field.label" value="data"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="dataInicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="data_inicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_inicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="dataFim" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="data_fim"/>
+		<property name="com.jaspersoft.studio.field.label" value="data_fim"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="horaInicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="hora_inicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="hora_inicio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="horaFim" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="hora_fim"/>
+		<property name="com.jaspersoft.studio.field.label" value="hora_fim"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="tipoReuniao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_reuniao"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_reuniao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="obs" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="obs"/>
+		<property name="com.jaspersoft.studio.field.label" value="obs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="reuniao"/>
+	</field>
+	<field name="pautas" class="java.lang.Object">
+		<property name="net.sf.jasperreports.json.field.expression" value="pautas"/>
+		<fieldDescription><![CDATA[pautas]]></fieldDescription>
+	</field>
+	<field name="decisoes" class="java.lang.Object">
+		<property name="net.sf.jasperreports.json.field.expression" value="decisoes"/>
+		<fieldDescription><![CDATA[decisoes]]></fieldDescription>
+	</field>
+	<field name="acoes" class="java.lang.Object">
+		<property name="net.sf.jasperreports.json.field.expression" value="acoes"/>
+		<fieldDescription><![CDATA[acoes]]></fieldDescription>
+	</field>
+	<field name="participantes" class="java.lang.Object">
+		<property name="net.sf.jasperreports.json.field.expression" value="participantes"/>
+		<fieldDescription><![CDATA[participantes]]></fieldDescription>
+	</field>
+	<field name="votoSims" class="java.lang.Object">
+		<property name="net.sf.jasperreports.json.field.expression" value="decisoes.votoSims"/>
+		<fieldDescription><![CDATA[decisoes.votoSims]]></fieldDescription>
+	</field>
+	<field name="votoNaos" class="java.lang.Object">
+		<property name="net.sf.jasperreports.json.field.expression" value="decisoes.votoNaos"/>
+		<fieldDescription><![CDATA[decisoes.votoNaos]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="76" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="2" width="78" height="68" uuid="84b1da9b-b993-437f-b00b-851d7d448d5d"/>
+				<imageExpression><![CDATA["http://localhost:8080/content/images/logo-sfh.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="102" y="12" width="238" height="25" uuid="5213af55-24e1-44bb-a0ab-9b603a08fb02">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ATA DE REUNIÃO Nº:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="342" y="12" width="100" height="25" uuid="f10cba3a-8507-493a-a797-e4f459de2b91">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="70" width="550" height="1" uuid="e97889e1-1cfa-431b-8774-47ee18aad82f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="142" y="46" width="100" height="14" uuid="d47a7ade-6643-40c8-9d16-1b3c5428f072"/>
+				<textFieldExpression><![CDATA[$F{tipoReuniao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="55" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<staticText>
+				<reportElement x="57" y="2" width="60" height="15" uuid="f4108ea1-a4cc-4bff-93b6-512255513d72">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[da data,  ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="114" y="2" width="70" height="15" uuid="e9053639-63e0-42b7-a046-c8777166d6c8">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataInicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="184" y="2" width="299" height="15" uuid="c6626c01-b809-4859-ba43-3074f5cc12d4">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[,  reuniram-se os Srs.(as) para discutirem]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="2" width="17" height="15" uuid="be7b2005-5c47-457a-85e2-9654984bc3da">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Às]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="21" y="2" width="46" height="15" uuid="a4e9c1aa-4405-4462-a561-6e045b9fbdf1">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horaInicio}]]></textFieldExpression>
+			</textField>
+			<subreport overflowType="Stretch">
+				<reportElement stretchType="ContainerHeight" x="1" y="43" width="200" height="10" uuid="85aec3a5-896d-4c9a-82df-626de52ad34f">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("participantes")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["sub_participantes.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="283" y="43" width="200" height="10" uuid="0007a319-3023-4538-b501-72826fda2e7e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("pautas")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["sub_pauta.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="1" y="20" width="386" height="15" uuid="826dff32-e21a-47f8-a765-0e0d9c763f46">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[a(s) seguinte(s) pauta(s) do dia.]]></text>
+			</staticText>
+		</band>
+		<band height="22">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="1" y="1" width="200" height="20" uuid="13aa0f7a-12ef-4176-8d1e-246c4bec6092">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("decisoes")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["sub_decisoes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="24">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="1" y="0" width="253" height="20" uuid="5d266728-e619-4c6a-aaee-dbefe66990b3"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("acoes")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["sub_acoes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="1" y="1" width="409" height="15" uuid="f62b7a5f-2551-44cd-b801-aeffcc8184b9">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Depois de lido todos os itens acima deu-se por encerrada às]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="464" y="1" width="77" height="15" uuid="22bb9f2f-c7af-4e2a-b04b-448b238d3b3f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ a reunião.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="417" y="1" width="46" height="15" uuid="5393e4ce-00c1-4cf2-ba62-761d6ab0f5f7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horaFim}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -46,7 +46,7 @@ public class Decisao implements Serializable {
     private Set<VotoNaoDecisao> votoNaos = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "pautas", "decisoes", "acoes", "participantes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reuniao", "pautas", "decisoes", "acoes", "participantes" }, allowSetters = true)
     private Reuniao reuniao;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
