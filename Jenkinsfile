@@ -38,11 +38,11 @@ pipeline {
 			}	
         }
 		
-		stage('testes back-end') {
-			steps {
-				sh "./mvnw clean verify"
-			}	
-        }
+#		stage('testes back-end') {
+#			steps {
+#				sh "./mvnw clean verify"
+#			}	
+#        }
 		
 		stage('testes front-end') {
 			steps {
