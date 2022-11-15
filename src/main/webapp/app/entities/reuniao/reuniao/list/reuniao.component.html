@@ -40,23 +40,8 @@
           <th scope="col" jhiSortBy="data">
             <span jhiTranslate="reuniaoappApp.reuniaoReuniao.data">Data</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="dataInicio">
-            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.dataInicio">Data Inicio</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="dataFim">
-            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.dataFim">Data Fim</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="horaInicio">
-            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.horaInicio">Hora Inicio</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="horaFim">
-            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.horaFim">Hora Fim</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col" jhiSortBy="tipoReuniao">
             <span jhiTranslate="reuniaoappApp.reuniaoReuniao.tipoReuniao">Tipo Reuniao</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="obs">
-            <span jhiTranslate="reuniaoappApp.reuniaoReuniao.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -69,14 +54,12 @@
           <td>{{ reuniao.nome }}</td>
           <td>{{ reuniao.descricao }}</td>
           <td>{{ reuniao.data | formatMediumDate }}</td>
-          <td>{{ reuniao.dataInicio | formatMediumDate }}</td>
-          <td>{{ reuniao.dataFim | formatMediumDate }}</td>
-          <td>{{ reuniao.horaInicio }}</td>
-          <td>{{ reuniao.horaFim }}</td>
           <td jhiTranslate="{{ 'reuniaoappApp.TipoReuniao.' + reuniao.tipoReuniao }}">{{ reuniao.tipoReuniao }}</td>
-          <td>{{ reuniao.obs }}</td>
           <td class="text-end">
             <div class="btn-group">
+              <button type="submit" (click)="print(reuniao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="newspaper"></fa-icon>
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/reuniao', reuniao.id, 'edit']"

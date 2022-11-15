@@ -1,4 +1,4 @@
-import { ITipoReceber, NewTipoReceber } from './tipo-receber.model';
+import { ITipoReceber } from './tipo-receber.model';
 
 export const sampleWithRequiredData: ITipoReceber = {
   id: 74700,
@@ -15,12 +15,6 @@ export const sampleWithFullData: ITipoReceber = {
   nome: 'Malawi Specialist',
 };
 
-export const sampleWithNewData: NewTipoReceber = {
-  nome: 'Mexican vertical Pro',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

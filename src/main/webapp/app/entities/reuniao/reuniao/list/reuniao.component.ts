@@ -3,8 +3,10 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as fileSaver from 'file-saver';
 
 import { IReuniao } from '../reuniao.model';
+import { IFiltroReuniao, FiltroReuniao } from '../filtroReuniao.models';
 
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { ReuniaoService } from '../service/reuniao.service';
@@ -70,6 +72,33 @@ export class ReuniaoComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  print(reuniao: IReuniao): void {
+    const filtro: IFiltroReuniao = new FiltroReuniao();
+    filtro.idReuniao = reuniao.id;
+    filtro.tipo = 'PRINT';
+    this.reuniaoService.print(filtro).subscribe(res => {
+      this.downloadFile(res.body, res.headers.get('content-type'), res.headers.get('content-disposition')?.split('filename=')[1], 'PRINT');
+    });
+  }
+
+  downloadFile(data: any, contentType: any, filename: any, type: any): void {
+    const blob = new Blob([data], { type: contentType.concat('; charset=utf-8') });
+    if (type === 'PRINT') {
+      const blobUrl = URL.createObjectURL(blob);
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = blobUrl;
+      document.body.appendChild(iframe);
+      if (iframe.contentWindow !== null) {
+        iframe.contentWindow.print();
+      }
+    } else {
+      fileSaver.saveAs(blob, filename);
+      // const url = window.URL.createObjectURL(blob);
+      // window.open(url, filename);
+    }
   }
 
   protected sort(): string[] {

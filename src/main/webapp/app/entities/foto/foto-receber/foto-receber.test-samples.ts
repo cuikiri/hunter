@@ -1,4 +1,4 @@
-import { IFotoReceber, NewFotoReceber } from './foto-receber.model';
+import { IFotoReceber } from './foto-receber.model';
 
 export const sampleWithRequiredData: IFotoReceber = {
   id: 1443,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IFotoReceber = {
   conteudoContentType: 'unknown',
 };
 
-export const sampleWithNewData: NewFotoReceber = {
-  conteudo: '../fake-data/blob/hipster.png',
-  conteudoContentType: 'unknown',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

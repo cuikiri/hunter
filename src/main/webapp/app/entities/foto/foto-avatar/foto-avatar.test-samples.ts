@@ -1,4 +1,4 @@
-import { IFotoAvatar, NewFotoAvatar } from './foto-avatar.model';
+import { IFotoAvatar } from './foto-avatar.model';
 
 export const sampleWithRequiredData: IFotoAvatar = {
   id: 26440,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IFotoAvatar = {
   conteudoContentType: 'unknown',
 };
 
-export const sampleWithNewData: NewFotoAvatar = {
-  conteudo: '../fake-data/blob/hipster.png',
-  conteudoContentType: 'unknown',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

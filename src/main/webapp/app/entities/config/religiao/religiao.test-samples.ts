@@ -1,4 +1,4 @@
-import { IReligiao, NewReligiao } from './religiao.model';
+import { IReligiao } from './religiao.model';
 
 export const sampleWithRequiredData: IReligiao = {
   id: 56390,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IReligiao = {
   descricao: 'Lead Cedi Mesa',
 };
 
-export const sampleWithNewData: NewReligiao = {
-  codigo: 'Peixe',
-  descricao: 'connecting scalable',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

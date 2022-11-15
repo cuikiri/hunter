@@ -1,4 +1,4 @@
-import { IGrupoProduto, NewGrupoProduto } from './grupo-produto.model';
+import { IGrupoProduto } from './grupo-produto.model';
 
 export const sampleWithRequiredData: IGrupoProduto = {
   id: 88628,
@@ -16,12 +16,6 @@ export const sampleWithFullData: IGrupoProduto = {
   obs: 'superstructure',
 };
 
-export const sampleWithNewData: NewGrupoProduto = {
-  nome: 'invoice',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

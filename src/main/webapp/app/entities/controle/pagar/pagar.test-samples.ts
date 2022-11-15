@@ -2,7 +2,7 @@ import dayjs from 'dayjs/esm';
 
 import { StatusContaPagar } from 'app/entities/enumerations/status-conta-pagar.model';
 
-import { IPagar, NewPagar } from './pagar.model';
+import { IPagar } from './pagar.model';
 
 export const sampleWithRequiredData: IPagar = {
   id: 41931,
@@ -25,13 +25,6 @@ export const sampleWithFullData: IPagar = {
   obs: 'Turquia Brunei',
 };
 
-export const sampleWithNewData: NewPagar = {
-  data: dayjs('2022-09-15'),
-  valor: 98621,
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

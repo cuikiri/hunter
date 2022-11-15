@@ -1,4 +1,4 @@
-import { IFotoExameMedico, NewFotoExameMedico } from './foto-exame-medico.model';
+import { IFotoExameMedico } from './foto-exame-medico.model';
 
 export const sampleWithRequiredData: IFotoExameMedico = {
   id: 652,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IFotoExameMedico = {
   fotoContentType: 'unknown',
 };
 
-export const sampleWithNewData: NewFotoExameMedico = {
-  foto: '../fake-data/blob/hipster.png',
-  fotoContentType: 'unknown',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

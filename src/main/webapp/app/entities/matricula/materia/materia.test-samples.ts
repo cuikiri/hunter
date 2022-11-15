@@ -1,4 +1,4 @@
-import { IMateria, NewMateria } from './materia.model';
+import { IMateria } from './materia.model';
 
 export const sampleWithRequiredData: IMateria = {
   id: 91727,
@@ -15,12 +15,6 @@ export const sampleWithFullData: IMateria = {
   nome: 'generation',
 };
 
-export const sampleWithNewData: NewMateria = {
-  nome: 'e-markets Brinquedos Loan',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

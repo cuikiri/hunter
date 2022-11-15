@@ -9,6 +9,7 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IReuniao, getReuniaoIdentifier } from '../reuniao.model';
+import { IFiltroReuniao } from '../filtroReuniao.models';
 
 export type EntityResponseType = HttpResponse<IReuniao>;
 export type EntityArrayResponseType = HttpResponse<IReuniao[]>;
@@ -55,6 +56,10 @@ export class ReuniaoService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  print(filtro: IFiltroReuniao): Observable<HttpResponse<any>> {
+    return this.http.post(`${this.resourceUrl}/all/jasper`, filtro, { observe: 'response', responseType: 'blob' });
   }
 
   addReuniaoToCollectionIfMissing(reuniaoCollection: IReuniao[], ...reuniaosToCheck: (IReuniao | null | undefined)[]): IReuniao[] {

@@ -1,4 +1,4 @@
-import { IEvento, NewEvento } from './evento.model';
+import { IEvento } from './evento.model';
 
 export const sampleWithRequiredData: IEvento = {
   id: 92648,
@@ -20,12 +20,6 @@ export const sampleWithFullData: IEvento = {
   obs: 'Manager seize Jogos',
 };
 
-export const sampleWithNewData: NewEvento = {
-  nome: 'alarm overriding',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

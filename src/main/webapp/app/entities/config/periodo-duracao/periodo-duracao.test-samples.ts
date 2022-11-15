@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { IPeriodoDuracao, NewPeriodoDuracao } from './periodo-duracao.model';
+import { IPeriodoDuracao } from './periodo-duracao.model';
 
 export const sampleWithRequiredData: IPeriodoDuracao = {
   id: 32457,
@@ -29,14 +29,6 @@ export const sampleWithFullData: IPeriodoDuracao = {
   obs: 'dynamic Sapatos',
 };
 
-export const sampleWithNewData: NewPeriodoDuracao = {
-  nome: 'program',
-  dataInicio: dayjs('2022-09-15'),
-  dataFim: dayjs('2022-09-15'),
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

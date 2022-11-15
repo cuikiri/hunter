@@ -1,4 +1,4 @@
-import { ITipoMensagem, NewTipoMensagem } from './tipo-mensagem.model';
+import { ITipoMensagem } from './tipo-mensagem.model';
 
 export const sampleWithRequiredData: ITipoMensagem = {
   id: 66677,
@@ -19,13 +19,6 @@ export const sampleWithFullData: ITipoMensagem = {
   descricao: 'lilás Forward Metal',
 };
 
-export const sampleWithNewData: NewTipoMensagem = {
-  codigo: 'Refinado Bedfordshir',
-  nome: 'Avenida',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

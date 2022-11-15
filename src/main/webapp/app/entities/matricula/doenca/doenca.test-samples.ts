@@ -1,4 +1,4 @@
-import { IDoenca, NewDoenca } from './doenca.model';
+import { IDoenca } from './doenca.model';
 
 export const sampleWithRequiredData: IDoenca = {
   id: 69431,
@@ -21,12 +21,6 @@ export const sampleWithFullData: IDoenca = {
   obs: 'AI',
 };
 
-export const sampleWithNewData: NewDoenca = {
-  nome: 'connecting open-source Rodovia',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

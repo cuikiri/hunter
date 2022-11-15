@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { IEntradaEstoque, NewEntradaEstoque } from './entrada-estoque.model';
+import { IEntradaEstoque } from './entrada-estoque.model';
 
 export const sampleWithRequiredData: IEntradaEstoque = {
   id: 78258,
@@ -25,14 +25,6 @@ export const sampleWithFullData: IEntradaEstoque = {
   obs: 'model Bicicleta',
 };
 
-export const sampleWithNewData: NewEntradaEstoque = {
-  data: dayjs('2022-09-15'),
-  qtde: 36571,
-  valorUnitario: 49083,
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { IColaborador, NewColaborador } from './colaborador.model';
+import { IColaborador } from './colaborador.model';
 
 export const sampleWithRequiredData: IColaborador = {
   id: 56141,
@@ -25,12 +25,6 @@ export const sampleWithFullData: IColaborador = {
   obs: 'PNG portal',
 };
 
-export const sampleWithNewData: NewColaborador = {
-  dataCadastro: dayjs('2022-09-15'),
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

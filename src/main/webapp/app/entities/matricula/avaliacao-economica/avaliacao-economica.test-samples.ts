@@ -7,7 +7,7 @@ import { TipoMoradia } from 'app/entities/enumerations/tipo-moradia.model';
 import { FamiliaExiste } from 'app/entities/enumerations/familia-existe.model';
 import { AssitenciaMedica } from 'app/entities/enumerations/assitencia-medica.model';
 
-import { IAvaliacaoEconomica, NewAvaliacaoEconomica } from './avaliacao-economica.model';
+import { IAvaliacaoEconomica } from './avaliacao-economica.model';
 
 export const sampleWithRequiredData: IAvaliacaoEconomica = {
   id: 77987,
@@ -95,31 +95,6 @@ export const sampleWithFullData: IAvaliacaoEconomica = {
   temAcompanhamentoMedico: SimNao['NAO'],
 };
 
-export const sampleWithNewData: NewAvaliacaoEconomica = {
-  trabalhoOuEstagio: SimNao['SIM'],
-  contribuiRendaFamiliar: SimNao['NAO'],
-  apoioFinanceiroFamiliar: SimNao['SIM'],
-  estudaAtualmente: SimNao['SIM'],
-  estudouAnteriormente: SimNao['NAO'],
-  concluiAnoEscolarAnterior: SimNao['SIM'],
-  moraCom: Moradia['AVOS'],
-  pais: Pais['PAI_FALECIDOS'],
-  situacaoMoradia: SituacaoMoradia['PROPRIO'],
-  tipoMoradia: TipoMoradia['OUTROS'],
-  recebeBeneficioGoverno: SimNao['NAO'],
-  familiaExiste: FamiliaExiste['VIOLENCIA'],
-  assitenciaMedica: AssitenciaMedica['PUBLICA'],
-  temAlergia: SimNao['NAO'],
-  temProblemaSaude: SimNao['SIM'],
-  tomaMedicamento: SimNao['SIM'],
-  teveFratura: SimNao['SIM'],
-  teveCirurgia: SimNao['SIM'],
-  temDeficiencia: SimNao['NAO'],
-  temAcompanhamentoMedico: SimNao['SIM'],
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -1,4 +1,4 @@
-import { ITurma, NewTurma } from './turma.model';
+import { ITurma } from './turma.model';
 
 export const sampleWithRequiredData: ITurma = {
   id: 7606,
@@ -18,13 +18,6 @@ export const sampleWithFullData: ITurma = {
   ano: 74149,
 };
 
-export const sampleWithNewData: NewTurma = {
-  nome: 'efficient',
-  ano: 12913,
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

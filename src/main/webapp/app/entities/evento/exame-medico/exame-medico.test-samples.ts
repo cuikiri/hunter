@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { IExameMedico, NewExameMedico } from './exame-medico.model';
+import { IExameMedico } from './exame-medico.model';
 
 export const sampleWithRequiredData: IExameMedico = {
   id: 69324,
@@ -22,12 +22,6 @@ export const sampleWithFullData: IExameMedico = {
   obs: 'deposit',
 };
 
-export const sampleWithNewData: NewExameMedico = {
-  data: dayjs('2022-09-15'),
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

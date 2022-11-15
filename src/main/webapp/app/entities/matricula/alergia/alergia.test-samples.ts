@@ -1,4 +1,4 @@
-import { IAlergia, NewAlergia } from './alergia.model';
+import { IAlergia } from './alergia.model';
 
 export const sampleWithRequiredData: IAlergia = {
   id: 37545,
@@ -21,12 +21,6 @@ export const sampleWithFullData: IAlergia = {
   obs: 'Samoa Equador cross-platform',
 };
 
-export const sampleWithNewData: NewAlergia = {
-  nome: 'Mato Líbano',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { IMatricula, NewMatricula } from './matricula.model';
+import { IMatricula } from './matricula.model';
 
 export const sampleWithRequiredData: IMatricula = {
   id: 55032,
@@ -19,12 +19,6 @@ export const sampleWithFullData: IMatricula = {
   obs: 'Bahia Buckinghamshire',
 };
 
-export const sampleWithNewData: NewMatricula = {
-  data: dayjs('2022-09-15'),
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

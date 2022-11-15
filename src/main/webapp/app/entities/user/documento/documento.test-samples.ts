@@ -1,4 +1,4 @@
-import { IDocumento, NewDocumento } from './documento.model';
+import { IDocumento } from './documento.model';
 
 export const sampleWithRequiredData: IDocumento = {
   id: 81947,
@@ -15,12 +15,6 @@ export const sampleWithFullData: IDocumento = {
   descricao: 'synergistic Agent Principal',
 };
 
-export const sampleWithNewData: NewDocumento = {
-  descricao: 'copy PNG',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

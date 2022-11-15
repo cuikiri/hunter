@@ -1,4 +1,4 @@
-import { IProduto, NewProduto } from './produto.model';
+import { IProduto } from './produto.model';
 
 export const sampleWithRequiredData: IProduto = {
   id: 79836,
@@ -20,12 +20,6 @@ export const sampleWithFullData: IProduto = {
   peso: 'generating Mônaco ov',
 };
 
-export const sampleWithNewData: NewProduto = {
-  nome: 'Bulgária Account',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

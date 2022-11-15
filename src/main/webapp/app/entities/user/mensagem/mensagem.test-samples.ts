@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { IMensagem, NewMensagem } from './mensagem.model';
+import { IMensagem } from './mensagem.model';
 
 export const sampleWithRequiredData: IMensagem = {
   id: 46374,
@@ -23,14 +23,6 @@ export const sampleWithFullData: IMensagem = {
   conteudo: 'Realigned',
 };
 
-export const sampleWithNewData: NewMensagem = {
-  data: dayjs('2022-06-23'),
-  titulo: 'Salada',
-  conteudo: 'Object-based',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

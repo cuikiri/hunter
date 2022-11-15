@@ -3,7 +3,7 @@ import dayjs from 'dayjs/esm';
 import { Pressao } from 'app/entities/enumerations/pressao.model';
 import { Coracao } from 'app/entities/enumerations/coracao.model';
 
-import { IDadosMedico, NewDadosMedico } from './dados-medico.model';
+import { IDadosMedico } from './dados-medico.model';
 
 export const sampleWithRequiredData: IDadosMedico = {
   id: 44539,
@@ -34,16 +34,6 @@ export const sampleWithFullData: IDadosMedico = {
   obs: 'HDD',
 };
 
-export const sampleWithNewData: NewDadosMedico = {
-  data: dayjs('2022-09-15'),
-  peso: 1309,
-  altura: 40367,
-  pressao: Pressao['ALTA'],
-  coracao: Coracao['CARDIOMIOPATIA'],
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -1,4 +1,4 @@
-import { IDadosPessoais, NewDadosPessoais } from './dados-pessoais.model';
+import { IDadosPessoais } from './dados-pessoais.model';
 
 export const sampleWithRequiredData: IDadosPessoais = {
   id: 91359,
@@ -29,15 +29,6 @@ export const sampleWithFullData: IDadosPessoais = {
   whatsapp: 'Congelado capacitor',
 };
 
-export const sampleWithNewData: NewDadosPessoais = {
-  nome: 'enhance Travessa Ave',
-  sobreNome: 'pele Amazonas Future',
-  mae: 'protocol âmbar artificial',
-  celular: 'Configuration',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

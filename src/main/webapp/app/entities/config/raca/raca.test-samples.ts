@@ -1,4 +1,4 @@
-import { IRaca, NewRaca } from './raca.model';
+import { IRaca } from './raca.model';
 
 export const sampleWithRequiredData: IRaca = {
   id: 21720,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IRaca = {
   descricao: 'navigating',
 };
 
-export const sampleWithNewData: NewRaca = {
-  codigo: 'Principal',
-  descricao: 'Travessa',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

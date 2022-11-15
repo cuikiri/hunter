@@ -1,4 +1,4 @@
-import { IVacina, NewVacina } from './vacina.model';
+import { IVacina } from './vacina.model';
 
 export const sampleWithRequiredData: IVacina = {
   id: 15796,
@@ -18,12 +18,6 @@ export const sampleWithFullData: IVacina = {
   obs: 'up Janeiro Money',
 };
 
-export const sampleWithNewData: NewVacina = {
-  nome: 'Savings out-of-the-box Alameda',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

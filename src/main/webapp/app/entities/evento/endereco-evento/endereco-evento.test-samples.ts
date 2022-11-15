@@ -1,4 +1,4 @@
-import { IEnderecoEvento, NewEnderecoEvento } from './endereco-evento.model';
+import { IEnderecoEvento } from './endereco-evento.model';
 
 export const sampleWithRequiredData: IEnderecoEvento = {
   id: 31477,
@@ -32,17 +32,6 @@ export const sampleWithFullData: IEnderecoEvento = {
   uf: 'em',
 };
 
-export const sampleWithNewData: NewEnderecoEvento = {
-  cep: 'SMSXXXXX',
-  logradouro: 'Representative Líbia',
-  numero: 'bronze',
-  bairro: 'Account Pizza',
-  cidade: 'Netherlands program',
-  uf: 'Pi',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

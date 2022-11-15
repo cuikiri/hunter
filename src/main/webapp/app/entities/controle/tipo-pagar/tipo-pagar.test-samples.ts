@@ -1,4 +1,4 @@
-import { ITipoPagar, NewTipoPagar } from './tipo-pagar.model';
+import { ITipoPagar } from './tipo-pagar.model';
 
 export const sampleWithRequiredData: ITipoPagar = {
   id: 59682,
@@ -15,12 +15,6 @@ export const sampleWithFullData: ITipoPagar = {
   nome: 'bypass transmit',
 };
 
-export const sampleWithNewData: NewTipoPagar = {
-  nome: 'Camiseta Inteligente',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

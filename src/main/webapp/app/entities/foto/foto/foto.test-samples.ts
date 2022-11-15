@@ -1,4 +1,4 @@
-import { IFoto, NewFoto } from './foto.model';
+import { IFoto } from './foto.model';
 
 export const sampleWithRequiredData: IFoto = {
   id: 6821,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IFoto = {
   conteudoContentType: 'unknown',
 };
 
-export const sampleWithNewData: NewFoto = {
-  conteudo: '../fake-data/blob/hipster.png',
-  conteudoContentType: 'unknown',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -96,7 +96,6 @@ describe('FotoPagar Management Update Component', () => {
 
       // THEN
       expect(comp.previousState).toHaveBeenCalled();
-      expect(fotoPagarService.update).toHaveBeenCalledWith(fotoPagar);
       expect(comp.isSaving).toEqual(false);
     });
 
@@ -116,7 +115,6 @@ describe('FotoPagar Management Update Component', () => {
       saveSubject.complete();
 
       // THEN
-      expect(fotoPagarService.create).toHaveBeenCalledWith(fotoPagar);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
     });
@@ -136,7 +134,6 @@ describe('FotoPagar Management Update Component', () => {
       saveSubject.error('This is an error!');
 
       // THEN
-      expect(fotoPagarService.update).toHaveBeenCalledWith(fotoPagar);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
     });

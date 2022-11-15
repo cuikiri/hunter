@@ -1,6 +1,6 @@
 import { Ensino } from 'app/entities/enumerations/ensino.model';
 
-import { IAcompanhamentoAluno, NewAcompanhamentoAluno } from './acompanhamento-aluno.model';
+import { IAcompanhamentoAluno } from './acompanhamento-aluno.model';
 
 export const sampleWithRequiredData: IAcompanhamentoAluno = {
   id: 66735,
@@ -23,14 +23,6 @@ export const sampleWithFullData: IAcompanhamentoAluno = {
   bimestre: 86210,
 };
 
-export const sampleWithNewData: NewAcompanhamentoAluno = {
-  ano: 91007,
-  ensino: Ensino['MEDIO'],
-  bimestre: 72023,
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

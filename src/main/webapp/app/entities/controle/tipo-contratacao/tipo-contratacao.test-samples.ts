@@ -1,4 +1,4 @@
-import { ITipoContratacao, NewTipoContratacao } from './tipo-contratacao.model';
+import { ITipoContratacao } from './tipo-contratacao.model';
 
 export const sampleWithRequiredData: ITipoContratacao = {
   id: 1770,
@@ -15,12 +15,6 @@ export const sampleWithFullData: ITipoContratacao = {
   nome: 'Implementation Taka',
 };
 
-export const sampleWithNewData: NewTipoContratacao = {
-  nome: 'marca Research Espírito',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -6,15 +6,19 @@ import br.com.jhisolution.user.hunters.repository.ReuniaoRepository;
 import br.com.jhisolution.user.hunters.service.ReuniaoService;
 import br.com.jhisolution.user.hunters.web.rest.dto.FiltroReuniaoDTO;
 import br.com.jhisolution.user.hunters.web.rest.dto.ReuniaoDTO;
+import com.google.gson.Gson;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import net.sf.jasperreports.engine.JRException;
@@ -22,7 +26,7 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.data.JsonDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -133,22 +137,23 @@ public class ReuniaoServiceImpl implements ReuniaoService {
     public Resource findAllByReuniaoIdJasper(FiltroReuniaoDTO filtro) {
         log.debug("Request to get jasper report of Meeting for ID: {}", filtro.getIdReuniao());
         try {
-            File file = ResourceUtils.getFile("classpath:templates/jasper/reuniao/ata_reuniao.jrxml");
+            File fileReuniao = ResourceUtils.getFile("classpath:templates/jasper/reuniao/ata_reuniao.jrxml");
             //JasperReport jasperReport = (JasperReport)JRLoader.loadObject(file);
-            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+            JasperReport jasperReuniao = JasperCompileManager.compileReport(fileReuniao.getAbsolutePath());
             //JRSaver.saveObject(jasperReport, "report_receber.jasper");
 
             List<ReuniaoDTO> lista = this.findAllByReuniaoId(filtro.getIdReuniao());
-            //String strJson = Objects.nonNull(dto)? gson.toJson(dto) : "";
-            //log.debug("String JSON utilizada: {}", strJson);
-            //InputStream stream = new ByteArrayInputStream(strJson.getBytes());
-            //JsonDataSource dataSource = new JsonDataSource(stream);
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
+            String strJson = Objects.nonNull(lista) ? new Gson().toJson(lista) : "";
+            log.debug("String JSON utilizada: {}", strJson);
+            InputStream stream = new ByteArrayInputStream(strJson.getBytes());
+            JsonDataSource dataSource = new JsonDataSource(stream);
+            //JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lista);
 
             Map<String, Object> parameters = new HashMap<>();
+            parameters.put("SUBREPORT_DIR", "templates/jasper/reuniao/");
             //parameters.put("userName", "Dhaval's Orders");
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReuniao, parameters, dataSource);
             ReportExporter simpleReportExporter = new ReportExporter(jasperPrint);
             String fileName = "";
             log.debug("Cria arquivo na pasta: {}", this.fileStorageLocation);

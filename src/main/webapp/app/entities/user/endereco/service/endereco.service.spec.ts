@@ -24,16 +24,11 @@ describe('Endereco Service', () => {
       cep: 'AAAAAAA',
       logradouro: 'AAAAAAA',
       complemento1: 'AAAAAAA',
-      complemento2: 'AAAAAAA',
       numero: 'AAAAAAA',
       bairro: 'AAAAAAA',
       localidade: 'AAAAAAA',
       uf: 'AAAAAAA',
       unidade: 'AAAAAAA',
-      ibge: 'AAAAAAA',
-      gia: 'AAAAAAA',
-      latitude: 0,
-      longitude: 0,
     };
   });
 
@@ -72,16 +67,11 @@ describe('Endereco Service', () => {
           cep: 'BBBBBB',
           logradouro: 'BBBBBB',
           complemento1: 'BBBBBB',
-          complemento2: 'BBBBBB',
           numero: 'BBBBBB',
           bairro: 'BBBBBB',
           localidade: 'BBBBBB',
           uf: 'BBBBBB',
           unidade: 'BBBBBB',
-          ibge: 'BBBBBB',
-          gia: 'BBBBBB',
-          latitude: 1,
-          longitude: 1,
         },
         elemDefault
       );
@@ -99,10 +89,7 @@ describe('Endereco Service', () => {
       const patchObject = Object.assign(
         {
           logradouro: 'BBBBBB',
-          complemento2: 'BBBBBB',
           bairro: 'BBBBBB',
-          gia: 'BBBBBB',
-          latitude: 1,
         },
         new Endereco()
       );
@@ -125,16 +112,11 @@ describe('Endereco Service', () => {
           cep: 'BBBBBB',
           logradouro: 'BBBBBB',
           complemento1: 'BBBBBB',
-          complemento2: 'BBBBBB',
           numero: 'BBBBBB',
           bairro: 'BBBBBB',
           localidade: 'BBBBBB',
           uf: 'BBBBBB',
           unidade: 'BBBBBB',
-          ibge: 'BBBBBB',
-          gia: 'BBBBBB',
-          latitude: 1,
-          longitude: 1,
         },
         elemDefault
       );

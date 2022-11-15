@@ -1,6 +1,10 @@
 package br.com.jhisolution.user.hunters.domain;
 
 import br.com.jhisolution.user.hunters.domain.enumeration.TipoReuniao;
+import br.com.jhisolution.user.hunters.web.rest.dto.AcaoDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.DecisaoDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.ParticipanteDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.PautaDTO;
 import br.com.jhisolution.user.hunters.web.rest.dto.ReuniaoDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -9,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -400,12 +405,26 @@ public class Reuniao implements Serializable {
             Objects.nonNull(getDataFim()) ? getDataFim().format(formatter) : "",
             getHoraInicio(),
             getHoraFim(),
-            getTipoReuniao(),
+            getTipoReuniao().name(),
             getObs(),
-            getPautas(),
-            getDecisoes(),
-            getAcoes(),
-            getParticipantes()
+            Objects.nonNull(getPautas())
+                ? getPautas()
+                    .stream()
+                    .map(obj -> PautaDTO.getInstance(obj.getId(), obj.getNome(), obj.getObs()))
+                    .collect(Collectors.toList())
+                : null,
+            Objects.nonNull(getDecisoes())
+                ? getDecisoes().stream().map(obj -> DecisaoDTO.getInstance(obj)).collect(Collectors.toList())
+                : null,
+            Objects.nonNull(getAcoes())
+                ? getAcoes().stream().map(obj -> AcaoDTO.getInstance(obj.getId(), obj.getNome(), obj.getObs())).collect(Collectors.toList())
+                : null,
+            Objects.nonNull(getParticipantes())
+                ? getParticipantes()
+                    .stream()
+                    .map(obj -> ParticipanteDTO.getInstance(obj.getId(), obj.getNome(), obj.getObs()))
+                    .collect(Collectors.toList())
+                : null
         );
     }
 }

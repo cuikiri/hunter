@@ -1,4 +1,4 @@
-import { IFotoIcon, NewFotoIcon } from './foto-icon.model';
+import { IFotoIcon } from './foto-icon.model';
 
 export const sampleWithRequiredData: IFotoIcon = {
   id: 10226,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IFotoIcon = {
   conteudoContentType: 'unknown',
 };
 
-export const sampleWithNewData: NewFotoIcon = {
-  conteudo: '../fake-data/blob/hipster.png',
-  conteudoContentType: 'unknown',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

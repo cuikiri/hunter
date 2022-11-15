@@ -1,4 +1,4 @@
-import { IReceberDe, NewReceberDe } from './receber-de.model';
+import { IReceberDe } from './receber-de.model';
 
 export const sampleWithRequiredData: IReceberDe = {
   id: 2201,
@@ -20,12 +20,6 @@ export const sampleWithFullData: IReceberDe = {
   documento: 'Incrível bus',
 };
 
-export const sampleWithNewData: NewReceberDe = {
-  nome: 'Áustria Analyst extend',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

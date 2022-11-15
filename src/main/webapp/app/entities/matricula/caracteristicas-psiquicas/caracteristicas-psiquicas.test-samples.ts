@@ -1,4 +1,4 @@
-import { ICaracteristicasPsiquicas, NewCaracteristicasPsiquicas } from './caracteristicas-psiquicas.model';
+import { ICaracteristicasPsiquicas } from './caracteristicas-psiquicas.model';
 
 export const sampleWithRequiredData: ICaracteristicasPsiquicas = {
   id: 66133,
@@ -15,12 +15,6 @@ export const sampleWithFullData: ICaracteristicasPsiquicas = {
   nome: 'Solutions Mobility',
 };
 
-export const sampleWithNewData: NewCaracteristicasPsiquicas = {
-  nome: 'International',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

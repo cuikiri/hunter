@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
 
-import { ISaidaEstoque, NewSaidaEstoque } from './saida-estoque.model';
+import { ISaidaEstoque } from './saida-estoque.model';
 
 export const sampleWithRequiredData: ISaidaEstoque = {
   id: 53397,
@@ -24,14 +24,6 @@ export const sampleWithFullData: ISaidaEstoque = {
   obs: 'Open-source',
 };
 
-export const sampleWithNewData: NewSaidaEstoque = {
-  data: dayjs('2022-09-15'),
-  qtde: 58966,
-  valorUnitario: 72393,
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

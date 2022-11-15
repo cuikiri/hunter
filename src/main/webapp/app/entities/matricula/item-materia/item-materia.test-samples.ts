@@ -1,4 +1,4 @@
-import { IItemMateria, NewItemMateria } from './item-materia.model';
+import { IItemMateria } from './item-materia.model';
 
 export const sampleWithRequiredData: IItemMateria = {
   id: 22754,
@@ -17,12 +17,6 @@ export const sampleWithFullData: IItemMateria = {
   obs: 'connect',
 };
 
-export const sampleWithNewData: NewItemMateria = {
-  nota: 'Piauí Solutions',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

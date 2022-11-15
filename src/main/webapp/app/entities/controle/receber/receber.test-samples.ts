@@ -2,7 +2,7 @@ import dayjs from 'dayjs/esm';
 
 import { StatusContaReceber } from 'app/entities/enumerations/status-conta-receber.model';
 
-import { IReceber, NewReceber } from './receber.model';
+import { IReceber } from './receber.model';
 
 export const sampleWithRequiredData: IReceber = {
   id: 22537,
@@ -26,13 +26,6 @@ export const sampleWithFullData: IReceber = {
   obs: 'Ergonomic Madeira',
 };
 
-export const sampleWithNewData: NewReceber = {
-  data: dayjs('2022-09-15'),
-  valor: 298,
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

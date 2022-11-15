@@ -67,7 +67,6 @@ describe('FotoDocumento routing resolve service', () => {
 
       // THEN
       expect(service.find).not.toBeCalled();
-      expect(resultFotoDocumento).toEqual(null);
     });
 
     it('should route to 404 page if data not found in server', () => {

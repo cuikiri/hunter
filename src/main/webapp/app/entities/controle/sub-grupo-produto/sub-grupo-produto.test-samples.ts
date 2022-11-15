@@ -1,4 +1,4 @@
-import { ISubGrupoProduto, NewSubGrupoProduto } from './sub-grupo-produto.model';
+import { ISubGrupoProduto } from './sub-grupo-produto.model';
 
 export const sampleWithRequiredData: ISubGrupoProduto = {
   id: 93823,
@@ -17,12 +17,6 @@ export const sampleWithFullData: ISubGrupoProduto = {
   obs: 'Loan implement withdrawal',
 };
 
-export const sampleWithNewData: NewSubGrupoProduto = {
-  nome: 'Inteligente',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

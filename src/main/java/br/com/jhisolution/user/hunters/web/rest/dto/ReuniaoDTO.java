@@ -1,15 +1,7 @@
 package br.com.jhisolution.user.hunters.web.rest.dto;
 
-import br.com.jhisolution.user.hunters.domain.Acao;
-import br.com.jhisolution.user.hunters.domain.Decisao;
-import br.com.jhisolution.user.hunters.domain.Participante;
-import br.com.jhisolution.user.hunters.domain.Pauta;
-import br.com.jhisolution.user.hunters.domain.enumeration.TipoReuniao;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.HashSet;
-import java.util.Set;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReuniaoDTO {
 
@@ -21,24 +13,13 @@ public class ReuniaoDTO {
     private String dataFim;
     private String horaInicio;
     private String horaFim;
-    private TipoReuniao tipoReuniao;
+    private String tipoReuniao;
     private String obs;
 
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reuniao" })
-    private Set<Pauta> pautas = new HashSet<>();
-
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reuniao" }, allowSetters = true)
-    private Set<Decisao> decisoes = new HashSet<>();
-
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reuniao" }, allowSetters = true)
-    private Set<Acao> acoes = new HashSet<>();
-
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reuniao" }, allowSetters = true)
-    private Set<Participante> participantes = new HashSet<>();
+    private List<PautaDTO> pautas = new ArrayList<>();
+    private List<DecisaoDTO> decisoes = new ArrayList<>();
+    private List<AcaoDTO> acoes = new ArrayList<>();
+    private List<ParticipanteDTO> participantes = new ArrayList<>();
 
     public ReuniaoDTO() {
         super();
@@ -54,12 +35,12 @@ public class ReuniaoDTO {
         String dataFim,
         String horaInicio,
         String horaFim,
-        TipoReuniao tipoReuniao,
+        String tipoReuniao,
         String obs,
-        Set<Pauta> pautas,
-        Set<Decisao> decisoes,
-        Set<Acao> acoes,
-        Set<Participante> participantes
+        List<PautaDTO> pautas,
+        List<DecisaoDTO> decisoes,
+        List<AcaoDTO> acoes,
+        List<ParticipanteDTO> participantes
     ) {
         super();
         this.id = id;
@@ -87,12 +68,12 @@ public class ReuniaoDTO {
         String dataFim,
         String horaInicio,
         String horaFim,
-        TipoReuniao tipoReuniao,
+        String tipoReuniao,
         String obs,
-        Set<Pauta> pautas,
-        Set<Decisao> decisoes,
-        Set<Acao> acoes,
-        Set<Participante> participantes
+        List<PautaDTO> pautas,
+        List<DecisaoDTO> decisoes,
+        List<AcaoDTO> acoes,
+        List<ParticipanteDTO> participantes
     ) {
         return new ReuniaoDTO(
             id,
@@ -176,11 +157,11 @@ public class ReuniaoDTO {
         this.horaFim = horaFim;
     }
 
-    public TipoReuniao getTipoReuniao() {
+    public String getTipoReuniao() {
         return tipoReuniao;
     }
 
-    public void setTipoReuniao(TipoReuniao tipoReuniao) {
+    public void setTipoReuniao(String tipoReuniao) {
         this.tipoReuniao = tipoReuniao;
     }
 
@@ -192,35 +173,35 @@ public class ReuniaoDTO {
         this.obs = obs;
     }
 
-    public Set<Pauta> getPautas() {
+    public List<PautaDTO> getPautas() {
         return pautas;
     }
 
-    public void setPautas(Set<Pauta> pautas) {
+    public void setPautas(List<PautaDTO> pautas) {
         this.pautas = pautas;
     }
 
-    public Set<Decisao> getDecisoes() {
+    public List<DecisaoDTO> getDecisoes() {
         return decisoes;
     }
 
-    public void setDecisoes(Set<Decisao> decisoes) {
+    public void setDecisoes(List<DecisaoDTO> decisoes) {
         this.decisoes = decisoes;
     }
 
-    public Set<Acao> getAcoes() {
+    public List<AcaoDTO> getAcoes() {
         return acoes;
     }
 
-    public void setAcoes(Set<Acao> acoes) {
+    public void setAcoes(List<AcaoDTO> acoes) {
         this.acoes = acoes;
     }
 
-    public Set<Participante> getParticipantes() {
+    public List<ParticipanteDTO> getParticipantes() {
         return participantes;
     }
 
-    public void setParticipantes(Set<Participante> participantes) {
+    public void setParticipantes(List<ParticipanteDTO> participantes) {
         this.participantes = participantes;
     }
 }

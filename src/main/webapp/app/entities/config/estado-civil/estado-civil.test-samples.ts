@@ -1,4 +1,4 @@
-import { IEstadoCivil, NewEstadoCivil } from './estado-civil.model';
+import { IEstadoCivil } from './estado-civil.model';
 
 export const sampleWithRequiredData: IEstadoCivil = {
   id: 18935,
@@ -18,13 +18,6 @@ export const sampleWithFullData: IEstadoCivil = {
   descricao: 'Agent experiences',
 };
 
-export const sampleWithNewData: NewEstadoCivil = {
-  codigo: 'Distributed Bedfords',
-  descricao: 'Algodão',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

@@ -1,4 +1,4 @@
-import { IAgendaColaborador, NewAgendaColaborador } from './agenda-colaborador.model';
+import { IAgendaColaborador } from './agenda-colaborador.model';
 
 export const sampleWithRequiredData: IAgendaColaborador = {
   id: 69901,
@@ -17,12 +17,6 @@ export const sampleWithFullData: IAgendaColaborador = {
   obs: 'District Borracha',
 };
 
-export const sampleWithNewData: NewAgendaColaborador = {
-  nome: 'partnerships reintermediate',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

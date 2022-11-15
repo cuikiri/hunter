@@ -1,4 +1,4 @@
-import { IDiaSemana, NewDiaSemana } from './dia-semana.model';
+import { IDiaSemana } from './dia-semana.model';
 
 export const sampleWithRequiredData: IDiaSemana = {
   id: 95543,
@@ -17,12 +17,6 @@ export const sampleWithFullData: IDiaSemana = {
   obs: 'secondary technologies Mouse',
 };
 
-export const sampleWithNewData: NewDiaSemana = {
-  nome: 'generating Kuwaiti',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);

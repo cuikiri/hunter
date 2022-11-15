@@ -1,4 +1,4 @@
-import { IPagarPara, NewPagarPara } from './pagar-para.model';
+import { IPagarPara } from './pagar-para.model';
 
 export const sampleWithRequiredData: IPagarPara = {
   id: 47727,
@@ -25,12 +25,6 @@ export const sampleWithFullData: IPagarPara = {
   pix: 'Esportes District',
 };
 
-export const sampleWithNewData: NewPagarPara = {
-  nome: 'backing',
-  id: null,
-};
-
-Object.freeze(sampleWithNewData);
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);
 Object.freeze(sampleWithFullData);
