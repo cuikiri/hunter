@@ -38,9 +38,9 @@ pipeline {
 			}	
         }
 		
-		stage('testes front-end') {
+		stage('testes unitarios') {
 			steps {
-				sh "npm test"
+				sh "./mvnw clean verify"
 			}	
         }
 		
