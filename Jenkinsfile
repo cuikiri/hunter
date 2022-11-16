@@ -4,9 +4,9 @@ pipeline {
     agent any
     
     tools {
-    	jdk 'jdk11'
+        jdk 'jdk11'
         maven 'maven-3.8.6'
-		nodejs 'node'
+        nodejs "node"
     }
     stages {
         stage('check java') {
