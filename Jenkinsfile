@@ -6,6 +6,7 @@ pipeline {
     tools {
     	jdk 'jdk11'
         maven 'maven-3.8.6'
+		nodejs 'node'
     }
     stages {
         stage('check java') {
