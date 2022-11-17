@@ -6,9 +6,18 @@ pipeline {
     tools {
         jdk 'jdk11'
         maven 'maven-3.8.6'
-        nodejs "node"
-    }
+     }
+ 
     stages {
+	    stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                ''' 
+            }
+        }
+		
         stage('check java') {
 			steps {
                 sh "java -version"
@@ -21,6 +30,7 @@ pipeline {
 				sh "./mvnw -ntp clean -P-webapp"
 			}	
         }
+		
         stage('nohttp') {
 			steps {
 				sh "./mvnw -ntp checkstyle:check"
@@ -41,7 +51,9 @@ pipeline {
 		
 		stage('testes unitarios') {
 			steps {
-				sh "./mvnw clean verify"
+				container('nodejs') {
+					sh "npm test"
+				}
 			}	
         }
 		
