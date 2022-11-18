@@ -43,18 +43,12 @@ pipeline {
 			}	
         }
 
-        stage('npm install') {
+        stage('build and test') {
 			steps {
 				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
 			}	
         }
-		
-		stage('testes unitarios') {
-			steps {
-				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:test-front"
-			}	
-        }
-		
+	
         stage('packaging') {
 			steps {
 				sh "./mvnw -ntp verify -P-webapp -Pprod -DskipTests"
