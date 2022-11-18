@@ -51,9 +51,7 @@ pipeline {
 		
 		stage('testes unitarios') {
 			steps {
-				container('nodejs') {
-					sh "npm test"
-				}
+				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:test-front"
 			}	
         }
 		

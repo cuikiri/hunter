@@ -993,6 +993,16 @@
                                     <goal>npm</goal>
                                 </goals>
                             </execution>
+							<execution>
+								<id>npm run test</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>test-front</goal>
+								</goals>
+								<configuration>
+									<arguments>run test</arguments>
+								</configuration>
+							</execution>
                             <execution>
                                 <id>webapp build dev</id>
                                 <goals>
