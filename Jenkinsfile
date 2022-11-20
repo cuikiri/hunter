@@ -37,7 +37,7 @@ pipeline {
 			}	
         }
 
-        stage('frontend-maven-plugin test') {
+        stage('frontend test') {
 			steps {
 				sh "npm test"
 			}	
