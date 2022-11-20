@@ -45,7 +45,6 @@ pipeline {
 
         stage('build and test') {
 			steps {
-				sh "npm install"
 				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
 			}	
         }
