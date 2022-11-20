@@ -1,12 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent {
-        docker {
-            image 'node:lts-bullseye-slim' 
-            args '-p 3000:3000' 
-        }
-    }
+    agent any
     
     tools {
         jdk 'jdk11'
@@ -50,6 +45,7 @@ pipeline {
 
         stage('build and test') {
 			steps {
+				sh "npm install"
 				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
 			}	
         }
