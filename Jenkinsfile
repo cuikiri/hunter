@@ -10,24 +10,15 @@ pipeline {
      }
  
     stages {
-	    stage ('Initialize') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                ''' 
-            }
-        }
-		
-        stage('check java') {
-			steps {
-                sh "java -version"
-            }
-        }
-
         stage('clean') {
 			steps {
 				sh "mvn -ntp clean"
+			}	
+        }
+		
+		stage('mvn install') {
+			steps {
+				sh "npm install"
 			}	
         }
 		
