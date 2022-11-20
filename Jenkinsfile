@@ -27,33 +27,25 @@ pipeline {
 
         stage('clean') {
 			steps {
-				sh "chmod +x mvnw"
-				sh "./mvnw -ntp clean -P-webapp"
+				sh "mvn -ntp clean"
 			}	
         }
 		
-        stage('nohttp') {
+        stage('java test') {
 			steps {
-				sh "./mvnw -ntp checkstyle:check"
+				sh "mvn -ntp test"
 			}	
         }
 
-        stage('install tools') {
+        stage('frontend-maven-plugin test') {
 			steps {
-				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:install-node-and-npm@install-node-and-npm"
-			}	
-        }
-
-        stage('build and test') {
-			steps {
-				sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
+				sh "npm test"
 			}	
         }
 	
-        stage('packaging') {
+        stage('build packaging') {
 			steps {
-				sh "./mvnw -ntp verify -P-webapp -Pprod -DskipTests"
-				archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+				sh "mvn clean package -Dmaven.test.skip"
 			}	
         }
     }
