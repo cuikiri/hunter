@@ -57,7 +57,7 @@
     "test": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng test --coverage --log-heap-usage -w=2",
     "test:watch": "npm run test -- --watch",
     "watch": "concurrently npm:start npm:backend:start",
-    "webapp:build": "npm run clean-www && npm run webapp:build:dev node",
+    "webapp:build": "npm run clean-www && npm run webapp:build:dev",
     "webapp:build:dev": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --configuration development",
     "webapp:build:prod": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng build --configuration production",
     "webapp:dev": "node --max_old_space_size=4096 node_modules/@angular/cli/bin/ng serve",
