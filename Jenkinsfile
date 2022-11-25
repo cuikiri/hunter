@@ -15,16 +15,16 @@ pipeline {
 				sh "mvn -ntp clean"
 			}	
         }
-		
-        stage('frontend test') {
-			steps {
-				sh "npm test"
-			}	
-        }
 	
         stage('build packaging') {
 			steps {
 				sh "mvn -ntp clean package"
+			}	
+        }
+        
+        stage('frontend test') {
+			steps {
+				sh "npm test"
 			}	
         }
     }
