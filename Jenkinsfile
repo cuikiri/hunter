@@ -16,18 +16,6 @@ pipeline {
 			}	
         }
 		
-		stage('mvn install') {
-			steps {
-				sh "npm install"
-			}	
-        }
-		
-        stage('java test') {
-			steps {
-				sh "mvn -ntp test"
-			}	
-        }
-
         stage('frontend test') {
 			steps {
 				sh "npm test"
@@ -36,7 +24,7 @@ pipeline {
 	
         stage('build packaging') {
 			steps {
-				sh "mvn clean package -Dmaven.test.skip"
+				sh "mvn -ntp clean package"
 			}	
         }
     }
