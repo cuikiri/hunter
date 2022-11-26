@@ -38,14 +38,14 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final JHipsterProperties jHipsterProperties;
 
-    @Value("${tomcat.ajp.port}")
-    private Integer port;
+    //@Value("${tomcat.ajp.port}")
+    //private Integer port;
 
-    @Value("${tomcat.ajp.enabled}")
-    private Boolean enabled;
+    //@Value("${tomcat.ajp.enabled}")
+    //private Boolean enabled;
 
-    @Value("${tomcat.ajp.remoteauthentication}")
-    private Boolean remoteauthentication;
+    //@Value("${tomcat.ajp.remoteauthentication}")
+    //private Boolean remoteauthentication;
 
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
         this.env = env;

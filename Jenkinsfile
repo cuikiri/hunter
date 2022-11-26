@@ -5,20 +5,13 @@ pipeline {
     
     tools {
         jdk 'jdk11'
-        maven 'maven-3.8.6'
 		nodejs '16.16.0'
      }
  
     stages {
-        stage('clean') {
-			steps {
-				sh "mvn -ntp clean"
-			}	
-        }
-	
         stage('build packaging') {
 			steps {
-				sh "mvn -ntp clean package"
+				sh "./mvnw -Pprod clean verify"
 			}	
         }
         
