@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    
+    tools {
+        jdk 'jdk11'
+        maven 'maven-3.8.6'
+     }
+ 
+    stages {
+        stage('build packaging') {
+			steps {
+				sh "mvn -Dtest=AcaoTest test"
+			}	
+        }
+    }
+}
