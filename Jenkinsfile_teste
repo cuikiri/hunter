@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('build packaging') {
 			steps {
-				sh "mvn -Dtest=AcaoTest test"
+				sh "./mvnw -Dtest=AcaoTest test"
 			}	
         }
     }
