@@ -12,16 +12,6 @@
     <name>Hunterapp</name>
     <description>Description for hunterapp</description>
 
-    <repositories>
-        <!-- jhipster-needle-maven-repository -->
-    </repositories>
-
-    <pluginRepositories>
-        <!-- jhipster-needle-maven-plugin-repository -->
-    </pluginRepositories>
-
-    <!-- jhipster-needle-distribution-management -->
-
     <properties>
         <!-- Build properties -->
         <maven.version>3.8.5</maven.version>
@@ -92,6 +82,12 @@
         <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
         <!-- jhipster-needle-maven-property -->
+        
+        <!--Put your own properties -->
+        <repository-owner>cuikiri</repository-owner>
+        <repository-name>hunter_image</repository-name>
+        <branch-name>main</branch-name>
+        <github.global.server>https://github.com/cuikiri/</github.global.server>
     </properties>
 
     <dependencyManagement>
@@ -106,6 +102,29 @@
             <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
+    
+    <repositories>
+        <!-- jhipster-needle-maven-repository -->
+        <repository>
+            <id>PROJECT-REPO-URL</id>
+            <url>https://github.com/${repository-owner}/${repository-name}/${branch-name}</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Temporary Staging Repository</name>
+            <url>file://${project.build.directory}/mvn-artifact</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
     	<dependency>
@@ -411,6 +430,67 @@
                 <artifactId>openapi-generator-maven-plugin</artifactId>
             </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.12</version>
+                <configuration>
+                    <message>Maven artifacts for ${project.version}</message>
+                    <noJekyll>true</noJekyll>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                    <branch>refs/heads/${branch-name}</branch>
+                    <includes>
+                        <include>**/*</include>
+                    </includes>
+                    <merge>true</merge>
+                    <repositoryName>${repository-name}</repositoryName>
+                    <repositoryOwner>${repository-owner}</repositoryOwner>
+                    <server>github</server>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <altDeploymentRepository>
+                        internal.repo::default::file://${project.build.directory}/mvn-artifact
+                    </altDeploymentRepository>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
