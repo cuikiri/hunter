@@ -1301,5 +1301,19 @@
             </build>
         </profile>
         <!-- jhipster-needle-maven-add-profile -->
+		<profile>
+			<id>AcaoTest</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.19</version>
+						<configuration>
+							<groups>br.com.jhisolution.user.hunters.domain.AcaoTest</groups>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
     </profiles>
 </project>
