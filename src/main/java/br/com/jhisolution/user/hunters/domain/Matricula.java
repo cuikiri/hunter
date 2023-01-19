@@ -38,13 +38,25 @@ public class Matricula implements Serializable {
     @Column(name = "data", nullable = false)
     private LocalDate data;
 
+    @Size(max = 50)
+    @Column(name = "responsavel", length = 50)
+    private String responsavel;
+
+    @Size(max = 15)
+    @Column(name = "rg", length = 15)
+    private String rg;
+
+    @Size(max = 15)
+    @Column(name = "cpf", length = 15)
+    private String cpf;
+
     @Size(max = 100)
     @Column(name = "obs", length = 100)
     private String obs;
 
     @JsonIgnoreProperties(value = { "periodoDuracao" }, allowSetters = true)
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn
     private Turma turma;
 
     @ManyToOne
@@ -161,5 +173,29 @@ public class Matricula implements Serializable {
             ", data='" + getData() + "'" +
             ", obs='" + getObs() + "'" +
             "}";
+    }
+
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

@@ -9,7 +9,7 @@ import { IMatricula, Matricula } from '../matricula.model';
 import { MatriculaService } from '../service/matricula.service';
 import { ITurma } from 'app/entities/matricula/turma/turma.model';
 import { TurmaService } from 'app/entities/matricula/turma/service/turma.service';
-import { IDadosPessoais } from 'app/entities/user/dados-pessoais/dados-pessoais.model';
+import { IDadosPessoais, DadosPessoais } from 'app/entities/user/dados-pessoais/dados-pessoais.model';
 import { DadosPessoaisService } from 'app/entities/user/dados-pessoais/service/dados-pessoais.service';
 
 @Component({
@@ -19,12 +19,16 @@ import { DadosPessoaisService } from 'app/entities/user/dados-pessoais/service/d
 export class MatriculaUpdateComponent implements OnInit {
   isSaving = false;
 
+  dadosPessoais?: IDadosPessoais;
   turmasCollection: ITurma[] = [];
   dadosPessoaisSharedCollection: IDadosPessoais[] = [];
 
   editForm = this.fb.group({
     id: [],
     data: [null, [Validators.required]],
+    responsavel: [null, [Validators.required, Validators.maxLength(50)]],
+    rg: [null, [Validators.required, Validators.maxLength(15)]],
+    cpf: [null, [Validators.required, Validators.maxLength(15)]],
     obs: [null, [Validators.maxLength(100)]],
     turma: [],
     dadosPessoais: [],
@@ -39,9 +43,9 @@ export class MatriculaUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ matricula }) => {
+    this.activatedRoute.data.subscribe(({ matricula, dadosPessoais }) => {
+      this.dadosPessoais = dadosPessoais ?? new DadosPessoais();
       this.updateForm(matricula);
-
       this.loadRelationshipsOptions();
     });
   }
@@ -53,6 +57,7 @@ export class MatriculaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const matricula = this.createFromForm();
+    matricula.dadosPessoais = this.dadosPessoais;
     if (matricula.id !== undefined) {
       this.subscribeToSaveResponse(this.matriculaService.update(matricula));
     } else {
@@ -91,6 +96,9 @@ export class MatriculaUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: matricula.id,
       data: matricula.data,
+      responsavel: matricula.responsavel,
+      rg: matricula.rg,
+      cpf: matricula.cpf,
       obs: matricula.obs,
       turma: matricula.turma,
       dadosPessoais: matricula.dadosPessoais,
@@ -126,6 +134,9 @@ export class MatriculaUpdateComponent implements OnInit {
       ...new Matricula(),
       id: this.editForm.get(['id'])!.value,
       data: this.editForm.get(['data'])!.value,
+      responsavel: this.editForm.get(['responsavel'])!.value,
+      rg: this.editForm.get(['rg'])!.value,
+      cpf: this.editForm.get(['cpf'])!.value,
       obs: this.editForm.get(['obs'])!.value,
       turma: this.editForm.get(['turma'])!.value,
       dadosPessoais: this.editForm.get(['dadosPessoais'])!.value,

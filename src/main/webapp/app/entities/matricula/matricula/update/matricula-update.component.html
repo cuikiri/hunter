@@ -40,6 +40,77 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.matriculaMatricula.responsavel" for="field_responsavel">Responsavel</label>
+          <input
+            type="text"
+            class="form-control"
+            name="responsavel"
+            id="field_responsavel"
+            data-cy="responsavel"
+            formControlName="responsavel"
+          />
+          <div *ngIf="editForm.get('responsavel')!.invalid && (editForm.get('responsavel')!.dirty || editForm.get('responsavel')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('responsavel')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+          <div *ngIf="editForm.get('responsavel')!.invalid && (editForm.get('responsavel')!.dirty || editForm.get('responsavel')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('responsavel')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.matriculaMatricula.rg" for="field_rg">RG</label>
+          <input type="text" class="form-control" name="rg" id="field_rg" data-cy="rg" formControlName="rg" />
+          <div *ngIf="editForm.get('rg')!.invalid && (editForm.get('rg')!.dirty || editForm.get('rg')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('rg')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 15 }"
+            >
+              This field cannot be longer than 15 characters.
+            </small>
+          </div>
+          <div *ngIf="editForm.get('rg')!.invalid && (editForm.get('rg')!.dirty || editForm.get('rg')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('rg')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="hunterappApp.matriculaMatricula.cpf" for="field_cpf">CPF</label>
+          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          <div *ngIf="editForm.get('cpf')!.invalid && (editForm.get('cpf')!.dirty || editForm.get('cpf')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cpf')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 15 }"
+            >
+              This field cannot be longer than 15 characters.
+            </small>
+          </div>
+          <div *ngIf="editForm.get('cpf')!.invalid && (editForm.get('cpf')!.dirty || editForm.get('cpf')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('cpf')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="hunterappApp.matriculaMatricula.obs" for="field_obs">Obs</label>
           <input type="text" class="form-control" name="obs" id="field_obs" data-cy="obs" formControlName="obs" />
           <div *ngIf="editForm.get('obs')!.invalid && (editForm.get('obs')!.dirty || editForm.get('obs')!.touched)">
@@ -63,31 +134,6 @@
               *ngFor="let turmaOption of turmasCollection; trackBy: trackTurmaById"
             >
               {{ turmaOption.nome }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.matriculaMatricula.dadosPessoais" for="field_dadosPessoais"
-            >Dados Pessoais 1</label
-          >
-          <select
-            class="form-control"
-            id="field_dadosPessoais"
-            data-cy="dadosPessoais"
-            name="dadosPessoais"
-            formControlName="dadosPessoais"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                dadosPessoaisOption.id === editForm.get('dadosPessoais')!.value?.id
-                  ? editForm.get('dadosPessoais')!.value
-                  : dadosPessoaisOption
-              "
-              *ngFor="let dadosPessoaisOption of dadosPessoaisSharedCollection; trackBy: trackDadosPessoaisById"
-            >
-              {{ dadosPessoaisOption.id }}
             </option>
           </select>
         </div>

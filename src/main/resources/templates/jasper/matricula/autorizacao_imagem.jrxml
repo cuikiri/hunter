@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="autorizacao_imagem" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71651dc0-b422-474f-8a2e-ff4129798a55">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="2" width="78" height="68" uuid="9d8b8c91-8155-4ef5-a8be-8dbf7c9d1d69"/>
+				<imageExpression><![CDATA["http://localhost:8080/content/images/logo-sfh.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="102" y="30" width="418" height="20" uuid="3d534a09-6b7d-4f28-9f5d-7618f3b5a98c">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUTORIZAÇÃO PARA USO DE NOME e IMAGEM]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="70" width="550" height="1" uuid="bc269a6b-2a6a-4179-870e-fa377317bb89">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="516" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="8" width="545" height="62" uuid="ea83552f-36e4-428a-ac70-e4decdee7732"/>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Pela presente e na melhor forma de direito, eu, _____________________________________________________________, portador da cédula de identidade nº ____________________________ e do CPF nº _____________________ abaixo assinado, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="76" width="545" height="20" uuid="53926039-fb49-4c8a-8e25-eba3a7066ba1"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUTORIZO (   )             NÃO AUTORIZO (   ) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="108" width="545" height="192" uuid="6166fb9d-07d0-45df-9bc9-cc5645c462c4"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[de forma gratuita, por prazo indeterminado, para uso com ou sem fins lucrativos, a partir desta data, que o projeto Santa Fé Hunters, com sede  na cidade de São Paulo, faça uso da(s) imagem(ns) do educando ________________________________________________________________________, seja(m) ela(s) fotográfica(s), em vídeo(s) e/ou quaisquer outra(s) forma(s) de mídia, podendo vincular inclusive o meu nome acima nominado, em divulgações jornalísticas ou publicitárias, produções fotográficas, audiovisuais e de gravações de imagens, em materiais impressos, publicações internas e/ou externas, palestras e/ou materiais EAD, programas televisivos, nas redes sociais e/ou outros dessa natureza, sem fins lucrativos, permitindo igualmente a disponibilização deste material em DVD ou outra forma de mídia em acervos de biblioteca, periódicos, entre outros. 
+Declaro estar ciente que a utilização do uso dessas imagem(ns)/nome na(s) referida(s) mídia(s) e/ou divulgação(ões) está(ão) de acordo com meu interesse e responsabilidade.
+]]></text>
+			</staticText>
+			<textField pattern=" dd  MMMMM yyyy">
+				<reportElement x="86" y="370" width="127" height="14" uuid="a936c12b-3842-4594-9f8b-868f6e432049">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="370" width="72" height="14" uuid="a7748e1a-561c-47a7-b529-ed87b82e2a86"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[São Paulo,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="446" width="534" height="30" uuid="b00b57be-c696-437f-8b6c-5694117ab7d1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[_______________________________________________
+Assinatura do Responsável]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

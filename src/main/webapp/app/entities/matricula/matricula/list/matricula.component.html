@@ -2,10 +2,9 @@
   <h2 id="page-heading" data-cy="MatriculaHeading">
     <span jhiTranslate="hunterappApp.matriculaMatricula.home.title">Matriculas</span>
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end" *ngIf="!dadosPessoais">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.matriculaMatricula.home.refreshListLabel">Refresh List</span>
       </button>
 
       <button
@@ -15,7 +14,20 @@
         [routerLink]="['/matricula/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.matriculaMatricula.home.createLabel"> Create a new Matricula </span>
+      </button>
+    </div>
+    <div class="d-flex justify-content-end" *ngIf="dadosPessoais">
+      <button class="btn btn-info me-2" [routerLink]="['/dados-pessoais']" [disabled]="isLoading">
+        <fa-icon icon="arrow-left" [spin]="isLoading"></fa-icon>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-matricula"
+        [routerLink]="['/matricula/new/dadospessoais/', dadosPessoais?.id]"
+      >
+        <fa-icon icon="plus"></fa-icon>
       </button>
     </div>
   </h2>
@@ -37,13 +49,10 @@
             <span jhiTranslate="hunterappApp.matriculaMatricula.data">Data</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="obs">
-            <span jhiTranslate="hunterappApp.matriculaMatricula.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
+            <span jhiTranslate="hunterappApp.matriculaMatricula.responsavel">Responsavel</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="turma.nome">
             <span jhiTranslate="hunterappApp.matriculaMatricula.turma">Turma</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="dadosPessoais.id">
-            <span jhiTranslate="hunterappApp.matriculaMatricula.dadosPessoais">Dados Pessoais 1</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
@@ -54,17 +63,8 @@
             <a [routerLink]="['/matricula', matricula.id, 'view']">{{ matricula.id }}</a>
           </td>
           <td>{{ matricula.data | formatMediumDate }}</td>
-          <td>{{ matricula.obs }}</td>
-          <td>
-            <div *ngIf="matricula.turma">
-              <a [routerLink]="['/turma', matricula.turma?.id, 'view']">{{ matricula.turma?.nome }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="matricula.dadosPessoais">
-              <a [routerLink]="['/dados-pessoais', matricula.dadosPessoais?.id, 'view']">{{ matricula.dadosPessoais?.id }}</a>
-            </div>
-          </td>
+          <td>{{ matricula.responsavel }}</td>
+          <td>{{ matricula.turma?.nome }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -74,7 +74,6 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button
@@ -84,12 +83,10 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(matricula)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="autorizacao_esportiva" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="476ff791-aed6-45de-a2b5-8f1732c9a79c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="2" width="78" height="68" uuid="91d46597-2642-4488-bd73-81b52108f4d7"/>
+				<imageExpression><![CDATA["http://localhost:8080/content/images/logo-sfh.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="70" width="550" height="1" uuid="aa7c7e59-82c0-4d26-b3cd-a9726febe7fc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="102" y="6" width="418" height="54" uuid="2bd11daf-f287-43a6-98f1-252fc5c9d1a8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AUTORIZAÇÃO PARA PRÁTICA ESPORTIVA E UTILIZAÇÃO DE IMAGEM PELA ASSOCIAÇÃO SANTA FÉ HUNTERS ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="188" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="-52" width="535" height="49" uuid="d81aa3d3-3904-44f9-9b09-187e79cdaba9"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Autorizo a criança/adolescente, ____________________________________________________, a participar do projeto desenvolvido pela associação Santa Fé Hunters. Autorizo a associação Santa Fé Hunters utilizar imagens do participante em caráter gratuito, por prazo indeterminado, com foco exclusivo na divulgação de ações sociais de interesse público que não visam lucro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="91" width="534" height="30" uuid="ba62949f-7fc2-4f2e-bd83-15eb03238f30"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[_______________________________________________
+Assinatura do Responsável]]></text>
+			</staticText>
+			<textField pattern=" dd  MMMMM yyyy">
+				<reportElement x="86" y="20" width="127" height="14" uuid="b1cf98b7-8d23-49cb-bb4b-a1f2e9aac2fa">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="20" width="72" height="14" uuid="8b05e8c7-f42a-4b67-b4f1-06c22626c4b4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[São Paulo,]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

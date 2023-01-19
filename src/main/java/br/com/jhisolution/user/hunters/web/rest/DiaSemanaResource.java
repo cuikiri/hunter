@@ -159,6 +159,17 @@ public class DiaSemanaResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/dia-semanas/periodo/{id}")
+    public ResponseEntity<List<DiaSemana>> getAllDiaSemanasByPeriodoDuracaoId(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of DiaSemanas by PeriodoDuracaoId");
+        Page<DiaSemana> page = diaSemanaService.findAllByPeridoDuracaoId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /dia-semanas/:id} : get the "id" diaSemana.
      *

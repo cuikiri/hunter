@@ -170,6 +170,23 @@ public class MatriculaResource {
     }
 
     /**
+     * {@code GET  /documentos/dadospessoais/{id}} : get all the documentos by dados pessoais.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of documentos in body.
+     */
+    @GetMapping("/matriculas/dadospessoais/{id}")
+    public ResponseEntity<List<Matricula>> getAllMatriculaByDadoPessoalId(
+        @PathVariable Long id,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Documentos by dados pessoais");
+        Page<Matricula> page = matriculaService.findAllByPessoalId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * {@code GET  /matriculas/:id} : get the "id" matricula.
      *
      * @param id the id of the matricula to retrieve.

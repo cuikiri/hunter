@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="questionario_saude" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fcb5793a-c32a-40e1-ae8d-0ec223d5a049">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="2" width="78" height="68" uuid="861f219f-929f-48d1-a87d-96d326a978a9"/>
+				<imageExpression><![CDATA["http://localhost:8080/content/images/logo-sfh.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="102" y="30" width="418" height="20" uuid="f4e15d12-c3a6-4c54-a29f-ec2df04e94b5">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUESTIONÁRIO SOBRE QUESTÕES DE SAÚDE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="70" width="550" height="1" uuid="900d1ba1-9847-4464-a1b4-9587ce07cc32">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="662" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="20" width="472" height="20" uuid="9a38b3d1-7f81-4dd1-89a3-6375b782323e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Por favor, assinale “sim” ou “não” as seguintes perguntas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="62" width="523" height="38" uuid="9a5ca164-80b5-48af-903d-17a5a1326af4"/>
+				<text><![CDATA[    1) Alguma vez o médico disse que o educando possui algum problema de coração e recomendou que só praticasse atividade física sob prescrição médica? 
+       sim       não]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="105" width="523" height="30" uuid="8c2417e2-94ab-4053-993d-2ca1beeaea5f"/>
+				<text><![CDATA[    2) O Educando sente dor no peito causada pela prática de atividade física?
+       sim       não]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="136" width="523" height="30" uuid="ac9da96b-93c1-4aea-af15-2f727c9052df"/>
+				<text><![CDATA[    3) O Educando sentiu dor no peito no último mês?
+       sim       não]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="167" width="523" height="33" uuid="756d1d0e-95a8-4755-9773-8cbea98f9d88"/>
+				<text><![CDATA[    4) O Educando tende a perder a consciência ou cair, como resultado da prática de atividade física?
+       sim       não]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="202" width="523" height="38" uuid="b8960cc5-2c6f-4385-96c2-be7a4875c203"/>
+				<text><![CDATA[    5) O Educando tem algum problema ósseo ou muscular que poderia piorar com a prática de atividades físicas? 
+       sim       não]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="245" width="523" height="38" uuid="223a3aba-ee3f-4f2e-aa7a-bda8b8f238c9"/>
+				<text><![CDATA[    6) O médico do educando já recomendou o uso de medicamentos para controle de sua pressão arterial ou condição cardiovascular? 
+       sim       não]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="289" width="523" height="51" uuid="fa9db847-5da7-46f4-937f-ec4d945d4738"/>
+				<text><![CDATA[    7) Você tem consciência, através de sua própria experiência e/ou de aconselhamento médico, de alguma outra razão física que impeça o educando a realização de atividades físicas? 
+       sim       não
+Se sim, qual? _________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="354" width="525" height="36" uuid="26513f43-da4f-4f21-9541-26e6b9a22450"/>
+				<text><![CDATA[Gostaria de comentar algum outro problema de saúde, seja de ordem física ou psicológica, que impeça a participação do educando na atividade proposta ou que seja importante termos conhecimento para possibilitar o cuidado à esta situação específica durante as aulas?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="401" width="523" height="20" uuid="7b181ccd-12d7-4ec3-842c-b0baa16d4a08"/>
+				<text><![CDATA[________________________________________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="426" width="523" height="20" uuid="1b31cef1-d2b1-47c7-ad2e-6e164d742711"/>
+				<text><![CDATA[________________________________________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="452" width="523" height="20" uuid="8ba87e3a-d3f8-474a-8ac9-94bb16801690"/>
+				<text><![CDATA[________________________________________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="606" width="534" height="30" uuid="389b74da-dc21-4f6f-a717-6acdefdd1e87"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[_______________________________________________
+Assinatura do Responsável]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="484" width="534" height="40" uuid="84d5061d-2261-46d2-b7fc-7c25c95dda46"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eu __________________________________________________ responsável pelo educando aqui informado, confirmo serem verdadeiras as informações deste documento e autorizo o uso da imagem do mesmo pelo Instituto. 
+]]></text>
+			</staticText>
+			<textField pattern=" dd  MMMMM yyyy">
+				<reportElement x="91" y="532" width="127" height="14" uuid="bc4e3f38-42f6-44be-8c55-657d0fea7ab7">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="532" width="72" height="14" uuid="966361ba-072b-4a6f-a1e5-6d7337378faa"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[São Paulo,]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="39" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

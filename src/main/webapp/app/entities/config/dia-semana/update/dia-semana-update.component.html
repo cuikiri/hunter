@@ -49,31 +49,6 @@
             </small>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="hunterappApp.configDiaSemana.periodoDuracao" for="field_periodoDuracao"
-            >Periodo Duracao</label
-          >
-          <select
-            class="form-control"
-            id="field_periodoDuracao"
-            data-cy="periodoDuracao"
-            name="periodoDuracao"
-            formControlName="periodoDuracao"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                periodoDuracaoOption.id === editForm.get('periodoDuracao')!.value?.id
-                  ? editForm.get('periodoDuracao')!.value
-                  : periodoDuracaoOption
-              "
-              *ngFor="let periodoDuracaoOption of periodoDuracaosSharedCollection; trackBy: trackPeriodoDuracaoById"
-            >
-              {{ periodoDuracaoOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

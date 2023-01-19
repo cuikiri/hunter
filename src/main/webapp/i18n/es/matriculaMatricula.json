@@ -19,6 +19,9 @@
       },
       "id": "ID",
       "data": "Data",
+      "responsavel": "Resposavel",
+      "rg": "RG",
+      "cpf": "CPF",
       "obs": "Obs",
       "turma": "Turma",
       "dadosPessoais1": "Dados Pessoais 1"

@@ -40,6 +40,7 @@ public interface DiaSemanaService {
      * @return the list of entities.
      */
     Page<DiaSemana> findAll(Pageable pageable);
+    Page<DiaSemana> findAllByPeridoDuracaoId(Long id, Pageable pageable);
 
     /**
      * Get the "id" diaSemana.

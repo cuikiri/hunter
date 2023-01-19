@@ -3,15 +3,15 @@
     <span jhiTranslate="hunterappApp.configDiaSemana.home.title">Dia Semanas</span>
 
     <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      <button class="btn btn-info me-2" [routerLink]="['/periodo-duracao']" [disabled]="isLoading">
+        <fa-icon icon="arrow-left"></fa-icon>
       </button>
 
       <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-dia-semana"
-        [routerLink]="['/dia-semana/new']"
+        [routerLink]="['/dia-semana/new/periodo/', periodo?.id]"
       >
         <fa-icon icon="plus"></fa-icon>
       </button>
@@ -37,24 +37,14 @@
           <th scope="col" jhiSortBy="obs">
             <span jhiTranslate="hunterappApp.configDiaSemana.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="periodoDuracao.id">
-            <span jhiTranslate="hunterappApp.configDiaSemana.periodoDuracao">Periodo Duracao</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let diaSemana of diaSemanas; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/dia-semana', diaSemana.id, 'view']">{{ diaSemana.id }}</a>
-          </td>
+          <td>{{ diaSemana.id }}</td>
           <td>{{ diaSemana.nome }}</td>
           <td>{{ diaSemana.obs }}</td>
-          <td>
-            <div *ngIf="diaSemana.periodoDuracao">
-              <a [routerLink]="['/periodo-duracao', diaSemana.periodoDuracao?.id, 'view']">{{ diaSemana.periodoDuracao?.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -64,7 +54,6 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button
@@ -74,12 +63,10 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(diaSemana)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

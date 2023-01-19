@@ -20,6 +20,9 @@
       "id": "ID",
       "data": "Data",
       "obs": "Obs",
+      "responsavel": "Resposavel",
+      "rg": "RG",
+      "cpf": "CPF",
       "turma": "Turma",
       "dadosPessoais1": "Dados Pessoais 1"
     }

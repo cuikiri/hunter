@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="regras_projeto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="687517df-105b-490f-b20a-a8ccd6a05070">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="2" width="78" height="68" uuid="89bf1eb9-5883-4ad3-be66-2fc42fa02a39"/>
+				<imageExpression><![CDATA["http://localhost:8080/content/images/logo-sfh.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="102" y="30" width="418" height="20" uuid="f1c21d88-d4aa-46b7-92b6-48b281f63299">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REGRAS DO PROJETO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="70" width="550" height="1" uuid="331e1136-6ab6-4ac2-b904-e8ffa85fdf90">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="677" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="11" width="534" height="48" uuid="ea93fd80-692b-438f-b1ad-59299ca1e157"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[    Por favor, leia atentamente as questões abaixo e, para maior comodidade, tenha sempre este documento em mãos e caso seja necessário, compareça ao local de atividades para tirar dúvidas ou conversar com os educadores. Quanto maior a participação da família, melhor é o desenvolvimento da criança / adolescente e melhor é a qualidade das atividades ministradas por nossos educadores.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="69" width="300" height="20" uuid="de048269-387d-4661-bc14-532f0c58b0fa"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABILIDADES DA ASSOCIAÇÃO ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="89" width="534" height="61" uuid="0f067bcb-51cf-47a7-9f43-f2f2771e5aca"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fornecer material pedagógico/esportivo.
+Preparar educadores, auxiliares e estagiários.
+Garantir o desenvolvimento do projeto.
+Promover supervisão e acompanhamento da equipe técnica.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="152" width="240" height="20" uuid="1edf623a-1f00-4bd4-b2ad-4cbcd2a08cb9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABILIDADES DA FAMÍLIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="174" width="534" height="76" uuid="41c4eed5-bb21-41eb-b289-68ef4ae2412a"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Acompanhar o desenvolvimento do adolescente através de presença nas reuniões.
+Ajudar na obtenção dos BOLETINS cada vez que esse for recebido.
+Encorajar a criança ou o adolescente para dar continuidade nos estudos.
+Estimular a participação da criança em jogos e atividades extras.
+Contribuir no preenchimento de formulários sobre questões socioeconômicas da região.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="252" width="240" height="20" uuid="abada9b4-a8bb-4eef-aaba-c03fd619fb1c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABILIDADES DA FAMÍLIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="273" width="534" height="177" uuid="0cd22cd3-e236-4565-8248-afa49a98b505"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cada turma do projeto terá oportunidade para meninos e meninas em condições iguais, sendo o número total de participantes combinado com o educador e a instituição parceira, que pode ir de 30 a 35 crianças ou adolescentes.
+Todos os educandos receberão camiseta do projeto e deverão usar nos dias de aula, conforme orientação dos educadores. Caso tenha tênis, deverá ser usado durante as aulas para sua segurança (evitar lesões ou pisões por quem estiver calçado) e roupas confortáveis, de preferência shorts ou bermuda que não sejam jeans.
+As aulas terão duração de 1h15 a 1h30min com cada grupo sendo 2 vezes por semana, reservando alguns minutos para reflexão sobre os valores e conteúdo do plano de aula. As aulas serão compostas por atividade física e rítmica, trabalhando a ludicidade, brincadeira e trabalhos técnicos da modalidade do basquete. 
+Será feito chamada regularmente para conferir a presença.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="451" width="534" height="29" uuid="89724b49-e060-4a8e-8579-2d6bc0673659"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Os educandos devem ter no mínimo 85% de presença no mês (exemplo: caso tenhamos 8 aulas, o educando não poderá faltar mais de 2 vezes). ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="482" width="534" height="58" uuid="40b9ed62-f5e7-403d-ac30-33118ca5d66a"/>
+				<textElement>
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Durante as aulas haverá regras e combinados estabelecidos em conjunto com os educadores que deverão ser cumpridas.
+ Havendo desacato o educador mediará o conflito buscando a melhor solução para o grupo e pela continuidade do projeto.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="554" width="534" height="36" uuid="a4edcbb5-97c3-49a1-a3d1-84795764bbf1"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Estou ciente das regras acima, das minhas responsabilidades e dos cuidados que o educando deverá ter para participar das aulas.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="639" width="534" height="29" uuid="39f88d95-71d2-417f-ad58-cd311e336f83"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[    ______________________________				  _____________________________
+ ASSINATURA DO RESPONSÁVEL			ASSINATURA DA ASSOCIAÇÃO
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

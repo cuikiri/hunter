@@ -80,4 +80,11 @@ public class MatriculaServiceImpl implements MatriculaService {
         log.debug("Request to delete Matricula : {}", id);
         matriculaRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Matricula> findAllByPessoalId(Long id, Pageable pageable) {
+        log.debug("Request to get all Matricula by DadoPessoal id");
+        return matriculaRepository.findAllByPessoalId(id, pageable);
+    }
 }

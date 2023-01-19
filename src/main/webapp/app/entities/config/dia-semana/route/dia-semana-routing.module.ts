@@ -6,6 +6,7 @@ import { DiaSemanaComponent } from '../list/dia-semana.component';
 import { DiaSemanaDetailComponent } from '../detail/dia-semana-detail.component';
 import { DiaSemanaUpdateComponent } from '../update/dia-semana-update.component';
 import { DiaSemanaRoutingResolveService } from './dia-semana-routing-resolve.service';
+import { DiaSemanaRoutingResolvePeriodoService } from './dia-semana-routing-resolve-periodo.service';
 
 const diaSemanaRoute: Routes = [
   {
@@ -13,6 +14,17 @@ const diaSemanaRoute: Routes = [
     component: DiaSemanaComponent,
     data: {
       defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'periodo/:idPeriodo',
+    component: DiaSemanaComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    resolve: {
+      periodo: DiaSemanaRoutingResolvePeriodoService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -29,6 +41,15 @@ const diaSemanaRoute: Routes = [
     component: DiaSemanaUpdateComponent,
     resolve: {
       diaSemana: DiaSemanaRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new/periodo/:idPeriodo',
+    component: DiaSemanaUpdateComponent,
+    resolve: {
+      diaSemana: DiaSemanaRoutingResolveService,
+      periodo: DiaSemanaRoutingResolvePeriodoService,
     },
     canActivate: [UserRouteAccessService],
   },

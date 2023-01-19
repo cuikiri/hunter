@@ -4,6 +4,7 @@ import br.com.jhisolution.user.hunters.domain.Matricula;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Service Interface for managing {@link Matricula}.
@@ -40,6 +41,7 @@ public interface MatriculaService {
      * @return the list of entities.
      */
     Page<Matricula> findAll(Pageable pageable);
+    Page<Matricula> findAllByPessoalId(@Param("id") Long id, Pageable pageable);
 
     /**
      * Get all the matriculas with eager load of many-to-many relationships.

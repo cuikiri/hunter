@@ -38,4 +38,9 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
 
     @Query("select matricula from Matricula matricula left join fetch matricula.turma where matricula.id =:id")
     Optional<Matricula> findOneWithToOneRelationships(@Param("id") Long id);
+
+    @Query(
+        "select DISTINCT dadosPessoais.matriculas from DadosPessoais dadosPessoais join dadosPessoais.matriculas where dadosPessoais.id =:id"
+    )
+    Page<Matricula> findAllByPessoalId(@Param("id") Long id, Pageable pageable);
 }

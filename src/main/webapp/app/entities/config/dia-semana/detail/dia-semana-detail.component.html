@@ -22,12 +22,6 @@
         <dd>
           <span>{{ diaSemana.obs }}</span>
         </dd>
-        <dt><span jhiTranslate="hunterappApp.configDiaSemana.periodoDuracao">Periodo Duracao</span></dt>
-        <dd>
-          <div *ngIf="diaSemana.periodoDuracao">
-            <a [routerLink]="['/periodo-duracao', diaSemana.periodoDuracao?.id, 'view']">{{ diaSemana.periodoDuracao?.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

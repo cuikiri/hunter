@@ -6,6 +6,7 @@ import { MatriculaComponent } from '../list/matricula.component';
 import { MatriculaDetailComponent } from '../detail/matricula-detail.component';
 import { MatriculaUpdateComponent } from '../update/matricula-update.component';
 import { MatriculaRoutingResolveService } from './matricula-routing-resolve.service';
+import { MatriculaRoutingResolvePessoaService } from './matricula-routing-resolve-pessoa.service';
 
 const matriculaRoute: Routes = [
   {
@@ -13,6 +14,17 @@ const matriculaRoute: Routes = [
     component: MatriculaComponent,
     data: {
       defaultSort: 'id,asc',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'dadospessoais/:idDadospessoais',
+    component: MatriculaComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
+    resolve: {
+      dadosPessoais: MatriculaRoutingResolvePessoaService,
     },
     canActivate: [UserRouteAccessService],
   },
@@ -28,7 +40,16 @@ const matriculaRoute: Routes = [
     path: 'new',
     component: MatriculaUpdateComponent,
     resolve: {
+      matricula: MatriculaUpdateComponent,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'new/dadospessoais/:idDadospessoais',
+    component: MatriculaUpdateComponent,
+    resolve: {
       matricula: MatriculaRoutingResolveService,
+      dadosPessoais: MatriculaRoutingResolvePessoaService,
     },
     canActivate: [UserRouteAccessService],
   },

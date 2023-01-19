@@ -36,6 +36,11 @@ export class DiaSemanaService {
     return this.http.get<IDiaSemana>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findAllByPeriodoId(id: number, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IDiaSemana[]>(`${this.resourceUrl}/periodo/${id}`, { params: options, observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IDiaSemana[]>(this.resourceUrl, { params: options, observe: 'response' });

@@ -1,8 +1,12 @@
 package br.com.jhisolution.user.hunters.service.impl;
 
+import br.com.jhisolution.user.hunters.domain.DadosPessoais;
 import br.com.jhisolution.user.hunters.domain.DiaSemana;
+import br.com.jhisolution.user.hunters.domain.PeriodoDuracao;
 import br.com.jhisolution.user.hunters.repository.DiaSemanaRepository;
+import br.com.jhisolution.user.hunters.repository.PeriodoDuracaoRepository;
 import br.com.jhisolution.user.hunters.service.DiaSemanaService;
+import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +25,20 @@ public class DiaSemanaServiceImpl implements DiaSemanaService {
     private final Logger log = LoggerFactory.getLogger(DiaSemanaServiceImpl.class);
 
     private final DiaSemanaRepository diaSemanaRepository;
+    private final PeriodoDuracaoRepository periodoDuracaoRepository;
 
-    public DiaSemanaServiceImpl(DiaSemanaRepository diaSemanaRepository) {
+    public DiaSemanaServiceImpl(DiaSemanaRepository diaSemanaRepository, PeriodoDuracaoRepository periodoDuracaoRepository) {
         this.diaSemanaRepository = diaSemanaRepository;
+        this.periodoDuracaoRepository = periodoDuracaoRepository;
     }
 
     @Override
     public DiaSemana save(DiaSemana diaSemana) {
         log.debug("Request to save DiaSemana : {}", diaSemana);
+        if (Objects.nonNull(diaSemana.getPeriodoDuracao()) && Objects.nonNull(diaSemana.getPeriodoDuracao().getId())) {
+            PeriodoDuracao periodoDuracao = periodoDuracaoRepository.findById(diaSemana.getPeriodoDuracao().getId()).get();
+            diaSemana.setPeriodoDuracao(periodoDuracao);
+        }
         return diaSemanaRepository.save(diaSemana);
     }
 
@@ -75,5 +85,11 @@ public class DiaSemanaServiceImpl implements DiaSemanaService {
     public void delete(Long id) {
         log.debug("Request to delete DiaSemana : {}", id);
         diaSemanaRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<DiaSemana> findAllByPeridoDuracaoId(Long id, Pageable pageable) {
+        log.debug("Request to get all DiaSemanas by PeridoDuracao id");
+        return diaSemanaRepository.findAllByPeridoDuracaoId(id, pageable);
     }
 }

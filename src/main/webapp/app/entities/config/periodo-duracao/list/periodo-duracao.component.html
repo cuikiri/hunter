@@ -5,7 +5,6 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="hunterappApp.configPeriodoDuracao.home.refreshListLabel">Refresh List</span>
       </button>
 
       <button
@@ -15,7 +14,6 @@
         [routerLink]="['/periodo-duracao/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="hunterappApp.configPeriodoDuracao.home.createLabel"> Create a new Periodo Duracao </span>
       </button>
     </div>
   </h2>
@@ -48,25 +46,27 @@
           <th scope="col" jhiSortBy="horaFim">
             <span jhiTranslate="hunterappApp.configPeriodoDuracao.horaFim">Hora Fim</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="obs">
-            <span jhiTranslate="hunterappApp.configPeriodoDuracao.obs">Obs</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let periodoDuracao of periodoDuracaos; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/periodo-duracao', periodoDuracao.id, 'view']">{{ periodoDuracao.id }}</a>
-          </td>
+          <td>{{ periodoDuracao.id }}</td>
           <td>{{ periodoDuracao.nome }}</td>
           <td>{{ periodoDuracao.dataInicio | formatMediumDate }}</td>
           <td>{{ periodoDuracao.dataFim | formatMediumDate }}</td>
           <td>{{ periodoDuracao.horaInicio }}</td>
           <td>{{ periodoDuracao.horaFim }}</td>
-          <td>{{ periodoDuracao.obs }}</td>
           <td class="text-end">
             <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/dia-semana/periodo/', periodoDuracao.id]"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="align-justify"></fa-icon>
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/periodo-duracao', periodoDuracao.id, 'view']"
@@ -74,7 +74,6 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button
@@ -84,12 +83,10 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(periodoDuracao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

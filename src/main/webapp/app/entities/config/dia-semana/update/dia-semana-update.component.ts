@@ -7,7 +7,7 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IDiaSemana, DiaSemana } from '../dia-semana.model';
 import { DiaSemanaService } from '../service/dia-semana.service';
-import { IPeriodoDuracao } from 'app/entities/config/periodo-duracao/periodo-duracao.model';
+import { IPeriodoDuracao, PeriodoDuracao } from 'app/entities/config/periodo-duracao/periodo-duracao.model';
 import { PeriodoDuracaoService } from 'app/entities/config/periodo-duracao/service/periodo-duracao.service';
 
 @Component({
@@ -17,6 +17,7 @@ import { PeriodoDuracaoService } from 'app/entities/config/periodo-duracao/servi
 export class DiaSemanaUpdateComponent implements OnInit {
   isSaving = false;
 
+  periodo?: IPeriodoDuracao;
   periodoDuracaosSharedCollection: IPeriodoDuracao[] = [];
 
   editForm = this.fb.group({
@@ -34,9 +35,9 @@ export class DiaSemanaUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ diaSemana }) => {
+    this.activatedRoute.data.subscribe(({ diaSemana, periodo }) => {
       this.updateForm(diaSemana);
-
+      this.periodo = periodo ?? new PeriodoDuracao();
       this.loadRelationshipsOptions();
     });
   }
@@ -48,6 +49,7 @@ export class DiaSemanaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const diaSemana = this.createFromForm();
+    diaSemana.periodoDuracao = this.periodo;
     if (diaSemana.id !== undefined) {
       this.subscribeToSaveResponse(this.diaSemanaService.update(diaSemana));
     } else {
