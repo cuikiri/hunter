@@ -3,20 +3,26 @@ package br.com.jhisolution.user.hunters.web.rest;
 import br.com.jhisolution.user.hunters.domain.Matricula;
 import br.com.jhisolution.user.hunters.repository.MatriculaRepository;
 import br.com.jhisolution.user.hunters.service.MatriculaService;
+import br.com.jhisolution.user.hunters.service.dto.MatriculaDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.FiltroMatriculaDTO;
 import br.com.jhisolution.user.hunters.web.rest.errors.BadRequestAlertException;
+import io.jsonwebtoken.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -181,7 +187,24 @@ public class MatriculaResource {
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get a page of Documentos by dados pessoais");
-        Page<Matricula> page = matriculaService.findAllByPessoalId(id, pageable);
+        Page<Matricula> page = matriculaService.findAllByPessoaId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /documentos/dadospessoais/{id}} : get all the documentos by dados pessoais.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of documentos in body.
+     */
+    @GetMapping("/matriculas/dadospessoais/likenome/{nome}")
+    public ResponseEntity<List<Matricula>> getAllMatriculaByDadoPessoalId(
+        @PathVariable String nome,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Documentos by dados pessoais");
+        Page<Matricula> page = matriculaService.findAllByPessoaLikeNome(nome, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -199,6 +222,31 @@ public class MatriculaResource {
         return ResponseUtil.wrapOrNotFound(matricula);
     }
 
+    @GetMapping("/matriculas/jasper/{id}")
+    public ResponseEntity<MatriculaDTO> getMatriculaJasper(@PathVariable Long id) {
+        log.debug("REST request to get Matricula : {}", id);
+        Optional<Matricula> matricula = matriculaService.findOne(id);
+
+        MatriculaDTO resp = new MatriculaDTO();
+        Matricula obj = matricula.orElse(null);
+
+        if (Objects.nonNull(obj)) {
+            resp =
+                new MatriculaDTO(
+                    obj.getId(),
+                    obj.getData(),
+                    obj.getResponsavel(),
+                    obj.getRg(),
+                    obj.getCpf(),
+                    Objects.nonNull(obj.getDadosPessoais())
+                        ? obj.getDadosPessoais().getNome() + " " + obj.getDadosPessoais().getSobreNome()
+                        : ""
+                );
+        }
+
+        return ResponseUtil.wrapOrNotFound(Optional.of(resp));
+    }
+
     /**
      * {@code DELETE  /matriculas/:id} : delete the "id" matricula.
      *
@@ -213,5 +261,37 @@ public class MatriculaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/matriculas/report/autorizacao/esportiva/jasper")
+    public ResponseEntity<Resource> getAutorizacaoEsportivaJasper(
+        @Valid @RequestBody FiltroMatriculaDTO filtro,
+        HttpServletRequest request
+    ) throws URISyntaxException, IOException, java.io.IOException {
+        log.debug("***************************************************************************************");
+        log.debug("REST request to get a Autorizacao Esportiva");
+        log.debug("***************************************************************************************");
+        // Load file as Resource
+        Resource resource = matriculaService.findOneJasper(filtro);
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            log.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.parseMediaType(contentType))
+            .contentLength(resource.getFile().length())
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + resource.getFilename())
+            .headers(HeaderUtil.createAlert(applicationName, "AutorizacaoEsportiva exported successfully", resource.toString()))
+            .body(resource);
     }
 }

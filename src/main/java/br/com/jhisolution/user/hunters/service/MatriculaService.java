@@ -1,7 +1,10 @@
 package br.com.jhisolution.user.hunters.service;
 
 import br.com.jhisolution.user.hunters.domain.Matricula;
+import br.com.jhisolution.user.hunters.web.rest.dto.FiltroMatriculaDTO;
+import br.com.jhisolution.user.hunters.web.rest.dto.FiltroPagarDTO;
 import java.util.Optional;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -41,7 +44,10 @@ public interface MatriculaService {
      * @return the list of entities.
      */
     Page<Matricula> findAll(Pageable pageable);
-    Page<Matricula> findAllByPessoalId(@Param("id") Long id, Pageable pageable);
+    Page<Matricula> findAllByPessoaId(@Param("id") Long id, Pageable pageable);
+    Page<Matricula> findAllByPessoaLikeNome(@Param("nome") String nome, Pageable pageable);
+
+    Resource findOneJasper(FiltroMatriculaDTO filtro);
 
     /**
      * Get all the matriculas with eager load of many-to-many relationships.

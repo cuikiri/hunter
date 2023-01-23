@@ -4,6 +4,10 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="responsavel" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="pessoa" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -38,7 +42,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="668" splitType="Stretch">
+		<band height="703" splitType="Stretch">
 			<staticText>
 				<reportElement x="8" y="10" width="540" height="30" uuid="d6127e90-6e78-43e7-8bdd-4244d92eeee2"/>
 				<textElement textAlignment="Justified">
@@ -88,32 +92,40 @@
 				</textElement>
 				<text><![CDATA[Os Dados Pessoais não poderão ser revelados a terceiros, com exceção da prévia autorização por escrito do titular dos dados pessoais, ou ainda na hipótese da Empresa, por determinação legal, ter que fornecer os dados pessoais a uma autoridade pública, ocasião em o titular dos dados pessoais que deverá ser informado previamente  para que tome as medidas necessárias.]]></text>
 			</staticText>
-			<textField pattern=" dd  MMMMM yyyy">
-				<reportElement x="103" y="506" width="127" height="14" uuid="a25de2d8-0db5-4d94-b588-43097f72e405">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<staticText>
+				<reportElement x="16" y="542" width="290" height="20" uuid="c4c551cf-8dcf-407e-a8e4-24396d0ea1e3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[_______________________________________________]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="19" y="567" width="285" height="14" uuid="128df4c9-681a-41f7-b4d2-64c29c85efc8">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="28" y="506" width="72" height="14" uuid="184e6171-0947-4257-9426-55a652eb8edb"/>
-				<textElement>
+			<textField>
+				<reportElement x="19" y="585" width="285" height="14" uuid="cdbee30a-04e0-4245-ad0d-3288ec9408da">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[São Paulo,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="3" y="571" width="534" height="29" uuid="fd043122-6e7f-40db-a9ee-b6b9439ea757"/>
-				<textElement>
+				<textFieldExpression><![CDATA["RG: " + $F{rg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="19" y="603" width="285" height="14" uuid="946e94c1-b17f-4495-827f-ec31686851e1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[    ______________________________				  _____________________________
-      NOME DO RESPONSÁVEL			        ASSINATURA DO RESPONSÁVEL
-]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["CPF : " + $F{cpf}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

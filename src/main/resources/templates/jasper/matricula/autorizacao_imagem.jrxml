@@ -4,6 +4,10 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="responsavel" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="pessoa" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -37,14 +41,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="516" splitType="Stretch">
-			<staticText>
-				<reportElement x="5" y="8" width="545" height="62" uuid="ea83552f-36e4-428a-ac70-e4decdee7732"/>
-				<textElement textAlignment="Left">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[Pela presente e na melhor forma de direito, eu, _____________________________________________________________, portador da cédula de identidade nº ____________________________ e do CPF nº _____________________ abaixo assinado, ]]></text>
-			</staticText>
+		<band height="468" splitType="Stretch">
 			<staticText>
 				<reportElement x="5" y="76" width="545" height="20" uuid="53926039-fb49-4c8a-8e25-eba3a7066ba1"/>
 				<textElement textAlignment="Center">
@@ -52,17 +49,8 @@
 				</textElement>
 				<text><![CDATA[AUTORIZO (   )             NÃO AUTORIZO (   ) ]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="5" y="108" width="545" height="192" uuid="6166fb9d-07d0-45df-9bc9-cc5645c462c4"/>
-				<textElement textAlignment="Justified">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[de forma gratuita, por prazo indeterminado, para uso com ou sem fins lucrativos, a partir desta data, que o projeto Santa Fé Hunters, com sede  na cidade de São Paulo, faça uso da(s) imagem(ns) do educando ________________________________________________________________________, seja(m) ela(s) fotográfica(s), em vídeo(s) e/ou quaisquer outra(s) forma(s) de mídia, podendo vincular inclusive o meu nome acima nominado, em divulgações jornalísticas ou publicitárias, produções fotográficas, audiovisuais e de gravações de imagens, em materiais impressos, publicações internas e/ou externas, palestras e/ou materiais EAD, programas televisivos, nas redes sociais e/ou outros dessa natureza, sem fins lucrativos, permitindo igualmente a disponibilização deste material em DVD ou outra forma de mídia em acervos de biblioteca, periódicos, entre outros. 
-Declaro estar ciente que a utilização do uso dessas imagem(ns)/nome na(s) referida(s) mídia(s) e/ou divulgação(ões) está(ão) de acordo com meu interesse e responsabilidade.
-]]></text>
-			</staticText>
-			<textField pattern=" dd  MMMMM yyyy">
-				<reportElement x="86" y="370" width="127" height="14" uuid="a936c12b-3842-4594-9f8b-868f6e432049">
+			<textField pattern="d MMMM yyyy h:mm:ss a">
+				<reportElement x="86" y="333" width="194" height="14" uuid="a936c12b-3842-4594-9f8b-868f6e432049">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -72,20 +60,42 @@ Declaro estar ciente que a utilização do uso dessas imagem(ns)/nome na(s) refe
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="370" width="72" height="14" uuid="a7748e1a-561c-47a7-b529-ed87b82e2a86"/>
+				<reportElement x="11" y="333" width="72" height="14" uuid="a7748e1a-561c-47a7-b529-ed87b82e2a86"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[São Paulo,]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="5" y="10" width="545" height="60" uuid="1c9991d2-5927-4418-bf74-b00c8abca402"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Autorizo a criança/adolescente, " + $F{pessoa} + "Pela presente e na melhor forma de direito, eu, " + $F{responsavel} + ", portador da cédula de identidade nº " + $F{rg} + " e do CPF nº " + $F{cpf} + " abaixo assinado, "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="110" width="545" height="210" uuid="ab4c0db3-dbab-46b2-a286-5d068c6abc9a"/>
+				<textElement textAlignment="Justified">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["de forma gratuita, por prazo indeterminado, para uso com ou sem fins lucrativos, a partir desta data, que o projeto Santa Fé Hunters, com sede  na cidade de São Paulo, faça uso da(s) imagem(ns) do educando  " + $F{pessoa} + ", seja(m) ela(s) fotográfica(s), em vídeo(s) e/ou quaisquer outra(s) forma(s) de mídia, podendo vincular inclusive o meu nome acima nominado, em divulgações jornalísticas ou publicitárias, produções fotográficas, audiovisuais e de gravações de imagens, em materiais impressos, publicações internas e/ou externas, palestras e/ou materiais EAD, programas televisivos, nas redes sociais e/ou outros dessa natureza, sem fins lucrativos, permitindo igualmente a disponibilização deste material em DVD ou outra forma de mídia em acervos de biblioteca, periódicos, entre outros.  Declaro estar ciente que a utilização do uso dessas imagem(ns)/nome na(s) referida(s) mídia(s) e/ou divulgação(ões) está(ão) de acordo com meu interesse e responsabilidade."]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="11" y="446" width="534" height="30" uuid="b00b57be-c696-437f-8b6c-5694117ab7d1"/>
+				<reportElement x="40" y="404" width="290" height="20" uuid="87f0835b-8e74-45da-8fdf-0543509cf4f8"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[_______________________________________________
-Assinatura do Responsável]]></text>
+				<text><![CDATA[_______________________________________________]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="43" y="429" width="285" height="14" uuid="7e792d65-d2f0-4a1d-98b7-9544be6d260b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

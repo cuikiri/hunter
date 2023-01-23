@@ -5,6 +5,10 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="responsavel" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="pessoa" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -35,27 +39,38 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="100" splitType="Stretch">
+			<textField pattern="d MMMM yyyy">
+				<reportElement x="5" y="10" width="539" height="70" uuid="d98f8dd8-c8c1-4e11-804c-ed0988dc33e4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Autorizo a criança/adolescente,  " + $F{pessoa} + ", a participar do projeto desenvolvido pela associação Santa Fé Hunters. Autorizo a associação Santa Fé Hunters utilizar imagens do participante em caráter gratuito, por prazo indeterminado, com foco exclusivo na divulgação de ações sociais de interesse público que não visam lucro."]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="188" splitType="Stretch">
-			<staticText>
-				<reportElement x="10" y="-52" width="535" height="49" uuid="d81aa3d3-3904-44f9-9b09-187e79cdaba9"/>
-				<textElement textAlignment="Justified">
+		<band height="212" splitType="Stretch">
+			<textField>
+				<reportElement x="43" y="140" width="285" height="14" uuid="a2d7f8ee-05b7-4afe-8ad4-82f8436b89d3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Autorizo a criança/adolescente, ____________________________________________________, a participar do projeto desenvolvido pela associação Santa Fé Hunters. Autorizo a associação Santa Fé Hunters utilizar imagens do participante em caráter gratuito, por prazo indeterminado, com foco exclusivo na divulgação de ações sociais de interesse público que não visam lucro.]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="10" y="91" width="534" height="30" uuid="ba62949f-7fc2-4f2e-bd83-15eb03238f30"/>
+				<reportElement x="40" y="115" width="290" height="20" uuid="236ae2a1-cd64-4309-882d-3e8ad919ab88"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[_______________________________________________
-Assinatura do Responsável]]></text>
+				<text><![CDATA[_______________________________________________]]></text>
 			</staticText>
-			<textField pattern=" dd  MMMMM yyyy">
-				<reportElement x="86" y="20" width="127" height="14" uuid="b1cf98b7-8d23-49cb-bb4b-a1f2e9aac2fa">
+			<textField pattern="d MMMM yyyy h:mm:ss a">
+				<reportElement x="86" y="12" width="194" height="14" uuid="5613ecd2-d827-4c80-8d39-0521efa618c1">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -65,12 +80,30 @@ Assinatura do Responsável]]></text>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="11" y="20" width="72" height="14" uuid="8b05e8c7-f42a-4b67-b4f1-06c22626c4b4"/>
+				<reportElement x="11" y="12" width="72" height="14" uuid="a7cb1198-f734-42fa-9833-281cae323b46"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[São Paulo,]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="43" y="158" width="285" height="14" uuid="03504af2-fb2d-46bb-bebd-df6a871f9cff">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RG: " + $F{rg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="176" width="285" height="14" uuid="9d7370a0-3477-4561-a0df-192d8725eea0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CPF : " + $F{cpf}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

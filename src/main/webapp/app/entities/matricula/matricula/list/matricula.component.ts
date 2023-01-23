@@ -25,6 +25,7 @@ export class MatriculaComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
   dadosPessoais?: IDadosPessoais;
+  nome_search?: string;
 
   constructor(
     protected matriculaService: MatriculaService,
@@ -41,6 +42,45 @@ export class MatriculaComponent implements OnInit {
     if (id) {
       this.matriculaService
         .findAllByPessoaId(id, {
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe({
+          next: (res: HttpResponse<IMatricula[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else {
+      this.matriculaService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe({
+          next: (res: HttpResponse<IMatricula[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    }
+  }
+
+  getAllByDadosPessoalNomeLike(nome?: string, page?: number, dontNavigate?: boolean): void {
+    const pageToLoad: number = page ?? this.page ?? 1;
+    if (this.nome_search) {
+      this.matriculaService
+        .findAllByPessoaLikeNome(this.nome_search, {
           page: pageToLoad - 1,
           size: this.itemsPerPage,
           sort: this.sort(),

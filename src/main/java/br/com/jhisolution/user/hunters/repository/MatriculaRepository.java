@@ -42,5 +42,10 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
     @Query(
         "select DISTINCT dadosPessoais.matriculas from DadosPessoais dadosPessoais join dadosPessoais.matriculas where dadosPessoais.id =:id"
     )
-    Page<Matricula> findAllByPessoalId(@Param("id") Long id, Pageable pageable);
+    Page<Matricula> findAllByPessoaId(@Param("id") Long id, Pageable pageable);
+
+    @Query(
+        "select DISTINCT dadosPessoais.matriculas from DadosPessoais dadosPessoais join dadosPessoais.matriculas where dadosPessoais.nome like %:nome%"
+    )
+    Page<Matricula> findAllByPessoaLikeNome(@Param("nome") String nome, Pageable pageable);
 }

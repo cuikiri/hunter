@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="print()" [formGroup]="editForm">
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label class="custom-control-label" jhiTranslate="hunterappApp.matriculaMatricula.esportiva" for="field_esportiva"
+            >Autorização Esportiva</label
+          >
+          <input type="radio" class="custom-control-input" name="report" id="field_esportiva" formControlName="report" value="esportiva" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="custom-control-label" jhiTranslate="hunterappApp.matriculaMatricula.imagem" for="field_imagem"
+            >Autorização de Imagem</label
+          >
+          <input type="radio" class="custom-control-input" name="report" id="field_imagem" formControlName="report" value="imagem" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="custom-control-label" jhiTranslate="hunterappApp.matriculaMatricula.saude" for="field_saude"
+            >Questionário Saúde</label
+          >
+          <input type="radio" class="custom-control-input" name="report" id="field_saude" formControlName="report" value="saude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="custom-control-label" jhiTranslate="hunterappApp.matriculaMatricula.projeto" for="field_projeto"
+            >Regras Projeto</label
+          >
+          <input type="radio" class="custom-control-input" name="report" id="field_projeto" formControlName="report" value="projeto" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="custom-control-label" jhiTranslate="hunterappApp.matriculaMatricula.lgpd" for="field_lgpd">Termo LGPD</label>
+          <input type="radio" class="custom-control-input" name="report" id="field_lgpd" formControlName="report" value="lgpd" />
+        </div>
+
+        <div>
+          <button type="button" id="cancel-save" [routerLink]="['/matricula']" class="btn btn-secondary">
+            <fa-icon icon="arrow-left"></fa-icon>
+          </button>
+
+          <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+            <fa-icon icon="print"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

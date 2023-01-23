@@ -2,21 +2,7 @@
   <h2 id="page-heading" data-cy="MatriculaHeading">
     <span jhiTranslate="hunterappApp.matriculaMatricula.home.title">Matriculas</span>
 
-    <div class="d-flex justify-content-end" *ngIf="!dadosPessoais">
-      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-matricula"
-        [routerLink]="['/matricula/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-      </button>
-    </div>
-    <div class="d-flex justify-content-end" *ngIf="dadosPessoais">
+    <div class="d-flex justify-content-end" *ngIf="dadosPessoais && dadosPessoais.id; else elseBlock">
       <button class="btn btn-info me-2" [routerLink]="['/dados-pessoais']" [disabled]="isLoading">
         <fa-icon icon="arrow-left" [spin]="isLoading"></fa-icon>
       </button>
@@ -30,6 +16,15 @@
         <fa-icon icon="plus"></fa-icon>
       </button>
     </div>
+    <ng-template #elseBlock>
+      <div class="d-flex justify-content-end">
+        <label jhiTranslate="hunterappApp.matriculaMatricula.dadosPessoais" for="field_search">Dados Pessoais</label>
+        <input type="text" name="obs" id="field_search" [(ngModel)]="nome_search" />
+        <button class="btn btn-info me-2" (click)="getAllByDadosPessoalNomeLike()" [disabled]="isLoading">
+          <fa-icon icon="search" [spin]="isLoading"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
@@ -54,6 +49,9 @@
           <th scope="col" jhiSortBy="turma.nome">
             <span jhiTranslate="hunterappApp.matriculaMatricula.turma">Turma</span> <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="turma.nome">
+            <span jhiTranslate="hunterappApp.matriculaMatricula.dadosPessoais">Dados Pessoais</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -65,8 +63,18 @@
           <td>{{ matricula.data | formatMediumDate }}</td>
           <td>{{ matricula.responsavel }}</td>
           <td>{{ matricula.turma?.nome }}</td>
+          <td>{{ matricula.dadosPessoais?.nome }}</td>
           <td class="text-end">
             <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/matricula', matricula.id, 'print']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="print"></fa-icon>
+              </button>
+
               <button
                 type="submit"
                 [routerLink]="['/matricula', matricula.id, 'view']"

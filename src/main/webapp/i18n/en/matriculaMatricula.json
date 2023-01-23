@@ -24,7 +24,12 @@
       "rg": "RG",
       "cpf": "CPF",
       "turma": "Turma",
-      "dadosPessoais1": "Dados Pessoais 1"
+      "dadosPessoais1": "Dados Pessoais 1",
+      "esportiva": "Autorização Esportiva",
+      "imagem": "Autorização de Imagem",
+      "saude": "Questionário Saúde",
+      "projeto": "Regras Projeto",
+      "lgpd": "Termo LGPD"
     }
   }
 }

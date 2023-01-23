@@ -5,6 +5,10 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="responsavel" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="pessoa" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -99,23 +103,48 @@ Se sim, qual? _________________________________________________________]]></text
 				<text><![CDATA[________________________________________________________________________________________________________]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="17" y="606" width="534" height="30" uuid="389b74da-dc21-4f6f-a717-6acdefdd1e87"/>
+				<reportElement x="40" y="582" width="290" height="20" uuid="772c4187-7868-40eb-87f8-55fba99f3c03"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[_______________________________________________
-Assinatura do Responsável]]></text>
+				<text><![CDATA[_______________________________________________]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="14" y="484" width="534" height="40" uuid="84d5061d-2261-46d2-b7fc-7c25c95dda46"/>
-				<textElement textAlignment="Justified">
+			<textField>
+				<reportElement x="43" y="607" width="285" height="14" uuid="53fdd54a-a9f7-4f57-a72c-7ed766732560">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Eu __________________________________________________ responsável pelo educando aqui informado, confirmo serem verdadeiras as informações deste documento e autorizo o uso da imagem do mesmo pelo Instituto. 
-]]></text>
+				<textFieldExpression><![CDATA[$F{responsavel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="625" width="285" height="14" uuid="76085964-954a-45e9-853c-d9fbcebf8e1f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RG: " + $F{rg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="643" width="285" height="14" uuid="5a8e231c-68ad-4226-aa49-b52889c1415a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CPF : " + $F{cpf}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="525" width="72" height="14" uuid="b7e43d95-fe6b-4c89-92c6-8683bf884dda"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[São Paulo,]]></text>
 			</staticText>
-			<textField pattern=" dd  MMMMM yyyy">
-				<reportElement x="91" y="532" width="127" height="14" uuid="bc4e3f38-42f6-44be-8c55-657d0fea7ab7">
+			<textField pattern="d MMMM yyyy h:mm:ss a">
+				<reportElement x="86" y="525" width="194" height="14" uuid="72b15a81-24e5-4e11-83dc-e7ab4abf6435">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -124,13 +153,13 @@ Assinatura do Responsável]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="16" y="532" width="72" height="14" uuid="966361ba-072b-4a6f-a1e5-6d7337378faa"/>
+			<textField>
+				<reportElement x="5" y="475" width="546" height="45" uuid="16cf26d2-1a1e-41da-b44f-6775e17e9f3e"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="12"/>
 				</textElement>
-				<text><![CDATA[São Paulo,]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Eu, " + $F{responsavel} + ", responsável pelo educando aqui informado, confirmo serem verdadeiras as informações deste documento e autorizo o uso da imagem do mesmo pelo Instituto. "]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

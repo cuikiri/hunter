@@ -9,6 +9,7 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IMatricula, getMatriculaIdentifier } from '../matricula.model';
+import { IReportMatricula } from '../report.model';
 
 export type EntityResponseType = HttpResponse<IMatricula>;
 export type EntityArrayResponseType = HttpResponse<IMatricula[]>;
@@ -24,6 +25,10 @@ export class MatriculaService {
     return this.http
       .post<IMatricula>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  print(report: IReportMatricula): Observable<HttpResponse<any>> {
+    return this.http.post(`${this.resourceUrl}/report/autorizacao/esportiva/jasper`, report, { observe: 'response', responseType: 'blob' });
   }
 
   update(matricula: IMatricula): Observable<EntityResponseType> {
@@ -49,6 +54,11 @@ export class MatriculaService {
   findAllByPessoaId(id: number, req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IMatricula[]>(`${this.resourceUrl}/dadospessoais/${id}`, { params: options, observe: 'response' });
+  }
+
+  findAllByPessoaLikeNome(nome: string, req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IMatricula[]>(`${this.resourceUrl}/dadospessoais/likenome/${nome}`, { params: options, observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

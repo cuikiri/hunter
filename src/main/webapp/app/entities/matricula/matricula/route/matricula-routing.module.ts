@@ -5,6 +5,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { MatriculaComponent } from '../list/matricula.component';
 import { MatriculaDetailComponent } from '../detail/matricula-detail.component';
 import { MatriculaUpdateComponent } from '../update/matricula-update.component';
+import { MatriculaPrintComponent } from '../print/matricula-print.component';
 import { MatriculaRoutingResolveService } from './matricula-routing-resolve.service';
 import { MatriculaRoutingResolvePessoaService } from './matricula-routing-resolve-pessoa.service';
 
@@ -31,6 +32,14 @@ const matriculaRoute: Routes = [
   {
     path: ':id/view',
     component: MatriculaDetailComponent,
+    resolve: {
+      matricula: MatriculaRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/print',
+    component: MatriculaPrintComponent,
     resolve: {
       matricula: MatriculaRoutingResolveService,
     },
