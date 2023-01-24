@@ -22,7 +22,8 @@
       "titulo": "Titulo",
       "conteudo": "Conteudo",
       "tipo": "Tipo",
-      "dadosPessoais": "Dados Pessoais"
+      "dadosPessoais": "Dados Pessoais",
+      "selected": "Selecionado"
     }
   }
 }
